@@ -1,37 +1,12 @@
 const dotenv = require("dotenv");
 const express = require("express");
-const mongoose = require("mongoose");
+const connectToMongoDB = require('./database/connection.js')
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const morgan = require("morgan");
 
 const app = express();
 dotenv.config(); 
-
-// Función para conectar a MongoDB
-const connectToMongoDB = async () => {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log("Connected to MongoDB");
-  } catch (error) {
-    console.error("Error connecting to MongoDB:", error);
-    throw error;
-  }
-};
-
-// Manejar desconexión de MongoDB al detener o reiniciar el servidor
-mongoose.connection.on("disconnected", () => {
-  console.log("Disconnected from MongoDB");
-});
-process.on("SIGINT", async () => {
-  try {
-    await mongoose.connection.close();
-    console.log("Disconnected from MongoDB");
-    process.exit(0);
-  } catch (error) {
-    console.error("Error disconnecting from MongoDB", error);
-    process.exit(1);
-  }
-});
 
 // Middlewares
 const corsOptions = {
@@ -40,6 +15,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions)); // Configurar CORS
+app.use(morgan('dev'));
 app.use(cookieParser()); // Analizar cookies
 app.use(express.json()); // Analizar solicitudes JSON
 
