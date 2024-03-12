@@ -24,6 +24,11 @@ app.get("/health", (req, res) => {
   res.status(200).json({ message: "OK" });
 });
 
+// Ruta para la raíz del sitio
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "¡Bienvenido a Inmobiliaria Bonpland!" });
+});
+
 // Middleware para manejar errores
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
