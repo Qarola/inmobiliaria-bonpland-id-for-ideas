@@ -20,9 +20,14 @@ app.use(cookieParser()); // Analizar cookies
 app.use(express.json()); // Analizar solicitudes JSON
 
 //Ruta de prueba para verificar el estado del servidor remoto
-/* app.get("/health", (req, res) => {
+app.get("/health", (req, res) => {
   res.status(200).json({ message: "OK" });
-}); */
+});
+
+// Ruta para la raíz del sitio
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "¡Bienvenido a Inmobiliaria Bonpland!" });
+});
 
 // Middleware para manejar errores
 app.use((err, req, res, next) => {
