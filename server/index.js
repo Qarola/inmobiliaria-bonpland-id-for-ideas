@@ -5,6 +5,8 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const morgan = require("morgan");
 
+const propertyRoute = require('./routes/propertyRoutes/property.js')
+
 const app = express();
 dotenv.config(); 
 
@@ -19,12 +21,16 @@ app.use(morgan('dev'));
 app.use(cookieParser()); // Analizar cookies
 app.use(express.json()); // Analizar solicitudes JSON
 
+
+// Rutas
+app.use("/api", propertyRoute); 
+
 //Ruta de prueba para verificar el estado del servidor remoto
 app.get("/health", (req, res) => {
   res.status(200).json({ message: "OK" });
 });
 
-// Ruta para la raíz del sitio
+// Ruta de prueba para la raíz del sitio
 app.get("/", (req, res) => {
   res.status(200).json({ message: "¡Bienvenido a Inmobiliaria Bonpland!" });
 });
