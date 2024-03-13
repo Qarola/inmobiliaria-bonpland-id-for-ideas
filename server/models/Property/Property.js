@@ -44,6 +44,10 @@ const propertySchema = new mongoose.Schema(
     images: {
         type: [String],
     },
+    address: {
+      type: String,
+      required: true,
+    }
   },
   { timestamps: true }
 );
