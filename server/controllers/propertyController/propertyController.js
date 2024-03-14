@@ -7,6 +7,7 @@ const Property = require("../../models/Property/Property");
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 const reference = uuid.v4();
 
+// Get data from API MeLi and save DB.
 const getProperties = () => {
   return axios
     .get(
@@ -94,8 +95,24 @@ const getProperties = () => {
 };
 
 
+// Property detail by id
+const getPropertyDetails = async (req, res, next) => {
+  try {
+    const reference = req.params.id;
+    const property = await Property.findById(reference); // Busca la propiedad por su referencia
+
+    if (!property) {
+      return res.status(404).json({ message: "Property not found" });
+    }  
+    res.status(200).json(property);
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 
 module.exports = {
   getProperties,
-  
+  getPropertyDetails,  
 };
