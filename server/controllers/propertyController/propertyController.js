@@ -10,7 +10,7 @@ const reference = uuid.v4();
 const getProperties = () => {
   return axios
     .get(
-      `${meliConfig.root_url}/sites/MLA/search?item_location=lat:-37.987148_-30.987148,lon:-57.5483864_-50.5483864&category=MLA1459&limit=5`,
+      `${meliConfig.root_url}/sites/MLA/search?item_location=lat:-37.987148_-30.987148,lon:-57.5483864_-50.5483864&category=MLA1459&limit=10`,
       {
         headers: {
           Authorization: `Bearer ${ACCESS_TOKEN}`,
@@ -70,6 +70,10 @@ const getProperties = () => {
             images: [inmueble.thumbnail],
             /* images: inmueble.pictures && inmueble.pictures.length > 0 ? inmueble.pictures.map(picture => picture.url) : [], */ // Verifica si inmueble.pictures está definido y no está vacío antes de llamar a map()
             address: inmueble.location.address_line || "default_value",
+            featuredProperties: inmueble.listing_type_id,
+            sellerContact: inmueble.seller_contact,
+            otherInfo: inmueble.other_info,
+            
           };
 
           const newProperty = new Property(propertyData);
@@ -79,8 +83,8 @@ const getProperties = () => {
           console.error("Error al guardar la propiedad:", error.message);
         }
       });
-
-      await Promise.all(promises); //se espera a que todas las promesas de guardar propiedades se completen utilizando Promise.all
+       //Promise.all para esperar a que todas las promesas de guardado se completen antes de devolver una respuesta.
+      await Promise.all(promises); 
       return Promise.all(promises);
     })
     .catch((error) => {
@@ -89,6 +93,9 @@ const getProperties = () => {
     });
 };
 
+
+
 module.exports = {
   getProperties,
+  
 };
