@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 
 const propertySchema = new mongoose.Schema(
   {
+    titlePost: {
+      type: String,
+      require: true,
+    },
     propertyType: {
       type: String,
       required: true,
@@ -18,10 +22,14 @@ const propertySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    squareMeters: {
-      type: Number,
+    state: {
+      type: String,
       required: true,
     },
+    coveredArea: {
+      type: Number,
+      required: true
+  },
     price: {
       type: Number,
       required: true,
@@ -29,6 +37,7 @@ const propertySchema = new mongoose.Schema(
     status: {
       type: String,
       enum: ["available", "reserved", "rented", "sold"],
+      required: true,
       default: "available",
     },
     contractType: {
@@ -47,7 +56,46 @@ const propertySchema = new mongoose.Schema(
     address: {
       type: String,
       required: true,
-    }
+    },
+    featuredProperties: { //Propiedades destacadas
+      type: String,
+      required: true,
+      default: "",
+    },
+    sellerContact: {
+      contact: {
+        type: String,
+        required: true,
+      },
+      other_info: {
+        type: String,
+        default: "", 
+      },
+      webpage: {
+        type: String,
+        default: "", 
+      },
+      area_code: {
+        type: String,
+        default: "",
+      },
+      phone: {
+        type: String,
+        default: "", 
+      },
+      area_code2: {
+        type: String,
+        default: "", 
+      },
+      phone2: {
+        type: String,
+        default: "",
+      },
+      email: {
+        type: String,
+        default: "", 
+      },
+    },
   },
   { timestamps: true }
 );
