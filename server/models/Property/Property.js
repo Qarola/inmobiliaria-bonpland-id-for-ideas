@@ -56,7 +56,46 @@ const propertySchema = new mongoose.Schema(
     address: {
       type: String,
       required: true,
-    }
+    },
+    featuredProperties: { //Propiedades destacadas
+      type: String,
+      required: true,
+      default: "",
+    },
+    sellerContact: {
+      contact: {
+        type: String,
+        required: true,
+      },
+      other_info: {
+        type: String,
+        default: "", 
+      },
+      webpage: {
+        type: String,
+        default: "", 
+      },
+      area_code: {
+        type: String,
+        default: "",
+      },
+      phone: {
+        type: String,
+        default: "", 
+      },
+      area_code2: {
+        type: String,
+        default: "", 
+      },
+      phone2: {
+        type: String,
+        default: "",
+      },
+      email: {
+        type: String,
+        default: "", 
+      },
+    },
   },
   { timestamps: true }
 );
