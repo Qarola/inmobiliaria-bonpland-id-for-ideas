@@ -40,12 +40,7 @@ const sendAEmail = async (correoDestino, asunto, mensaje, reference) => {
         console.log("Correo electrónico enviado:", info.messageId);
       });
     });
-
-    // Envía una respuesta al cliente
-    return {
-      message:
-        "Recibimos su email, pronto nos pondremos en contacto con usted a la brevedad posible",
-    };
+    
   } catch (error) {
     console.error("Error al enviar el correo electrónico:", error);
     throw error;
