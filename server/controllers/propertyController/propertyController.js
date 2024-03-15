@@ -3,6 +3,7 @@ const axios = require("axios");
 const uuid = require("uuid");
 const { meliConfig } = require("../../config");
 const Property = require("../../models/Property/Property");
+const sendAEmail = require("../../utils/emailService");
 
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 const reference = uuid.v4();
@@ -74,7 +75,6 @@ const getProperties = () => {
             featuredProperties: inmueble.listing_type_id,
             sellerContact: inmueble.seller_contact,
             otherInfo: inmueble.other_info,
-            
           };
 
           const newProperty = new Property(propertyData);
@@ -84,8 +84,8 @@ const getProperties = () => {
           console.error("Error al guardar la propiedad:", error.message);
         }
       });
-       //Promise.all para esperar a que todas las promesas de guardado se completen antes de devolver una respuesta.
-      await Promise.all(promises); 
+      //Promise.all para esperar a que todas las promesas de guardado se completen antes de devolver una respuesta.
+      await Promise.all(promises);
       return Promise.all(promises);
     })
     .catch((error) => {
@@ -93,7 +93,6 @@ const getProperties = () => {
       throw error;
     });
 };
-
 
 // Property detail by id
 const getPropertyDetails = async (req, res, next) => {
@@ -103,16 +102,55 @@ const getPropertyDetails = async (req, res, next) => {
 
     if (!property) {
       return res.status(404).json({ message: "Property not found" });
-    }  
+    }
     res.status(200).json(property);
   } catch (error) {
     next(error);
   }
 };
 
+// POST to Real Estate contact
+const contactRealEstate = async (req, res) => {
+  try {
+    const { reference, message, email } = req.body;
 
+    // Verifica si se proporcionó un correo electrónico de destino
+    if (!email) {
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "Correo electrónico de destino no proporcionado",
+        });
+    }
+
+    // Envia el correo electrónico utilizando la función sendAEmail
+    await sendAEmail(
+      email,
+      `Consulta sobre propiedad referencia: ${reference}`,
+      message,
+      reference
+    );
+
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Correo enviado a la inmobiliaria correctamente.",
+      });
+  } catch (error) {
+    console.error("Error al contactar a la inmobiliaria:", error);
+    res
+      .status(500)
+      .json({
+        success: false,
+        message: "Error al contactar a la inmobiliaria.",
+      });
+  }
+};
 
 module.exports = {
   getProperties,
-  getPropertyDetails,  
+  getPropertyDetails,
+  contactRealEstate,
 };
