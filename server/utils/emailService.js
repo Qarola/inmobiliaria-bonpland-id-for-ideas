@@ -14,9 +14,9 @@ const sendAEmail = async (correoDestino, asunto, mensaje, reference) => {
       );
     }
 
-    // Configurar el correo electrónico
+    // Configura el correo electrónico
     const mailOptions = {
-      from: "Inmobiliaria Bonpland <tucorreogmail@gmail.com>",
+      from: "Inmobiliaria Bonpland <" + process.env.AUTH_EMAIL + ">",
       to: correoDestino,
       subject: asunto,
       html: `

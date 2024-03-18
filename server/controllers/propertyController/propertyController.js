@@ -149,6 +149,7 @@ const contactRealEstate = async (req, res) => {
   }
 };
 
+
 module.exports = {
   getProperties,
   getPropertyDetails,
