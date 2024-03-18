@@ -117,6 +117,23 @@ const getFeaturedProperties = async (req, res) => {
   }
 };
 
+//GET Property List
+const getPropertiesList = async (req, res) => {
+  try {
+    const getAllPropertiesDB = await Property.find();
+
+    res.status(200).json({
+      success: true,
+      data: getAllPropertiesDB,
+    });
+  } catch (error) {
+    console.error("Error al obtener todas las propieades.", error);
+    res.status(500).json({
+      success: false,
+      message: "Error al obtener todas la propiedades.",
+    });
+  }
+};
 
 
 // Property detail by id
@@ -215,6 +232,7 @@ const contactRealEstate = async (req, res) => {
 module.exports = {
   getProperties,
   getFeaturedProperties,
+  getPropertiesList,
   getPropertyDetails,
   contactRealEstate,
   EditProperty,

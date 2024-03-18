@@ -1,12 +1,14 @@
 const express = require('express');
 const property = express.Router();
-const { getProperties, getFeaturedProperties, getPropertyDetails, contactRealEstate,EditProperty,deleteProperty } = require('../../controllers/propertyController/propertyController')
+const { getProperties, getPropertiesList, getFeaturedProperties, getPropertyDetails, contactRealEstate,EditProperty,deleteProperty } = require('../../controllers/propertyController/propertyController')
 
 
 //GET
 property.get("/properties", getProperties);
 property.get("/detail/:id", getPropertyDetails);
 property.get("/featured-properties", getFeaturedProperties);
+property.get("/all-properties", getPropertiesList);
+
 
 //POST
 property.post("/contact-real-estate", contactRealEstate);
