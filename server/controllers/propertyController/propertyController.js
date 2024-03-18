@@ -109,6 +109,26 @@ const getPropertyDetails = async (req, res, next) => {
   }
 };
 
+// Edit property in the database
+async function EditProperty(req,res) {
+  let referenceToPut = req.body.reference;
+  console.log(referenceToPut);
+  let result = Property.findOneAndUpdate({reference : referenceToPut},req.body);
+  return res.send(await result);
+}
+
+// Delete property in the database
+async function deleteProperty(req,res) {
+  let referenceToDelete = req.body.reference
+  try {
+    let resultR = await Property.deleteOne({ reference:referenceToDelete });
+    console.log(resultR);
+    return res.status(200).json({status:200});
+  } catch (error) {
+    return res.status(500).json({status:500})
+  }
+}
+
 // POST to Real Estate contact
 const contactRealEstate = async (req, res) => {
   try {
@@ -154,4 +174,6 @@ module.exports = {
   getProperties,
   getPropertyDetails,
   contactRealEstate,
+  EditProperty,
+  deleteProperty
 };
