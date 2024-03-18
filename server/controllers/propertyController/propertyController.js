@@ -12,7 +12,7 @@ const reference = uuid.v4();
 const getProperties = () => {
   return axios
     .get(
-      `${meliConfig.root_url}/sites/MLA/search?item_location=lat:-37.987148_-30.987148,lon:-57.5483864_-50.5483864&category=MLA1459&limit=10`,
+      `${meliConfig.root_url}/sites/MLA/search?item_location=lat:-37.987148_-30.987148,lon:-57.5483864_-50.5483864&category=MLA1459&limit=20`,
       {
         headers: {
           Authorization: `Bearer ${ACCESS_TOKEN}`,
@@ -94,6 +94,31 @@ const getProperties = () => {
     });
 };
 
+//Get Featured Properties from DB
+const getFeaturedProperties = async (req, res) => {
+  try {
+    // Busca las propiedades disponibles ordenadas por precio ascendente y por número de habitaciones descendente
+    const featuredProperties = await Property.find({
+      status: "available", // Filtra por propiedades disponibles
+    })
+    .sort({ price: 1, rooms: -1 }) // Ordena por precio ascendente y por número de habitaciones descendente
+    .limit(10); // Limita el número de resultados a 10 
+
+    res.status(200).json({
+      success: true,
+      data: featuredProperties,
+    });
+  } catch (error) {
+    console.error("Error al obtener propiedades destacadas:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error al obtener propiedades destacadas.",
+    });
+  }
+};
+
+
+
 // Property detail by id
 const getPropertyDetails = async (req, res, next) => {
   try {
@@ -101,7 +126,7 @@ const getPropertyDetails = async (req, res, next) => {
     const property = await Property.findById(reference); // Busca la propiedad por su referencia
 
     if (!property) {
-      return res.status(404).json({ message: "Property not found" });
+      return res.status(404).json({ message: "Propiedad no encontrada" });
     }
     res.status(200).json(property);
   } catch (error) {
@@ -110,24 +135,41 @@ const getPropertyDetails = async (req, res, next) => {
 };
 
 // Edit property in the database
-async function EditProperty(req,res) {
-  let referenceToPut = req.body.reference;
-  console.log(referenceToPut);
-  let result = Property.findOneAndUpdate({reference : referenceToPut},req.body);
-  return res.send(await result);
-}
-
-// Delete property in the database
-async function deleteProperty(req,res) {
-  let referenceToDelete = req.body.reference
+async function EditProperty(req, res) {
   try {
-    let resultR = await Property.deleteOne({ reference:referenceToDelete });
-    console.log(resultR);
-    return res.status(200).json({status:200});
+    const referenceToPut = req.body.reference;
+    const result = await Property.findOneAndUpdate(
+      { reference: referenceToPut },
+      req.body,
+      { new: true } // Esto es para devolver el documento actualizado
+    );
+    return res.send(result);
   } catch (error) {
-    return res.status(500).json({status:500})
+    console.error("Error al editar la propiedad:", error);
+    return res.status(500).json({ status: 500, message: "Error al editar la propiedad." });
   }
 }
+
+
+// Delete property in the database
+async function deleteProperty(req, res) {
+  try {
+    const referenceToDelete = req.body.reference;
+    const result = await Property.deleteOne({ reference: referenceToDelete });
+//deletedCount es una propiedad que proviene del resultado de la operación deleteOne() en Mongoose, 
+//y nos indica cuántos documentos fueron eliminados de la base de datos.
+    if (result.deletedCount === 0) {
+      // Si no se encontró ninguna propiedad para eliminar
+      return res.status(404).json({ status: 404, message: "Propiedad no encontrada." });
+    }
+
+    return res.status(200).json({ status: 200, message: "Propiedad eliminada exitosamente." });
+  } catch (error) {
+    console.error("Error al eliminar la propiedad:", error);
+    return res.status(500).json({ status: 500, message: "Error al eliminar la propiedad." });
+  }
+}
+
 
 // POST to Real Estate contact
 const contactRealEstate = async (req, res) => {
@@ -172,6 +214,7 @@ const contactRealEstate = async (req, res) => {
 
 module.exports = {
   getProperties,
+  getFeaturedProperties,
   getPropertyDetails,
   contactRealEstate,
   EditProperty,
