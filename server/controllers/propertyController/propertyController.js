@@ -3,10 +3,12 @@ const axios = require("axios");
 const uuid = require("uuid");
 const { meliConfig } = require("../../config");
 const Property = require("../../models/Property/Property");
+const sendAEmail = require("../../utils/emailService");
 
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 const reference = uuid.v4();
 
+// Get data from API MeLi and save DB.
 const getProperties = () => {
   return axios
     .get(
@@ -73,7 +75,6 @@ const getProperties = () => {
             featuredProperties: inmueble.listing_type_id,
             sellerContact: inmueble.seller_contact,
             otherInfo: inmueble.other_info,
-            
           };
 
           const newProperty = new Property(propertyData);
@@ -83,8 +84,8 @@ const getProperties = () => {
           console.error("Error al guardar la propiedad:", error.message);
         }
       });
-       //Promise.all para esperar a que todas las promesas de guardado se completen antes de devolver una respuesta.
-      await Promise.all(promises); 
+      //Promise.all para esperar a que todas las promesas de guardado se completen antes de devolver una respuesta.
+      await Promise.all(promises);
       return Promise.all(promises);
     })
     .catch((error) => {
@@ -93,9 +94,86 @@ const getProperties = () => {
     });
 };
 
+// Property detail by id
+const getPropertyDetails = async (req, res, next) => {
+  try {
+    const reference = req.params.id;
+    const property = await Property.findById(reference); // Busca la propiedad por su referencia
+
+    if (!property) {
+      return res.status(404).json({ message: "Property not found" });
+    }
+    res.status(200).json(property);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Edit property in the database
+async function EditProperty(req,res) {
+  let referenceToPut = req.body.reference;
+  console.log(referenceToPut);
+  let result = Property.findOneAndUpdate({reference : referenceToPut},req.body);
+  return res.send(await result);
+}
+
+// Delete property in the database
+async function deleteProperty(req,res) {
+  let referenceToDelete = req.body.reference
+  try {
+    let resultR = await Property.deleteOne({ reference:referenceToDelete });
+    console.log(resultR);
+    return res.status(200).json({status:200});
+  } catch (error) {
+    return res.status(500).json({status:500})
+  }
+}
+
+// POST to Real Estate contact
+const contactRealEstate = async (req, res) => {
+  try {
+    const { reference, message, email } = req.body;
+
+    // Verifica si se proporcionó un correo electrónico de destino
+    if (!email) {
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "Correo electrónico de destino no proporcionado",
+        });
+    }
+
+    // Envia el correo electrónico utilizando la función sendAEmail
+    await sendAEmail(
+      email,
+      `Consulta sobre propiedad referencia: ${reference}`,
+      message,
+      reference
+    );
+
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Correo enviado a la inmobiliaria correctamente.",
+      });
+  } catch (error) {
+    console.error("Error al contactar a la inmobiliaria:", error);
+    res
+      .status(500)
+      .json({
+        success: false,
+        message: "Error al contactar a la inmobiliaria.",
+      });
+  }
+};
 
 
 module.exports = {
   getProperties,
-  
+  getPropertyDetails,
+  contactRealEstate,
+  EditProperty,
+  deleteProperty
 };
