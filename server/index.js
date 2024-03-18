@@ -1,11 +1,10 @@
 const dotenv = require("dotenv");
 const express = require("express");
-const connectToMongoDB = require('./database/connection.js')
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const morgan = require("morgan");
-
-const propertyRoute = require('./routes/propertyRoutes/property.js')
+const connectToMongoDB = require('./database/connection.js')
+const propertyRoute = require('./routes/propertyRoutes/property.routes.js')
 
 const app = express();
 dotenv.config(); 
