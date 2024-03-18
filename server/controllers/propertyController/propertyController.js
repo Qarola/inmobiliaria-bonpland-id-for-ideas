@@ -127,10 +127,10 @@ const getPropertiesList = async (req, res) => {
       data: getAllPropertiesDB,
     });
   } catch (error) {
-    console.error("Error al obtener todas las propieades.", error);
+    console.error("Error al obtener todas las propiedades.", error);
     res.status(500).json({
       success: false,
-      message: "Error al obtener todas la propiedades.",
+      message: "Error al obtener todas la propidedades.",
     });
   }
 };
