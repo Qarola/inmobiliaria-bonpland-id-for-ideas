@@ -1,7 +1,7 @@
 require("dotenv").config();
 const axios = require("axios");
 const uuid = require("uuid");
-const { meliConfig } = require("../../config");
+const { meliConfig } = require("../../meliConfig/config");
 const Property = require("../../models/Property/Property");
 const sendAEmail = require("../../utils/emailService");
 
@@ -70,7 +70,6 @@ const getProperties = () => {
             contractType: contractType,
             reference: reference, // Utiliza el reference único generado
             images: [inmueble.thumbnail],
-            /* images: inmueble.pictures && inmueble.pictures.length > 0 ? inmueble.pictures.map(picture => picture.url) : [], */ // Verifica si inmueble.pictures está definido y no está vacío antes de llamar a map()
             address: inmueble.location.address_line || "default_value",
             featuredProperties: inmueble.listing_type_id,
             sellerContact: inmueble.seller_contact,
@@ -101,8 +100,8 @@ const getFeaturedProperties = async (req, res) => {
     const featuredProperties = await Property.find({
       status: "available", // Filtra por propiedades disponibles
     })
-    .sort({ price: 1, rooms: -1 }) // Ordena por precio ascendente y por número de habitaciones descendente
-    .limit(10); // Limita el número de resultados a 10 
+      .sort({ price: 1, rooms: -1 }) // Ordena por precio ascendente y por número de habitaciones descendente
+      .limit(10); // Limita el número de resultados a 10
 
     res.status(200).json({
       success: true,
@@ -135,7 +134,6 @@ const getPropertiesList = async (req, res) => {
   }
 };
 
-
 // Property detail by id
 const getPropertyDetails = async (req, res, next) => {
   try {
@@ -163,30 +161,36 @@ async function EditProperty(req, res) {
     return res.send(result);
   } catch (error) {
     console.error("Error al editar la propiedad:", error);
-    return res.status(500).json({ status: 500, message: "Error al editar la propiedad." });
+    return res
+      .status(500)
+      .json({ status: 500, message: "Error al editar la propiedad." });
   }
 }
-
 
 // Delete property in the database
 async function deleteProperty(req, res) {
   try {
     const referenceToDelete = req.body.reference;
     const result = await Property.deleteOne({ reference: referenceToDelete });
-//deletedCount es una propiedad que proviene del resultado de la operación deleteOne() en Mongoose, 
-//y nos indica cuántos documentos fueron eliminados de la base de datos.
+    //deletedCount es una propiedad que proviene del resultado de la operación deleteOne() en Mongoose,
+    //y nos indica cuántos documentos fueron eliminados de la base de datos.
     if (result.deletedCount === 0) {
       // Si no se encontró ninguna propiedad para eliminar
-      return res.status(404).json({ status: 404, message: "Propiedad no encontrada." });
+      return res
+        .status(404)
+        .json({ status: 404, message: "Propiedad no encontrada." });
     }
 
-    return res.status(200).json({ status: 200, message: "Propiedad eliminada exitosamente." });
+    return res
+      .status(200)
+      .json({ status: 200, message: "Propiedad eliminada exitosamente." });
   } catch (error) {
     console.error("Error al eliminar la propiedad:", error);
-    return res.status(500).json({ status: 500, message: "Error al eliminar la propiedad." });
+    return res
+      .status(500)
+      .json({ status: 500, message: "Error al eliminar la propiedad." });
   }
 }
-
 
 // POST to Real Estate contact
 const contactRealEstate = async (req, res) => {
@@ -195,12 +199,10 @@ const contactRealEstate = async (req, res) => {
 
     // Verifica si se proporcionó un correo electrónico de destino
     if (!email) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "Correo electrónico de destino no proporcionado",
-        });
+      return res.status(400).json({
+        success: false,
+        message: "Correo electrónico de destino no proporcionado",
+      });
     }
 
     // Envia el correo electrónico utilizando la función sendAEmail
@@ -211,23 +213,50 @@ const contactRealEstate = async (req, res) => {
       reference
     );
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Correo enviado a la inmobiliaria correctamente.",
-      });
+    res.status(200).json({
+      success: true,
+      message: "Correo enviado a la inmobiliaria correctamente.",
+    });
   } catch (error) {
     console.error("Error al contactar a la inmobiliaria:", error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Error al contactar a la inmobiliaria.",
-      });
+    res.status(500).json({
+      success: false,
+      message: "Error al contactar a la inmobiliaria.",
+    });
   }
 };
 
+// Search by Property type
+const searchPropertiesByType = async (req, res) => {
+  try {
+    let { propertyType } = req.params; // Obtiene el tipo de propiedad desde los parámetros de la URL
+    propertyType =
+      propertyType.charAt(0).toUpperCase() +
+      propertyType.slice(1).toLowerCase(); // Convierte la primera letra a mayúscula y el resto a minúscula
+
+    const properties = await Property.find({ propertyType }); // Busca propiedades por el tipo especificado
+
+    if (properties.length === 0) {
+      // Si no se encontraron propiedades del tipo especificado
+      return res.status(404).json({
+        success: false,
+        message: `No se encontraron propiedades del tipo '${propertyType}'.`,
+      });
+    }
+
+    // Si se encontraron propiedades del tipo especificado, se devuelve en la respuesta
+    res.status(200).json({
+      success: true,
+      data: properties,
+    });
+  } catch (error) {
+    console.error("Error al buscar propiedades por tipo:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error al buscar propiedades por tipo.",
+    });
+  }
+};
 
 module.exports = {
   getProperties,
@@ -236,5 +265,6 @@ module.exports = {
   getPropertyDetails,
   contactRealEstate,
   EditProperty,
-  deleteProperty
+  deleteProperty,
+  searchPropertiesByType,
 };
