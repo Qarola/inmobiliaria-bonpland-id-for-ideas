@@ -5,6 +5,7 @@ const { meliConfig } = require("../../meliConfig/config");
 const Property = require("../../models/Property/Property");
 const sendAEmail = require("../../utils/emailService");
 
+ 
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 const reference = uuid.v4();
 
@@ -58,6 +59,9 @@ const getProperties = () => {
                 inmueble.attributes.find((attr) => attr.id === "ROOMS")
                   ?.value_name
               ) || 0,
+              bathrooms:
+              inmueble.attributes.find((attr) => attr.id === "FULL_BATHROOMS")
+                ?.value_name || 0,
             country: inmueble.location.country.name || "default_value",
             city: inmueble.location.city.name || "default_value",
             state: inmueble.location.state.name || "default_value",
@@ -98,7 +102,7 @@ const getFeaturedProperties = async (req, res) => {
   try {
     // Busca las propiedades disponibles ordenadas por precio ascendente y por número de habitaciones descendente
     const featuredProperties = await Property.find({
-      status: "available", // Filtra por propiedades disponibles
+      status: "disponible", // Filtra por propiedades disponibles
     })
       .sort({ price: 1, rooms: -1 }) // Ordena por precio ascendente y por número de habitaciones descendente
       .limit(10); // Limita el número de resultados a 10
@@ -204,7 +208,6 @@ const contactRealEstate = async (req, res) => {
         message: "Correo electrónico de destino no proporcionado",
       });
     }
-
     // Envia el correo electrónico utilizando la función sendAEmail
     await sendAEmail(
       email,
@@ -212,7 +215,6 @@ const contactRealEstate = async (req, res) => {
       message,
       reference
     );
-
     res.status(200).json({
       success: true,
       message: "Correo enviado a la inmobiliaria correctamente.",
@@ -243,7 +245,6 @@ const searchPropertiesByType = async (req, res) => {
         message: `No se encontraron propiedades del tipo '${propertyType}'.`,
       });
     }
-
     // Si se encontraron propiedades del tipo especificado, se devuelve en la respuesta
     res.status(200).json({
       success: true,
@@ -258,6 +259,30 @@ const searchPropertiesByType = async (req, res) => {
   }
 };
 
+//Change property status
+const changePropertyStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { newStatus } = req.body;
+
+    // Busca la propiedad por su ID
+    const prop = await Property.findById(id);
+
+    // Verifica si la propiedad existe
+    if (!prop) {
+      return res.status(404).json({ mensaje: 'Propiedad no encontrada' });
+    }
+    // Actualiza el estado de la propiedad
+    prop.status = newStatus;
+    await prop.save();
+
+    res.json({ mensaje: 'Estado de la propiedad actualizado correctamente', prop });
+  } catch (error) {
+    console.error('Error al actualizar el estado de la propiedad:', error);
+    res.status(500).json({ mensaje: 'Error interno del servidor' });
+  }
+};
+
 module.exports = {
   getProperties,
   getFeaturedProperties,
@@ -267,4 +292,5 @@ module.exports = {
   EditProperty,
   deleteProperty,
   searchPropertiesByType,
+  changePropertyStatus
 };

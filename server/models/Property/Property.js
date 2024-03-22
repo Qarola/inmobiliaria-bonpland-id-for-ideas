@@ -14,6 +14,9 @@ const propertySchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    bathrooms: {
+      type: Number,
+    },
     country: {
       type: String,
       required: true,
@@ -36,9 +39,9 @@ const propertySchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["available", "reserved", "rented", "sold"],
+      enum: ["disponible", "reservado", "rentado", "vendido"],
       required: true,
-      default: "available",
+      default: "disponible",
     },
     contractType: {
       type: String,
