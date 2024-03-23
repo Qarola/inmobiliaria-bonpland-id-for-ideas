@@ -19,7 +19,7 @@ const Navbar = () => {
                 <Link className="text-[#F6F6F6] navbar__item navbar__item-p m-3 p-2" to="/">Vender</Link>
                 <Link className="text-[#F6F6F6] navbar__item navbar__item-p m-3 p-2" to="/">Contacto</Link>
                 <div className="flex account__buttons">
-                    <Link className="text-[#F6F6F6] m-3 p-2 ps-5 navbar__item navbar__register" to="/">Registrarse</Link>
+                    <Link className="text-[#F6F6F6] m-3 p-2 navbar__item navbar__register" to="/">Registrarse</Link>
                     <Link className="text-[#1A3670] hover:bg-[#003DA2] hover:text-white transition-colors duration-200 m-3 p-2 me-10 navbar__item bg-[#FEFEFE] rounded" to="/">Ingresar</Link>
                 </div>
             </div>
