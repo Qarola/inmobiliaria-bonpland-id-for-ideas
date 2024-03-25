@@ -5,11 +5,11 @@ const Buscador = () => {
                 <img src='/assets/images/bg-example.png' alt="bg" className="object-cover w-full h-full" />
             </div>
             <div className="absolute w-[75%]">
-                <h1 className="mb-2 text-2xl font-medium">¿Que buscas?</h1>
+                <h1 className="mb-4 text-2xl font-medium">¿Que buscas?</h1>
                 <div className="flex justify-between bg-white w-[100%] rounded-full">
-                    <input className="w-[70%] rounded-l-full p-3" placeholder="Ubicacion deseada"/>
-                    <button className="p-3 font-normal border-l border-r border-gray-100 border-solid">Comprar</button>
-                    <button className="p-3 font-normal">Tipo de propiedad</button>
+                    <input className="w-[60%] rounded-l-full p-3" placeholder="Ubicacion deseada"/>
+                    <button className="p-3 font-[500] border-l border-r border-gray-100 border-solid">Comprar</button>
+                    <button className="p-3 font-[500]">Tipo de propiedad</button>
                     <button className="bg-black text-white rounded-r-full p-3">Lupa</button>
                 </div>
             </div>
