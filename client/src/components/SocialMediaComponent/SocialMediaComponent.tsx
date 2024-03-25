@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import icon from '../../assets/icon';
+import icon from '../../assets/iconos/icon';
 
 const iconInfo = {
   'facebook': {
