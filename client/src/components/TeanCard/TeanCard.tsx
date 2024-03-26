@@ -17,8 +17,20 @@ export const TeanCard: (params: params) => JSX.Element = (params: params) => {
           <p className='text-[#C9CED4]'>{params.role}</p>
 
         </div>
-        <p className='text-center text-[#475467]'>{params.jobDescription}</p>
-        <SocialMediaComponent className='flex justify-center gap-2 py-4' socialNetworks={[SocialNetworkEnum.facebook, SocialNetworkEnum.instagram, SocialNetworkEnum.twitter]} color={IconColorEnum.black} size={24} />
+        <p className='text-center text-[#475467]'>
+          {params.jobDescription}
+        </p>
+        <SocialMediaComponent
+          className='flex justify-center gap-2 py-4'
+          socialNetworks={
+            [
+              SocialNetworkEnum.facebook,
+              SocialNetworkEnum.instagram,
+              SocialNetworkEnum.twitter
+            ]
+          }
+          color={IconColorEnum.black}
+        />
       </section>
     </article>
   )
