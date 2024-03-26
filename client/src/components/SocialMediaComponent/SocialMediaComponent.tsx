@@ -55,18 +55,24 @@ export enum IconColorEnum {
 
 interface params {
   color: IconColorEnum;
-  size?: number;
   socialNetworks: SocialNetworkEnum[];
   className?: string;
 }
 
-export const SocialMediaComponent: (params: params) => JSX.Element = ({ color, size, socialNetworks, className }: params) => {
+export const SocialMediaComponent: (params: params) => JSX.Element = ({
+  color,
+  socialNetworks,
+  className
+}: params) => {
   return (
     <article className={className} >
       {
         socialNetworks.map(socialNetwork => (
-          <Link to={iconInfo[socialNetwork].link} key={socialNetwork}>
-            <img className={`h-[${size}px]`} src={iconInfo[socialNetwork].img[color]} alt={socialNetwork} />
+          <Link
+            to={iconInfo[socialNetwork].link}
+            key={socialNetwork}
+          >
+            <img src={iconInfo[socialNetwork].img[color]} alt={socialNetwork} />
           </Link>
         ))
       }
