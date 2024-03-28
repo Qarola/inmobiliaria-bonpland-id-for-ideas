@@ -2,41 +2,26 @@ import { Link } from "react-router-dom";
 
 import icon from '../../assets/iconos/icon';
 
-const iconInfo = {
+const SocialNetworkIcon = {
   'facebook': {
-    link: '',
-    img: {
-      'black': icon.facebookBlack,
-      'white': icon.facebookWhite,
-    }
+    'black': icon.facebookBlack,
+    'white': icon.facebookWhite,
   },
   'instagram': {
-    link: '',
-    img: {
-      'black': icon.instagramBlack,
-      'white': icon.instagramWhite,
-    }
+    'black': icon.instagramBlack,
+    'white': icon.instagramWhite,
   },
   'linkedin': {
-    link: '',
-    img: {
-      'black': icon.linkedinBlack,
-      'white': icon.linkedinWhite,
-    }
+    'black': icon.linkedinBlack,
+    'white': icon.linkedinWhite,
   },
   'twitter': {
-    link: '',
-    img: {
-      'black': icon.twitterBlack,
-      'white': icon.twitterWhite,
-    }
+    'black': icon.twitterBlack,
+    'white': icon.twitterWhite,
   },
   'youtube': {
-    link: '',
-    img: {
-      'black': icon.youtubeBlack,
-      'white': icon.youtubeWhite,
-    }
+    'black': icon.youtubeBlack,
+    'white': icon.youtubeWhite,
   }
 }
 
@@ -48,31 +33,35 @@ export enum SocialNetworkEnum {
   youtube = 'youtube'
 }
 
-export enum IconColorEnum {
+export enum SocialNetworkIconColorEnum {
   black = 'black',
   white = 'white',
 }
 
-interface params {
-  color: IconColorEnum;
-  socialNetworks: SocialNetworkEnum[];
+interface Params {
+  color: SocialNetworkIconColorEnum;
+  socialNetworks:
+  {
+    name: SocialNetworkEnum;
+    link: string;
+  }[];
   className?: string;
 }
 
-export const SocialMediaComponent: (params: params) => JSX.Element = ({
+export const SocialMediaComponent: (params: Params) => JSX.Element = ({
   color,
   socialNetworks,
   className
-}: params) => {
+}: Params) => {
   return (
     <article className={className} >
       {
         socialNetworks.map(socialNetwork => (
           <Link
-            to={iconInfo[socialNetwork].link}
-            key={socialNetwork}
+            to={socialNetwork.link}
+            key={socialNetwork.name}
           >
-            <img src={iconInfo[socialNetwork].img[color]} alt={socialNetwork} />
+            <img src={SocialNetworkIcon[socialNetwork.name][color]} alt={socialNetwork.name} />
           </Link>
         ))
       }

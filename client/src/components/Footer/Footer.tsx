@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { SocialMediaComponent, SocialNetworkEnum, IconColorEnum } from '../';
+// import { SocialMediaComponent, SocialNetworkEnum, IconColorEnum } from '../';
 
 const listOptions: {
   name: string;
@@ -50,7 +50,7 @@ export const Footer: () => JSX.Element = () => {
 
       </article>
 
-      <SocialMediaComponent className='flex justify-center gap-2 py-3' socialNetworks={
+      {/* <SocialMediaComponent className='flex justify-center gap-2 py-3' socialNetworks={
         [
           SocialNetworkEnum.youtube,
           SocialNetworkEnum.facebook,
@@ -60,7 +60,7 @@ export const Footer: () => JSX.Element = () => {
         ]
       }
         color={IconColorEnum.white}
-      />
+      /> */}
 
       <p className='mt-9 text-sm'>BI/MAX @ 2024. Todos los derechos reservados.</p>
     </section>
