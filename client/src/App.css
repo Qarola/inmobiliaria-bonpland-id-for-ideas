@@ -92,4 +92,9 @@
     .search__header{
       display: none;
     }
+
+    .navbar__icon{
+      color: white;
+      font-size: 300px;
+    }
 }

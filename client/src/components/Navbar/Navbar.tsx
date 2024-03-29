@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
+import MenuIcon from '@mui/icons-material/Menu';
+import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 
-const Navbar = () => {
+export const Navbar = () => {
     const [clicked, setClicked] = useState(false)
     const toggleClicked = () => {
         setClicked(!clicked)
@@ -25,14 +27,12 @@ const Navbar = () => {
             </div>
             <div id="switch">
                 <p onClick={toggleClicked}>{clicked ?
-                    <img className="navbar__icon" src='assets/iconos/option.png' alt="Logo"/>
+                    <MenuOpenIcon className="navbar__icon"/>
                     :
-                    <img className="navbar__icon" src='assets/iconos/option.png' alt="Logo"/>
+                    <MenuIcon className="navbar__icon"/>
                 }
                 </p>
             </div>
         </div>
     )
 }
-
-export default Navbar

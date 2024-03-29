@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
-/* Falta hacerlo responsive */
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 
 const Buscador = () => {
   const [showComprarOptions, setShowComprarOptions] = useState(false);
@@ -79,13 +78,15 @@ const Buscador = () => {
                                 </div>
                                 )}
                             </div>
-                        <button className="bg-gradient-to-b from-[#1A3670] to-[#4054B0] hover:from-[#4054B0] hover:to-[#1A3670] text-white rounded-r-full p-3">Lupa</button>
+                        <button className="bg-gradient-to-b from-[#1A3670] to-[#4054B0] hover:from-[#4054B0] hover:to-[#1A3670] text-white rounded-r-full p-3">
+                            <SearchRoundedIcon/>
+                        </button>
                     </div>
                 </div>
             </div>
       ) : (
         <div className="relative flex items-center justify-center bg-[#FFFFFF] p-5">
-                <div className="w-[80%]">
+                <div className="w-[100%]">
                     <h1 className="mb-4 text-2xl font-medium bg-gradient-to-b from-[#1A3670] to-[#4054B0] inline-block text-transparent bg-clip-text">¿Qué buscas?</h1>
                     <div className="flex justify-between bg-white w-[100%] rounded-full shadow-2xl">
                         <input className="w-[69.7%] rounded-l-full p-3" placeholder="Ubicación deseada"/>
@@ -100,7 +101,9 @@ const Buscador = () => {
                                 </div>
                               )}
                             </div>
-                        <button className="bg-gradient-to-b from-[#1A3670] to-[#4054B0] hover:from-[#4054B0] hover:to-[#1A3670] text-white rounded-r-full p-3">Lupa</button>
+                        <button className="bg-gradient-to-b from-[#1A3670] to-[#4054B0] hover:from-[#4054B0] hover:to-[#1A3670] text-white rounded-r-full p-3">
+                            <SearchRoundedIcon/>
+                        </button>
                     </div>
                 </div>
             </div>
