@@ -2,12 +2,8 @@ import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Home from './pages/Home';
-<<<<<<< HEAD
 import Register from './pages/Register';
-import { Footer } from './components';
-=======
 import { Footer, SocialNetworkEnum } from './components';
->>>>>>> 47db7f63d6bedf321fd174ade250b4924aac632d
 
 function App() {
     return (
@@ -17,8 +13,6 @@ function App() {
                 <Route path='/' element={<Home/>} />
                 <Route path='/register' element={<Register/>} />
             </Routes>
-<<<<<<< HEAD
-=======
             <Footer socialNetworks={[
                 {
                     name: SocialNetworkEnum.youtube,
@@ -41,7 +35,6 @@ function App() {
                     link: 'linkedin'
                 },
             ]} />
->>>>>>> 47db7f63d6bedf321fd174ade250b4924aac632d
         </BrowserRouter>
     )
 }
