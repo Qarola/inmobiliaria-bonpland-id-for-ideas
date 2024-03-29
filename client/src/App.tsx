@@ -13,7 +13,28 @@ function App() {
                 <Route path='/' element={<Home/>} />
                 <Route path='/register' element={<Register/>} />
             </Routes>
-
+            <Footer socialNetworks={[
+                {
+                    name: SocialNetworkEnum.youtube,
+                    link: 'youtube'
+                },
+                {
+                    name: SocialNetworkEnum.facebook,
+                    link: 'facebook'
+                },
+                {
+                    name: SocialNetworkEnum.twitter,
+                    link: 'twitter'
+                },
+                {
+                    name: SocialNetworkEnum.instagram,
+                    link: 'instagram'
+                },
+                {
+                    name: SocialNetworkEnum.linkedin,
+                    link: 'linkedin'
+                },
+            ]} />
         </BrowserRouter>
     )
 }
