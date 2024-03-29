@@ -2,7 +2,7 @@ import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Home from './pages/Home';
-import { Footer } from './components';
+import { Footer, SocialNetworkEnum } from './components';
 
 function App() {
     return (
@@ -11,7 +11,28 @@ function App() {
             <Routes>
                 <Route path='/' element={<Home />} />
             </Routes>
-            <Footer />
+            <Footer socialNetworks={[
+                {
+                    name: SocialNetworkEnum.youtube,
+                    link: 'youtube'
+                },
+                {
+                    name: SocialNetworkEnum.facebook,
+                    link: 'facebook'
+                },
+                {
+                    name: SocialNetworkEnum.twitter,
+                    link: 'twitter'
+                },
+                {
+                    name: SocialNetworkEnum.instagram,
+                    link: 'instagram'
+                },
+                {
+                    name: SocialNetworkEnum.linkedin,
+                    link: 'linkedin'
+                },
+            ]} />
         </BrowserRouter>
     )
 }

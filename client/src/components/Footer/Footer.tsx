@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-// import { SocialMediaComponent, SocialNetworkEnum, IconColorEnum } from '../';
+import { SocialMediaComponent, SocialNetworkEnum, SocialNetworkIconColorEnum } from '../SocialMediaComponent/SocialMediaComponent';
 
 const listOptions: {
   name: string;
@@ -31,7 +31,14 @@ const listOptions: {
     },
   ]
 
-export const Footer: () => JSX.Element = () => {
+interface Params {
+  socialNetworks: {
+    name: SocialNetworkEnum,
+    link: string,
+  }[]
+}
+
+export const Footer = (params: Params) => {
   return (
     <section className='sticky bottom-0 w-full text-center py-12 text-white bg-[#1A3670]'>
 
@@ -47,20 +54,13 @@ export const Footer: () => JSX.Element = () => {
             </Link>
           ))
         }
-
       </article>
 
-      {/* <SocialMediaComponent className='flex justify-center gap-2 py-3' socialNetworks={
-        [
-          SocialNetworkEnum.youtube,
-          SocialNetworkEnum.facebook,
-          SocialNetworkEnum.twitter,
-          SocialNetworkEnum.instagram,
-          SocialNetworkEnum.linkedin
-        ]
-      }
-        color={IconColorEnum.white}
-      /> */}
+      <SocialMediaComponent
+        className='flex justify-center gap-4 py-3'
+        socialNetworks={params.socialNetworks}
+        color={SocialNetworkIconColorEnum.white}
+      />
 
       <p className='mt-9 text-sm'>BI/MAX @ 2024. Todos los derechos reservados.</p>
     </section>
