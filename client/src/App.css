@@ -88,4 +88,8 @@
     .account__buttons{
       border-top: solid white 1px;
     }
+
+    .search__header{
+      display: none;
+    }
 }
