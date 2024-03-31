@@ -1,4 +1,4 @@
-import Buscador from '../components/Globals/Buscador';
+import Buscador from '../components/Buscador/Buscador';
 import Component_6 from '../components/Globals/Component_6';
 import { TeamCard } from '../components/';
 
