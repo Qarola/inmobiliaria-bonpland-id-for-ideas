@@ -33,7 +33,7 @@ const listOptions: {
 
 export const Footer: () => JSX.Element = () => {
   return (
-    <section className='sticky bottom-0 w-full text-center py-12 text-white bg-[#1A3670]'>
+    <section className='bottom-0 w-full text-center py-12 text-white bg-[#1A3670]'>
 
       <article className='p-3 mb-1'>
         {
