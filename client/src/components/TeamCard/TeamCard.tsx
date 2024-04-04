@@ -1,4 +1,4 @@
-import { SocialNetworkEnum, SocialNetworkIconColorEnum, SocialMediaComponent } from "../SocialMediaComponent/SocialMediaComponent";
+// import { SocialNetworkEnum, SocialNetworkIconColorEnum, SocialMediaComponent } from "../SocialMediaComponent/SocialMediaComponent";
 
 interface Params {
   image: string;
@@ -6,7 +6,7 @@ interface Params {
   role: string;
   jobDescription: string;
   socialNetworks: {
-    name: SocialNetworkEnum,
+    // name: SocialNetworkEnum,
     link: string,
   }[]
 }
@@ -23,11 +23,11 @@ export const TeamCard: (params: Params) => JSX.Element = (params: Params) => {
         <p className='text-center text-[#475467]'>
           {params.jobDescription}
         </p>
-        <SocialMediaComponent
+        {/* <SocialMediaComponent
           className='flex justify-center gap-2 py-4'
           socialNetworks={params.socialNetworks}
           color={SocialNetworkIconColorEnum.black}
-        />
+        /> */}
       </section>
     </article>
   )

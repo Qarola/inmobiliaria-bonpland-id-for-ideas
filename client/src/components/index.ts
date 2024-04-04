@@ -1,4 +1,4 @@
 export { Footer } from './Footer/Footer';
-export { SocialMediaComponent, SocialNetworkEnum, SocialNetworkIconColorEnum } from './SocialMediaComponent/SocialMediaComponent'
+export { SocialMediaComponent } from './SocialMediaComponent/SocialMediaComponent'
 export { TeamCard} from './TeamCard/TeamCard';
 export { Navbar } from './Navbar/Navbar'
