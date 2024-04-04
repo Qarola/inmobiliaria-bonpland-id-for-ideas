@@ -5,7 +5,6 @@ const { meliConfig } = require("../../meliConfig/config");
 const Property = require("../../models/Property/Property");
 const sendAEmail = require("../../utils/emailService");
 
- 
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 const reference = uuid.v4();
 
@@ -283,6 +282,85 @@ const changePropertyStatus = async (req, res) => {
   }
 };
 
+async function showPropertiesByFilters(req,res) {
+  try {
+    const {priceGreater,priceMinor,metersGreater,metersMinor} = req.body;
+
+    delete req.body.priceMinor;
+    delete req.body.metersMinor;
+    delete req.body.metersGreater;
+    delete req.body.priceGreater;
+
+    const rangePrice = ()=>{
+      if (priceGreater && priceMinor) {
+        return {
+          $gt:priceGreater,
+          $lt:priceMinor
+        };
+      }
+
+      if(!priceGreater && priceMinor){
+        return {
+          $lt:priceMinor
+        };
+      }
+
+      if(priceGreater && !priceMinor){
+        return {
+          $gt:priceGreater
+        };
+      }
+
+      return;
+    };
+
+    const rangeMeters = ()=>{
+      if (metersGreater && metersMinor) {
+        return {
+          $gt:metersGreater,
+          $lt:metersMinor
+        };
+      }
+
+      if(!metersGreater && metersMinor){
+        return {
+          $lt:metersMinor
+        };
+      }
+
+      if(metersGreater && !metersMinor){
+        return {
+          $gt:metersGreater
+        };
+      }
+      return;
+    };
+
+    if(rangePrice()){
+      req.body.price = rangePrice();
+    }
+    
+    if(rangeMeters()){
+      req.body.coveredArea = rangeMeters();
+    }
+
+    console.log(req.body)
+
+    const resp = await Property.find(req.body)
+
+    if (resp.length <= 0) {
+      throw new Error("Not found Any");
+    }
+
+    return res.status(200).json(resp);
+  } catch (error) {
+    console.error("Error al buscar la propiedad:", error);
+    return res
+      .status(500)
+      .json({ status: 500, message: "Error al buscar la propiedad." });
+  }
+}
+
 module.exports = {
   getProperties,
   getFeaturedProperties,
@@ -292,5 +370,6 @@ module.exports = {
   EditProperty,
   deleteProperty,
   searchPropertiesByType,
-  changePropertyStatus
+  changePropertyStatus,
+  showPropertiesByFilters
 };
