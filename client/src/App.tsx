@@ -14,26 +14,26 @@ function App() {
                 <Route path='/register' element={<Register />} />
             </Routes>
             <Footer socialNetworks={[
-                // {
-                //     name: SocialNetworkEnum.youtube,
-                //     link: 'youtube'
-                // },
-                // {
-                //     name: SocialNetworkEnum.facebook,
-                //     link: 'facebook'
-                // },
-                // {
-                //     name: SocialNetworkEnum.twitter,
-                //     link: 'twitter'
-                // },
-                // {
-                //     name: SocialNetworkEnum.instagram,
-                //     link: 'instagram'
-                // },
-                // {
-                //     name: SocialNetworkEnum.linkedin,
-                //     link: 'linkedin'
-                // },
+                {
+                    name: 'youtube',
+                    link: 'http://youtube'
+                },
+                {
+                    name: 'facebook',
+                    link: 'http://facebook'
+                },
+                {
+                    name: 'twitter',
+                    link: 'http://twitter'
+                },
+                {
+                    name: 'instagram',
+                    link: 'http://instagram'
+                },
+                {
+                    name: 'linkedin',
+                    link: 'http://linkedin'
+                },
             ]} />
         </BrowserRouter>
     )

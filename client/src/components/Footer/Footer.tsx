@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-// import { SocialMediaComponent, SocialNetworkEnum, SocialNetworkIconColorEnum } from '../SocialMediaComponent/SocialMediaComponent';
+import { SocialNetworks } from '../../types';
+import { SocialMediaComponent } from '../SocialMediaComponent/SocialMediaComponent';
 
 const listOptions: {
   name: string;
@@ -29,16 +30,14 @@ const listOptions: {
       name: 'Ingresar',
       link: '',
     },
-  ]
+  ];
 
 interface Params {
-  socialNetworks: {
-    // name: SocialNetworkEnum,
-    link: string,
-  }[]
+  socialNetworks: SocialNetworks[]
 }
 
 export const Footer = (params: Params) => {
+
   return (
     <section className='bottom-0 w-full text-center py-12 text-white bg-[#1A3670]'>
 
@@ -56,11 +55,10 @@ export const Footer = (params: Params) => {
         }
       </article>
 
-      {/* <SocialMediaComponent
+      <SocialMediaComponent
         className='flex justify-center gap-4 py-3'
         socialNetworks={params.socialNetworks}
-        color={SocialNetworkIconColorEnum.white}
-      /> */}
+        iconColor={{ colorOption: 'light' }} />
 
       <p className='mt-9 text-sm'>BI/MAX @ 2024. Todos los derechos reservados.</p>
     </section>
