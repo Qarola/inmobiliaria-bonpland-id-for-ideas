@@ -4,7 +4,8 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const morgan = require("morgan");
 const connectToMongoDB = require('./database/connection.js')
-const propertyRoute = require('./routes/propertyRoutes/property.routes.js')
+const propertyRoute = require('./routes/propertyRoutes/propertyRoutes.js')
+const userRoutes = require('./routes/userRoutes/userRoutes.js');
 
 const app = express();
 dotenv.config(); 
@@ -23,6 +24,7 @@ app.use(express.json()); // Analizar solicitudes JSON
 
 // Rutas
 app.use("/api", propertyRoute); 
+app.use("/users", userRoutes);
 
 //Ruta de prueba para verificar el estado del servidor remoto
 app.get("/health", (req, res) => {

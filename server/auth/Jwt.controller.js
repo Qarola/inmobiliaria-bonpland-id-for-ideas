@@ -55,7 +55,7 @@ passport.use(
         req.headers.authorization.split(" ")[1], // Extract token from "Bearer <token>"
         encoder.encode(process.env.JWT_SECRET)
       );
-      if (payload.role == "admin" || payload.role == "usuario") {
+      if (payload.role == "admin" || payload.role == "user") {
         req.user = payload; // Store the user's payload in the request for later use
         console.log(req.user);
         return next();
