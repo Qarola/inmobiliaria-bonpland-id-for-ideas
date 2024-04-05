@@ -6,6 +6,9 @@ const morgan = require("morgan");
 const connectToMongoDB = require('./database/connection.js')
 const propertyRoute = require('./routes/propertyRoutes/propertyRoutes.js')
 const userRoutes = require('./routes/userRoutes/userRoutes.js');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsDoc = require('swagger-jsdoc');
+const specs = require('./swaggerDocs.js'); // Importa specs desde el archivo swaggerDocs.js
 
 const app = express();
 dotenv.config(); 
@@ -21,20 +24,12 @@ app.use(morgan('dev'));
 app.use(cookieParser()); // Analizar cookies
 app.use(express.json()); // Analizar solicitudes JSON
 
-
 // Rutas
 app.use("/api", propertyRoute); 
 app.use("/users", userRoutes);
 
-//Ruta de prueba para verificar el estado del servidor remoto
-app.get("/health", (req, res) => {
-  res.status(200).json({ message: "OK" });
-});
-
-// Ruta de prueba para la raíz del sitio
-app.get("/", (req, res) => {
-  res.status(200).json({ message: "¡Bienvenido a Inmobiliaria Bonpland!" });
-});
+// Sirve la documentación Swagger en la ruta /api-docs
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // Middleware para manejar errores
 app.use((err, req, res, next) => {
@@ -48,9 +43,19 @@ app.use((err, req, res, next) => {
   });
 });
 
+// Ruta de prueba para verificar el estado del servidor remoto
+app.get("/health", (req, res) => {
+  res.status(200).json({ message: "OK" });
+});
+
+// Ruta de prueba para la raíz del sitio - config MeLi
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "¡Bienvenido a Inmobiliaria Bonpland!" });
+});
+
 const port = process.env.PORT || 5000;
 
-// Iniciar servidor y conectar a MongoDB
+// Inicia servidor y conectar a MongoDB
 app.listen(port, () => {
   connectToMongoDB();
   console.log(`Server running on port ${port}`);
