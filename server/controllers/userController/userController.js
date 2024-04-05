@@ -22,7 +22,7 @@ const registerUser = async (req, res) => {
       name,
       email,
       password: await bcrypt.hash(password, 10),
-      role: 'user', // Asignar el rol de usuario
+      role: 'user', // Asigna el rol de usuario
     });
     await newUser.save();
 
