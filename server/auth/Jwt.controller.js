@@ -52,23 +52,22 @@ passport.use(
     try {
       const encoder = new TextEncoder();
       const { payload } = await jwtVerify(
-        req.headers.authorization.split(" ")[1], // Extract token from "Bearer <token>"
+        req.headers.authorization.split(" ")[1], // Extraer token de "Bearer <token>"
         encoder.encode(process.env.JWT_SECRET)
       );
-      if (payload.role == "admin" || payload.role == "usuario") {
-        req.user = payload; // Store the user's payload in the request for later use
+      if (payload.role == "admin" || payload.role == "user") {
+        req.user = payload; // Almacenar la carga útil del usuario en la solicitud para uso posterior
         console.log(req.user);
-        return next();
+        return next(); // Llamar a next() para pasar al siguiente middleware
       } else {
-        res
-          .status(404)
-          .send(JSON.stringify({ status: 404, message: "Not found role" }));
+        return res.status(404).json({ status: 404, message: "Not found role" });
       }
     } catch (error) {
       console.log(error);
       return res.status(401).json({ message: "Unauthorized" });
     }
   };
+  
 
   //Route to create the token
 
@@ -92,4 +91,4 @@ passport.use(
     }
   };
 
-  module.exports = { validateToken, createToken };
+  module.exports = { validateToken, requireRole, createToken };
