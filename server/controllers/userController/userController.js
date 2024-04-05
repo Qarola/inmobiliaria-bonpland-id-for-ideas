@@ -87,7 +87,7 @@ const login = async (req, res, next) => {
     // Verifica el token
     await validateToken(req, res, next);
 
-    // Si la contraseña es válida y el token es válido, puedes devolver un mensaje de éxito o un token de autenticación
+    // Si la contraseña es válida y el token es válido, se puede devolver un mensaje de éxito o un token de autenticación
     return res.status(200).json({ message: "Inicio de sesión exitoso" });
   } catch (error) {
     console.error(error); // Imprime el error en la consola para depuración
