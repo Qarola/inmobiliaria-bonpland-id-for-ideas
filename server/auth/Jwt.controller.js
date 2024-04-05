@@ -92,4 +92,4 @@ passport.use(
     }
   };
 
-  module.exports = { validateToken, createToken };
+  module.exports = { validateToken, requireRole, createToken };

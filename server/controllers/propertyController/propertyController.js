@@ -97,6 +97,62 @@ const getProperties = () => {
     });
 };
 
+// Controlador para crear un nuevo inmueble
+const createProperty = async (req, res) => {
+  try {
+    // Extraemos los datos del cuerpo de la solicitud
+    const {
+      titlePost,
+      propertyType,
+      rooms,
+      bathrooms,
+      country,
+      city,
+      state,
+      coveredArea,
+      price,
+      status,
+      contractType,
+      reference,
+      images,
+      address,
+      featuredProperties,
+      sellerContact
+    } = req.body;
+
+    // Creamos una nueva instancia del modelo Property con los datos proporcionados
+    const newProperty = new Property({
+      titlePost,
+      propertyType,
+      rooms,
+      bathrooms,
+      country,
+      city,
+      state,
+      coveredArea,
+      price,
+      status,
+      contractType,
+      reference,
+      images,
+      address,
+      featuredProperties,
+      sellerContact
+    });
+
+    // Guardamos el nuevo inmueble en la base de datos
+    await newProperty.save();
+
+    // Enviamos una respuesta de éxito
+    res.status(201).json({ message: '¡Inmueble creado exitosamente!', property: newProperty });
+  } catch (error) {
+    // Si ocurre algún error, enviamos una respuesta de error al cliente
+    console.error('Error al crear el inmueble:', error.message);
+    res.status(500).json({ error: 'Se produjo un error al crear el inmueble' });
+  }
+};
+
+
 //Get Featured Properties from DB
 const getFeaturedProperties = async (req, res) => {
   try {
@@ -283,8 +339,88 @@ const changePropertyStatus = async (req, res) => {
   }
 };
 
+async function showPropertiesByFilters(req,res) {
+  try {
+    const {priceGreater,priceMinor,metersGreater,metersMinor} = req.body;
+
+    delete req.body.priceMinor;
+    delete req.body.metersMinor;
+    delete req.body.metersGreater;
+    delete req.body.priceGreater;
+
+    const rangePrice = ()=>{
+      if (priceGreater && priceMinor) {
+        return {
+          $gt:priceGreater,
+          $lt:priceMinor
+        };
+      }
+
+      if(!priceGreater && priceMinor){
+        return {
+          $lt:priceMinor
+        };
+      }
+
+      if(priceGreater && !priceMinor){
+        return {
+          $gt:priceGreater
+        };
+      }
+
+      return;
+    };
+
+    const rangeMeters = ()=>{
+      if (metersGreater && metersMinor) {
+        return {
+          $gt:metersGreater,
+          $lt:metersMinor
+        };
+      }
+
+      if(!metersGreater && metersMinor){
+        return {
+          $lt:metersMinor
+        };
+      }
+
+      if(metersGreater && !metersMinor){
+        return {
+          $gt:metersGreater
+        };
+      }
+      return;
+    };
+
+    if(rangePrice()){
+      req.body.price = rangePrice();
+    }
+    
+    if(rangeMeters()){
+      req.body.coveredArea = rangeMeters();
+    }
+
+    console.log(req.body)
+
+    const resp = await Property.find(req.body)
+
+    if (resp.length <= 0) {
+      throw new Error("Not found Any");
+    }
+
+    return res.status(200).json(resp);
+  } catch (error) {
+    console.error("Error al buscar la propiedad:", error);
+    return res
+      .status(500)
+      .json({ status: 500, message: "Error al buscar la propiedad." });
+  }
+}
+
 module.exports = {
   getProperties,
+  createProperty,
   getFeaturedProperties,
   getPropertiesList,
   getPropertyDetails,
@@ -292,5 +428,6 @@ module.exports = {
   EditProperty,
   deleteProperty,
   searchPropertiesByType,
-  changePropertyStatus
+  changePropertyStatus,
+  showPropertiesByFilters
 };
