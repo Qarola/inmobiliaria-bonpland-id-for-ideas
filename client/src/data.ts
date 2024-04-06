@@ -161,4 +161,30 @@ export const data ={
       ]
     },
   ],
+  properties: [
+    {
+      image: 'https://i.imgur.com/4YVydMJ.png',
+      title: 'Vendo espectacular casa!',
+      description: 'Inmueble inperdible, ampials habiataciones, zona Pilar.',
+      linkMore: '01',
+    },
+    {
+      image: 'https://i.imgur.com/4YVydMJ.png',
+      title: 'Vendo espectacular casa!',
+      description: 'Inmueble inperdible, ampials habiataciones, zona Pilar.',
+      linkMore: '02',
+    },
+    {
+      image: 'https://i.imgur.com/4YVydMJ.png',
+      title: 'Vendo espectacular casa!',
+      description: 'Inmueble inperdible, ampials habiataciones, zona Pilar.',
+      linkMore: '03',
+    },
+    {
+      image: 'https://i.imgur.com/4YVydMJ.png',
+      title: 'Vendo espectacular casa!',
+      description: 'Inmueble inperdible, ampials habiataciones, zona Pilar.',
+      linkMore: '04',
+    },
+  ]
 }
