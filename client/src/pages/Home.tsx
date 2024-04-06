@@ -3,7 +3,7 @@ import Component_6 from '../components/Globals/Component_6';
 // import { TeamCard, SocialNetworkEnum } from '../components/';
 import oliviaRhye from '../assets/images/Olivia Rhye.png'
 
-import { PropertiesCard } from '../components';
+import { PropertiesSection } from '../components';
 
 import { useFetch } from '../hooks/UseFetch';
 
@@ -29,13 +29,8 @@ const Home = () => {
                     link: 'facebook'
                 }
             ]} /> */}
-            <PropertiesCard
-                key={properties[0].linkMore}
-                image={properties[0].image}
-                title={properties[0].title}
-                description={properties[0].description}
-                linkMore={properties[0].linkMore}
-            />
+
+            <PropertiesSection properties={properties} />
         </div>
     )
 }
