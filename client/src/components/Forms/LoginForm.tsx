@@ -7,7 +7,8 @@ const LoginForm = () => {
     const [data, setData] = useState({})
 
     const enviar = (d) => {
-        setData(d)
+        const user = {...d, role: 'user'}
+        setData(user)
     }
 
     return(
@@ -43,10 +44,6 @@ const LoginForm = () => {
                     Ingresar con Google
                 </button>
             </form>
-            <div className="flex justify-center items-center gap-1">
-                <p className="text-sm font-bold">Ya tienes una cuenta?</p>
-                <Link className="text-sm text-gray-500" to="/login">Ingresar</Link>
-            </div>
         </div>
     )
 }
