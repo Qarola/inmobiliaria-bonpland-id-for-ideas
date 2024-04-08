@@ -4,7 +4,7 @@ const Login = () => {
     return(
         <div className="flex w-[100%] h-[100%] justify-between items-center overflow-hidden">
             <LoginForm/>
-            <img className="w-[50%]" src="assets/images/Register-img.png" alt="img"/>
+            <img className="w-[50%] search__header" src="assets/images/Register-img.png" alt="img"/>
         </div>
     )
 }

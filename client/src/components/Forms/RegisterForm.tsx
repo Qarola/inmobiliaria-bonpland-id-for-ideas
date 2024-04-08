@@ -11,13 +11,13 @@ const RegisterForm = () => {
     }
 
     return(
-        <div className="w-[100%] flex flex-col justify-center items-center">
+        <div className="w-[100%] flex flex-col justify-center items-center p-5">
             <img src="assets/logos/MAX2.png" alt="logo" />
             <div className="flex justify-center items-center gap-4">
-                <h1 className="font-bold text-3xl">Registrate en</h1>
+                <h1 className="font-bold text-2xl lg:text-3xl">Registrate en</h1>
                 <img className="w-[130px] mt-1" src="assets/logos/MAX.png" alt="logo" />
             </div>
-            <form className="w-[50%] p-4 flex flex-col justify-center items-center" onSubmit={handleSubmit(enviar)}>
+            <form className="p-4 flex flex-col justify-center items-center" onSubmit={handleSubmit(enviar)}>
                 <div className="w-[100%]">
                     <p className="p-2 font-bold">Mail:</p>
                     <input className="border solid gray p-2 rounded-lg w-[100%]"  placeholder="Correo electronico" type="text" {...register("email")}/>
