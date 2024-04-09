@@ -4,7 +4,7 @@ const uuid = require("uuid");
 const { meliConfig } = require("../../meliConfig/config");
 const Property = require("../../models/Property/Property");
 const sendAEmail = require("../../utils/emailService");
-
+const { propertyUpload } = require("../../utils/multer") ;
  
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 const reference = uuid.v4();
@@ -97,47 +97,44 @@ const getProperties = () => {
     });
 };
 
+
 // Controlador para crear un nuevo inmueble
 const createProperty = async (req, res) => {
   try {
-    // Extraemos los datos del cuerpo de la solicitud
-    const {
-      titlePost,
-      propertyType,
-      rooms,
-      bathrooms,
-      country,
-      city,
-      state,
-      coveredArea,
-      price,
-      status,
-      contractType,
-      reference,
-      images,
-      address,
-      featuredProperties,
-      sellerContact
-    } = req.body;
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ message: 'No se ha proporcionado ninguna imagen' });
+    }
 
-    // Creamos una nueva instancia del modelo Property con los datos proporcionados
+     // Procesa la imagen aquí
+     const imageUrls = req.files.map(file => file.path);
+     const images = imageUrls.join(', '); // Convertir el array en una cadena separada por comas.
+    
+    // Parsea la cadena JSON de sellerContact
+    const sellerContact = JSON.parse(req.body.sellerContact);
+
+    // Verifica si sellerContact está presente y si tiene el campo 'contact'
+    if (!sellerContact || !sellerContact.contact) {
+      throw new Error('El campo "contact" de sellerContact es requerido');
+    }
+
+     // Guarda la información en la base de datos
     const newProperty = new Property({
-      titlePost,
-      propertyType,
-      rooms,
-      bathrooms,
-      country,
-      city,
-      state,
-      coveredArea,
-      price,
-      status,
-      contractType,
-      reference,
-      images,
-      address,
-      featuredProperties,
-      sellerContact
+      titlePost: req.body.titlePost,
+      propertyType: req.body.propertyType,
+      rooms: req.body.rooms,
+      bathrooms: req.body.bathrooms,
+      country: req.body.country,
+      city: req.body.city,
+      state: req.body.state,
+      coveredArea: req.body.coveredArea,
+      price: req.body.price,
+      status: req.body.status,
+      contractType: req.body.contractType,
+      reference: req.body.reference,
+      images: images,
+      address: req.body.address,
+      featuredProperties: req.body.featuredProperties,
+      sellerContact: sellerContact
     });
 
     // Guardamos el nuevo inmueble en la base de datos
@@ -149,6 +146,7 @@ const createProperty = async (req, res) => {
     // Si ocurre algún error, enviamos una respuesta de error al cliente
     console.error('Error al crear el inmueble:', error.message);
     res.status(500).json({ error: 'Se produjo un error al crear el inmueble' });
+    console.log(req.body)
   }
 };
 
@@ -210,47 +208,56 @@ const getPropertyDetails = async (req, res, next) => {
 };
 
 // Edit property in the database
-async function EditProperty(req, res) {
+async function editProperty(req, res) {
   try {
-    const referenceToPut = req.body.reference;
+    const referenceToPut = req.params.reference;
+    let newData = req.body; // Datos para actualizar la propiedad
+
+    // Si hay archivos de imagen en la solicitud, procesarlos
+    if (req.files && req.files.length > 0) {
+      const imageNames = req.files.map(file => file.filename);
+      // Reemplazar la lista de imágenes existente con las nuevas imágenes
+      newData.images = imageNames;
+    }
+
+    // Buscar y actualizar la propiedad en la base de datos
     const result = await Property.findOneAndUpdate(
       { reference: referenceToPut },
-      req.body,
+      newData,
       { new: true } // Esto es para devolver el documento actualizado
     );
+
+    // Verificar si la propiedad se encontró y se actualizó correctamente
+    if (!result) {
+      return res.status(404).json({ message: "Propiedad no encontrada" });
+    }
+
+    // Devolver el documento actualizado como respuesta
     return res.send(result);
   } catch (error) {
     console.error("Error al editar la propiedad:", error);
-    return res
-      .status(500)
-      .json({ status: 500, message: "Error al editar la propiedad." });
+    return res.status(500).json({ message: "Error al editar la propiedad." });
   }
 }
+
 
 // Delete property in the database
 async function deleteProperty(req, res) {
   try {
-    const referenceToDelete = req.body.reference;
+    const referenceToDelete = req.params.reference; // Obtener la referencia de los parámetros de la ruta
     const result = await Property.deleteOne({ reference: referenceToDelete });
-    //deletedCount es una propiedad que proviene del resultado de la operación deleteOne() en Mongoose,
-    //y nos indica cuántos documentos fueron eliminados de la base de datos.
+
     if (result.deletedCount === 0) {
-      // Si no se encontró ninguna propiedad para eliminar
-      return res
-        .status(404)
-        .json({ status: 404, message: "Propiedad no encontrada." });
+      return res.status(404).json({ status: 404, message: "Propiedad no encontrada." });
     }
 
-    return res
-      .status(200)
-      .json({ status: 200, message: "Propiedad eliminada exitosamente." });
+    return res.status(200).json({ status: 200, message: "Propiedad eliminada exitosamente." });
   } catch (error) {
     console.error("Error al eliminar la propiedad:", error);
-    return res
-      .status(500)
-      .json({ status: 500, message: "Error al eliminar la propiedad." });
+    return res.status(500).json({ status: 500, message: "Error al eliminar la propiedad." });
   }
 }
+
 
 // POST to Real Estate contact
 const contactRealEstate = async (req, res) => {
@@ -314,22 +321,21 @@ const searchPropertiesByType = async (req, res) => {
     });
   }
 };
-
-//Change property status
 const changePropertyStatus = async (req, res) => {
   try {
-    const { id } = req.params;
-    const { newStatus } = req.body;
+    const reference = req.params.reference;
+    const { status } = req.body; 
 
-    // Busca la propiedad por su ID
-    const prop = await Property.findById(id);
+    // Busca la propiedad por su referencia
+    const prop = await Property.findOneAndUpdate({ reference }, { status });
 
     // Verifica si la propiedad existe
     if (!prop) {
       return res.status(404).json({ mensaje: 'Propiedad no encontrada' });
     }
+
     // Actualiza el estado de la propiedad
-    prop.status = newStatus;
+    prop.status = status; 
     await prop.save();
 
     res.json({ mensaje: 'Estado de la propiedad actualizado correctamente', prop });
@@ -338,6 +344,7 @@ const changePropertyStatus = async (req, res) => {
     res.status(500).json({ mensaje: 'Error interno del servidor' });
   }
 };
+
 
 async function showPropertiesByFilters(req,res) {
   try {
@@ -425,7 +432,7 @@ module.exports = {
   getPropertiesList,
   getPropertyDetails,
   contactRealEstate,
-  EditProperty,
+  editProperty,
   deleteProperty,
   searchPropertiesByType,
   changePropertyStatus,
