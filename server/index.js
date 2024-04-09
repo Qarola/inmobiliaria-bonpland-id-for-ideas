@@ -3,12 +3,12 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const morgan = require("morgan");
-const connectToMongoDB = require('./database/connection.js')
-const propertyRoute = require('./routes/propertyRoutes/propertyRoutes.js')
+const connectToMongoDB = require('./database/connection.js');
+const propertyRoute = require('./routes/propertyRoutes/propertyRoutes.js');
 const userRoutes = require('./routes/userRoutes/userRoutes.js');
-//const swaggerUi = require('swagger-ui-express');
-//const swaggerJsDoc = require('swagger-jsdoc');
-//const specs = require('./swaggerDocs.js'); // Importa specs desde el archivo swaggerDocs.js
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsDoc = require('swagger-jsdoc');
+const specs = require('./swaggerDocs.js'); 
 
 const app = express();
 dotenv.config(); 
@@ -29,7 +29,7 @@ app.use("/api", propertyRoute);
 app.use("/users", userRoutes);
 
 // Sirve la documentación Swagger en la ruta /api-docs
-//app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // Middleware para manejar errores
 app.use((err, req, res, next) => {
