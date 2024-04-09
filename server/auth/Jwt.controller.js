@@ -47,7 +47,6 @@ passport.use(
     };
   };
 
-  // Middleware to verify the token sent
   const validateToken = async (req, res, next) => {
     try {
       const encoder = new TextEncoder();
@@ -60,13 +59,12 @@ passport.use(
         console.log(req.user);
         return next();
       } else {
-        res
-          .status(404)
-          .send(JSON.stringify({ status: 404, message: "Not found role" }));
+        console.log("Invalid role");
+        return next(new Error("Unauthorized"));
       }
     } catch (error) {
       console.log(error);
-      return res.status(401).json({ message: "Unauthorized" });
+      return next(new Error("Unauthorized"));
     }
   };
 
