@@ -8,10 +8,11 @@ const { getProperties,
     getFeaturedProperties, 
     getPropertyDetails, 
     contactRealEstate,
-    EditProperty,
+    editProperty,
     deleteProperty,
     showPropertiesByFilters,
  } = require('../../controllers/propertyController/propertyController')
+const { propertyUpload } = require("../../utils/multer");
 
 
 //GET
@@ -23,16 +24,16 @@ property.get("/properties/type/:propertyType", searchPropertiesByType);
 property.get("/properties/search", showPropertiesByFilters);
 
 //POST
-property.post("/properies/create", createProperty);
+property.post("/properties/create", propertyUpload.array('images'), createProperty);
 property.post("/contact-real-estate", contactRealEstate);
 
 // PUT
-property.put('/', EditProperty);
-property.put('/properties/:id/status', changePropertyStatus);
+property.put('/edit/:reference', propertyUpload.array('images'), editProperty);
+property.put('/status/:reference', changePropertyStatus);
 
 
 // DELETE
-property.delete('/',deleteProperty);
+property.delete('/delete/:reference', deleteProperty);
 
 
 module.exports = property;

@@ -10,9 +10,9 @@ router.post('/register', registerUser);
 router.post('/admin/register', validateToken, requireRole('admin'), registerAdminFromDashboard);
 
 // Ruta para el inicio de sesión
-router.post('/login', login);
+router.post('/login', validateToken, login);
 
 // Ruta para crear el token y testear en Postman
-router.get('/token', createToken);
+router.post('/token', createToken);
 
 module.exports = router;
