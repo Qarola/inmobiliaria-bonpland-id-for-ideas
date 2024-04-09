@@ -633,9 +633,9 @@ module.exports = specs;
  * @swagger
  * /users/register:
  *   post:
- *     summary: Registra a un admin.
+ *     summary: Registra a un usuario.
  *     tags: [User]
- *     description: Un admin registra a otro admin.
+ *     description: Un usuario se registra normalmente.
  *     requestBody:
  *       required: true
  *       content:
@@ -666,7 +666,7 @@ module.exports = specs;
  *   post:
  *     summary: Registra un nuevo administrador.
  *     tags: [User]
- *     description: Registra un nuevo administrador. Esta ruta requiere autenticación y autorización como administrador.
+ *     description: Un admin registra a un nuevo admin. Esta ruta requiere autenticación y autorización como administrador.
  *     requestBody:
  *       required: true
  *       content:
