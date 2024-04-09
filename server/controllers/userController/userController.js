@@ -61,19 +61,25 @@ const registerAdminFromDashboard = async (req, res) => {
 // Inicio de sesión de usuario y admin
 const login = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
 
     // Busca al usuario por email
     let user = await User.findOne({ email });
     const adminEmails = process.env.ADMIN_EMAILS.split(',');
 
+    console.log("User found:", user); // Debug log
+
     // Si el usuario no está en la base de datos y no es el administrador definido en .env, devuelve un error
     if (!user && !adminEmails.includes(email)) {
+      console.log("User not found"); // Debug log
+
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
     // Si el usuario no está en la base de datos pero es el administrador definido en .env, procede con la autenticación
     if (adminEmails.includes(email)) {
+      console.log("Admin login"); // Debug log
+
       // Se puede realizar alguna lógica adicional aquí si es necesario para el administrador
       return res.status(200).json({ message: "Inicio de sesión exitoso para el administrador" });
     }
@@ -81,11 +87,15 @@ const login = async (req, res, next) => {
     // Verifica la contraseña para usuarios normales
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
+      console.log("Invalid credentials"); // Debug log
+
       return res.status(401).json({ message: "Credenciales inválidas" });
     }
 
     // Verifica el token
-    await validateToken(req, res, next);
+    if (!req.user) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
 
     // Si la contraseña es válida y el token es válido, se puede devolver un mensaje de éxito o un token de autenticación
     return res.status(200).json({ message: "Inicio de sesión exitoso" });
@@ -94,6 +104,7 @@ const login = async (req, res, next) => {
     return res.status(500).json({ message: "Error en el servidor" });
   }
 };
+
 
 
 
