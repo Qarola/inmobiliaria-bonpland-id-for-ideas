@@ -11,11 +11,11 @@ interface Params {
 
 export const PropertiesSection = (params: Params) => {
   return (
-    <section className='max-w-[1440px] p-20 m-auto text-center'>
+    <section className='max-w-[1440px] p-4 sm:p-8 md:p-12 xl:p-20 m-auto text-center'>
       <p className='text-blue2 text-2xl font-bold'>Novedades</p>
       <h2 className='text-black text-[35px] font-bold'>NUESTROS INMUEBLES DESTACADOS</h2>
 
-      <section className='flex gap-4 py-16'>
+      <section className='flex flex-wrap justify-center gap-4 py-16'>
         {
           params.properties.map(property => (
             <PropertiesCard
