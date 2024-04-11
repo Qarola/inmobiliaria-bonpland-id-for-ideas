@@ -186,5 +186,107 @@ export const data ={
       description: 'Inmueble inperdible, ampials habiataciones, zona Pilar.',
       linkMore: '04',
     },
-  ]
+  ],
+  agentsData: [
+    {
+      image: 'https://i.imgur.com/XG3QtfY.png',
+      name: 'Ramon',
+      lastName: 'Valdez',
+      role: 'Agente de inmobiliaria',
+      jobDescription: 'Former co-founder of Opendoor. Early staff at Spotify and Clearbit.',
+      socialNetworks: [
+        {
+          name: 'linkedin',
+          link: '',
+        },
+        {
+          name: 'twitter',
+          link: '',
+        },
+        {
+          name: 'instagram',
+          link: '',
+        },        
+        {
+          name: 'facebook',
+          link: '',
+        },
+      ]
+    },
+    {
+      image: 'https://i.imgur.com/XG3QtfY.png',
+      name: 'Julian ',
+      lastName: 'Alvarez',
+      role: 'Agente de inmobiliaria',
+      jobDescription: 'Lead engineering teams at Figma, Pitch, and Protocol Labs.',
+      socialNetworks: [
+        {
+          name: 'linkedin',
+          link: '',
+        },
+        {
+          name: 'twitter',
+          link: '',
+        },
+        {
+          name: 'instagram',
+          link: '',
+        },        
+        {
+          name: 'facebook',
+          link: '',
+        },
+      ]
+    },
+    {
+      image: 'https://i.imgur.com/XG3QtfY.png',
+      name: 'Marilina ',
+      lastName: 'Ross',
+      role: 'Agente de inmobiliaria',
+      jobDescription: 'Former PM for Linear, Lambda School, and On Deck.',
+      socialNetworks: [
+        {
+          name: 'linkedin',
+          link: '',
+        },
+        {
+          name: 'twitter',
+          link: '',
+        },
+        {
+          name: 'instagram',
+          link: '',
+        },        
+        {
+          name: 'facebook',
+          link: '',
+        },
+      ]
+    },    
+    {
+      image: 'https://i.imgur.com/XG3QtfY.png',
+      name: 'Cris ',
+      lastName: 'Miro',
+      role: 'Agente de inmobiliaria',
+      jobDescription: 'Lead CX at Wealthsimple. Former PagerDuty and Sqreen.',
+      socialNetworks: [
+        {
+          name: 'linkedin',
+          link: '',
+        },
+        {
+          name: 'twitter',
+          link: '',
+        },
+        {
+          name: 'instagram',
+          link: '',
+        },        
+        {
+          name: 'facebook',
+          link: '',
+        },
+      ]
+    },
+  ],
 }

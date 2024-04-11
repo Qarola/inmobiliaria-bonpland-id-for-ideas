@@ -1,4 +1,4 @@
-import { SocialMediaIcon } from '../SocialMediaIcon/SocialMediaIcon';
+import { SocialMediaIcon } from '../';
 
 interface Params {
   agentData: {

@@ -3,13 +3,13 @@ import Component_6 from '../components/Globals/Component_6';
 // import { TeamCard, SocialNetworkEnum } from '../components/';
 import oliviaRhye from '../assets/images/Olivia Rhye.png'
 
-import { PropertiesSection } from '../components';
+import { PropertiesSection, ContactAgentsSection } from '../components';
 
 import { useFetch } from '../hooks/UseFetch';
 
 const Home = () => {
 
-    const { properties } = useFetch("url");
+    const { properties, agentsData } = useFetch("url");
 
     return (
         <div className="">
@@ -31,6 +31,8 @@ const Home = () => {
             ]} /> */}
 
             <PropertiesSection properties={properties} />
+
+            <ContactAgentsSection agentsData={agentsData} />
         </div>
     )
 }
