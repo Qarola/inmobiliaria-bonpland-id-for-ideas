@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { registerUser, registerAdminFromDashboard, login } = require('../../controllers/userController/userController');
+const { registerUser, registerAdminFromDashboard, login, getAllUsers } = require('../../controllers/userController/userController');
 const { validateToken, requireRole, createToken } = require('../../auth/Jwt.controller');
+
+//Ruta para traer todos los usuarios de la DB.
+router.get('/', getAllUsers);
 
 // Ruta para el registro de usuarios normales
 router.post('/register', registerUser);
