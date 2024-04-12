@@ -7,3 +7,4 @@ export { PropertiesCard } from './PropertiesCard/PropertiesCard';
 export { SocialMediaIcon } from './SocialMediaIcon/SocialMediaIcon';
 export { AgentCard } from './AgentCard/AgentCard';
 export { ContactAgentsSection } from './ContactAgentsSection/ContactAgentsSection';
+export { Service } from './Service/Service';
