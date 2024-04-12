@@ -105,11 +105,27 @@ const login = async (req, res, next) => {
   }
 };
 
+const getAllUsers = async (req, res) => {
+  try {
+    const getAllUsersDB = await User.find();
+    res.status(200).json({
+      success: true,
+      data: getAllUsersDB,
+    });
+  } catch (error) {
+    console.error("Error al obtener todos los usuarios.", error);
+    res.status(500).json({
+      success: false,
+      message: "Error al obtener todos los usuarios.",
+    });
+  }
+};
 
 
 
 module.exports = {
   registerUser,
   registerAdminFromDashboard,
-  login
+  login,
+  getAllUsers
 };
