@@ -11,7 +11,7 @@ const options = {
     },
     servers: [
         {
-          url: "http://localhost:5000",//"https://inmobiliaria-bonpland-id-for-ideas.onrender.com",
+          url: "https://inmobiliaria-bonpland-id-for-ideas.onrender.com",  //"http://localhost:5000",
         },
       ],
       components: {
