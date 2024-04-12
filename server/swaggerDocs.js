@@ -11,7 +11,7 @@ const options = {
     },
     servers: [
         {
-          url: "https://inmobiliaria-bonpland-id-for-ideas.onrender.com",//"http://localhost:5000",
+          url: "http://localhost:5000",//"https://inmobiliaria-bonpland-id-for-ideas.onrender.com",
         },
       ],
       components: {
@@ -763,4 +763,42 @@ module.exports = specs;
  *         description: Credenciales incorrectas.
  *       '500':
  *         description: Error interno del servidor.
+ */
+
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     summary: Obtiene todos los usuarios.
+ *     tags: [User]
+ *     description: Endpoint para obtener todos los usuarios almacenados en la base de datos.
+ *     responses:
+ *       '200':
+ *         description: OK. Devuelve la lista de usuarios.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: Indica si la solicitud fue exitosa.
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/User'
+ *                   description: Lista de usuarios.
+ *       '500':
+ *         description: Error del servidor. No se pudo obtener la lista de usuarios.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: Indica si la solicitud fue exitosa.
+ *                 message:
+ *                   type: string
+ *                   description: Mensaje de error.
  */
