@@ -21,7 +21,7 @@ export const ContactAgentsSection = (params: Params) => {
         {
           params.agentsData.map(agentData => (
 
-            <AgentCard agentData={agentData} />
+            <AgentCard key={agentData.image} agentData={agentData} />
           ))
         }
       </section>

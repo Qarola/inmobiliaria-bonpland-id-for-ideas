@@ -29,7 +29,7 @@ export const AgentCard = ({ agentData }: Params) => {
       <article className='flex justify-center gap-4'>
         {
           agentData.socialNetworks.map(socialNetwork => (
-            <SocialMediaIcon socialNetwork={socialNetwork} />
+            <SocialMediaIcon key={socialNetwork.name} socialNetwork={socialNetwork} />
           ))
         }
       </article>
