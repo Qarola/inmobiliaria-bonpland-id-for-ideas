@@ -10,6 +10,7 @@ const RegisterForm = () => {
     const [users, setUsers] = useState({})
     const [pass2, setPass2] = useState()
     const [result, setResult] = useState()
+    const [error, setError] = useState()
 
     useEffect(() => {
     axios.get('https://inmobiliaria-bonpland-id-for-ideas.onrender.com/users')
@@ -22,43 +23,50 @@ const RegisterForm = () => {
     }, [data]);
 
     useEffect(() => {
-        if(result === 'Ok'){
-            console.log(data)
-            axios.post('https://inmobiliaria-bonpland-id-for-ideas.onrender.com/users/register', data)
-            .then(response =>{
-                console.log('usuario registrado', response.data)
-            })
-            .catch(error => {
-                console.log('usuario no registrado', response.data)
-            })
-        }
-    }, [data]);
+    }, [data, result]);
 
     const enviar = (d) => {
-        const dat = {...d, role: 'user', id: d.email}
+        const dat = { ...d, role: 'user', id: d.email };
+        const r = PasswordChecker(dat.password, pass2);
+        setResult(r);
         setData(dat)
-        const r = PasswordChecker(data.password, pass2)
-        setResult(r)
-    }
+
+        if (r === 'Ok') {
+            axios.post('https://inmobiliaria-bonpland-id-for-ideas.onrender.com/users/register', dat)
+            .then(response => {
+                console.log('usuario registrado', response.data);
+            })
+            .catch(error => {
+                setError(error.response.data.message);
+            });
+        }
+    };
 
     return(
         <div className="w-[100%] flex flex-col justify-center items-center p-5 relative">
+            <div className="flex flex-col gap-2 absolute top-[10px] right-[10px] lg:top-60 lg:right-[-260px]">
             { result === 'Error1' &&
-                <div className="absolute rounded-lg border-2 border-red top-20 left-5 p-2">
+                <div className=" bg-white rounded-lg border-2 border-red p-2">
                     <p>Las contraseñas no coinciden</p>
                 </div>
             }
             { result === 'Error2' &&
-                <div className="absolute rounded-lg border-2 border-red top-20 left-5 p-2">
+                <div className="bg-white rounded-lg border-2 border-red p-2">
                     <p>La contraseña debe tener entre 8 y 12 caracteres</p>
                 </div>
             }
+            { error &&
+                <div className="bg-white rounded-lg border-2 border-red p-2">
+                    <p>{error}</p>
+                </div>
+            }
+            </div>
             <img src="assets/logos/MAX2.png" alt="logo" />
             <div className="flex justify-center items-center gap-4">
                 <h1 className="font-bold text-2xl lg:text-3xl">Registrate en</h1>
                 <img className="w-[130px] mt-1" src="assets/logos/MAX.png" alt="logo" />
             </div>
-            <form className="p-4 flex flex-col justify-center items-center" onSubmit={handleSubmit(enviar)}>
+            <form className="w-[100%] sm:w-[70%] lg:w-[60%] p-4 flex flex-col justify-center items-center" onSubmit={handleSubmit(enviar)}>
                 <div className="w-[100%]">
                     <p className="p-2 font-bold">Mail:</p>
                     <input className="border solid gray p-2 rounded-lg w-[100%]"  placeholder="Correo electronico" type="text" {...register("email")}/>
