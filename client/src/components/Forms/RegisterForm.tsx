@@ -2,18 +2,19 @@ import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
 import {Link} from 'react-router-dom'
 import axios from 'axios';
+import PasswordChecker from '../../hooks/PasswordChecker.ts'
 
 const RegisterForm = () => {
     const { register, handleSubmit } = useForm()
     const [data, setData] = useState(null)
     const [users, setUsers] = useState({})
     const [pass2, setPass2] = useState()
+    const [result, setResult] = useState()
 
     useEffect(() => {
     axios.get('https://inmobiliaria-bonpland-id-for-ideas.onrender.com/users')
     .then(response => {
         setUsers(response.data);
-
     })
     .catch(error => {
         console.error('Error al obtener los usuarios:', error);
@@ -21,7 +22,7 @@ const RegisterForm = () => {
     }, [data]);
 
     useEffect(() => {
-        if(data === 'pepe'){
+        if(result === 'Ok'){
             console.log(data)
             axios.post('https://inmobiliaria-bonpland-id-for-ideas.onrender.com/users/register', data)
             .then(response =>{
@@ -34,12 +35,24 @@ const RegisterForm = () => {
     }, [data]);
 
     const enviar = (d) => {
-        const dat = {...d, role: 'user', id: '111'}
+        const dat = {...d, role: 'user', id: d.email}
         setData(dat)
+        const r = PasswordChecker(data.password, pass2)
+        setResult(r)
     }
 
     return(
-        <div className="w-[100%] flex flex-col justify-center items-center p-5">
+        <div className="w-[100%] flex flex-col justify-center items-center p-5 relative">
+            { result === 'Error1' &&
+                <div className="absolute rounded-lg border-2 border-red top-20 left-5 p-2">
+                    <p>Las contraseñas no coinciden</p>
+                </div>
+            }
+            { result === 'Error2' &&
+                <div className="absolute rounded-lg border-2 border-red top-20 left-5 p-2">
+                    <p>La contraseña debe tener entre 8 y 12 caracteres</p>
+                </div>
+            }
             <img src="assets/logos/MAX2.png" alt="logo" />
             <div className="flex justify-center items-center gap-4">
                 <h1 className="font-bold text-2xl lg:text-3xl">Registrate en</h1>
