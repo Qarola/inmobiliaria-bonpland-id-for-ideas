@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
 
 const AdminForm = () => {
     const { register, handleSubmit } = useForm()
