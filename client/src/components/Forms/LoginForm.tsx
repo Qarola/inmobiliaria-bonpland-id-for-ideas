@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import {Link} from 'react-router-dom'
+import axios from 'axios';
 
 const LoginForm = () => {
     const { register, handleSubmit } = useForm()
@@ -9,6 +10,14 @@ const LoginForm = () => {
     const enviar = (d) => {
         const user = {...d, role: 'user'}
         setData(user)
+
+        axios.post('https://inmobiliaria-bonpland-id-for-ideas.onrender.com/users/login', user)
+        .then(response => {
+            console.log('usuario logueado', response.data);
+        })
+        .catch(error => {
+            console.log(error.response.data.message);
+        });
     }
 
     return(
@@ -18,11 +27,7 @@ const LoginForm = () => {
                 <h1 className="font-bold text-2xl lg:text-3xl">Ingresa a</h1>
                 <img className="w-[130px] mt-1" src="assets/logos/MAX.png" alt="logo" />
             </div>
-            <form className="p-4 flex flex-col justify-center items-center" onSubmit={handleSubmit(enviar)}>
-                <div className="w-[100%]">
-                    <p className="p-2 font-bold">Usuario:</p>
-                    <input className="border solid gray p-2 rounded-lg w-[100%]"  placeholder="Nombre de usuario" type="text" {...register("username")}/>
-                </div>
+            <form className="w-[100%] sm:w-[70%] lg:w-[60%] p-4 flex flex-col justify-center items-center" onSubmit={handleSubmit(enviar)}>
                 <div className="w-[100%]">
                     <p className="p-2 font-bold">Mail:</p>
                     <input className="border solid gray p-2 rounded-lg w-[100%]"  placeholder="Correo electronico" type="text" {...register("email")}/>

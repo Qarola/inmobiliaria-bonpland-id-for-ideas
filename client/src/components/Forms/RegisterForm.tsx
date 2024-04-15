@@ -16,6 +16,7 @@ const RegisterForm = () => {
     axios.get('https://inmobiliaria-bonpland-id-for-ideas.onrender.com/users')
     .then(response => {
         setUsers(response.data);
+        console.log(users)
     })
     .catch(error => {
         console.error('Error al obtener los usuarios:', error);
@@ -24,6 +25,8 @@ const RegisterForm = () => {
 
     useEffect(() => {
     }, [data, result]);
+
+
 
     const enviar = (d) => {
         const dat = { ...d, role: 'user', id: d.email };
