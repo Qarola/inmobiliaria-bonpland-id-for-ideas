@@ -13,7 +13,11 @@ const reference = uuid.v4();
 const getProperties = () => {
   return axios
     .get(
-      `${meliConfig.root_url}/sites/MLA/search?item_location=lat:-37.987148_-30.987148,lon:-57.5483864_-50.5483864&category=MLA1459&limit=20`,
+      `${meliConfig.root_url}/sites/MLA/search?item_location=lat:-37.987148_-30.987148,lon:-57.5483864_-50.5483864&category=MLA1459&limit=20`,//Argentina
+      ///sites/MLU/search?item_location=lat:-34.901112_-34.831112,lon:-56.164532_-56.094532&category=MLU1459&limit=20`,Uruguay
+      ///sites/MLM/search?item_location=lat:19.432608_19.502608,lon:-99.133209_-99.063209&category=MLM1459&limit=20`,México
+      ///sites/MCO/search?item_location=lat:4.710989_4.780989,lon:-74.072092_-74.002092&category=MCO1459&limit=20`,Colombia
+      ///sites/MLC/search?item_location=lat:-33.44889_-33.37889,lon:-70.669265_-70.599265&category=MLC1459&limit=20`,Chile
       {
         headers: {
           Authorization: `Bearer ${ACCESS_TOKEN}`,
@@ -76,8 +80,7 @@ const getProperties = () => {
             images: [inmueble.thumbnail],
             address: inmueble.location.address_line || "default_value",
             featuredProperties: inmueble.listing_type_id,
-            sellerContact: inmueble.seller_contact,
-            otherInfo: inmueble.other_info,
+            sellerContact: inmueble.seller_contact
           };
 
           const newProperty = new Property(propertyData);

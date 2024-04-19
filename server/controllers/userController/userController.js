@@ -92,11 +92,6 @@ const login = async (req, res, next) => {
       return res.status(401).json({ message: "Credenciales inválidas" });
     }
 
-    // Verifica el token
-    if (!req.user) {
-      return res.status(401).json({ message: "Unauthorized" });
-    }
-
     // Si la contraseña es válida y el token es válido, se puede devolver un mensaje de éxito o un token de autenticación
     return res.status(200).json({ message: "Inicio de sesión exitoso" });
   } catch (error) {
@@ -104,6 +99,7 @@ const login = async (req, res, next) => {
     return res.status(500).json({ message: "Error en el servidor" });
   }
 };
+
 
 const getAllUsers = async (req, res) => {
   try {
