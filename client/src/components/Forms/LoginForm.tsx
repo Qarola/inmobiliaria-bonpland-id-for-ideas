@@ -5,18 +5,16 @@ import axios from 'axios';
 
 const LoginForm = () => {
     const { register, handleSubmit } = useForm()
-    const [data, setData] = useState({})
 
     const enviar = (d) => {
-        const user = {...d, role: 'user'}
-        setData(user)
+        let user = {...d, role: 'admin'}
 
-        axios.post('https://inmobiliaria-bonpland-id-for-ideas.onrender.com/users/login', user)
+        axios.post('https://inmobiliaria-bonpland-id-for-ideas.onrender.com/users/token', user)
         .then(response => {
-            console.log('usuario logueado', response.data);
+            console.log(response.data)
         })
         .catch(error => {
-            console.log(error.response.data.message);
+            console.log(error.response.data.message)
         });
     }
 

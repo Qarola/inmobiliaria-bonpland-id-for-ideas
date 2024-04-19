@@ -23,11 +23,6 @@ const RegisterForm = () => {
     });
     }, [data]);
 
-    useEffect(() => {
-    }, [data, result]);
-
-
-
     const enviar = (d) => {
         const dat = { ...d, role: 'user', id: d.email };
         const r = PasswordChecker(dat.password, pass2);
