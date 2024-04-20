@@ -1,7 +1,11 @@
 const User = require("../../models/User/User");
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
 const { validateToken } = require("../../auth/Jwt.controller");
 const dotenv = require("dotenv"); 
+
+const secretKey = process.env.JWT_SECRET;
+
 
 // Carga variables de entorno desde el archivo .env
 dotenv.config();
@@ -91,6 +95,9 @@ const login = async (req, res, next) => {
 
       return res.status(401).json({ message: "Credenciales inválidas" });
     }
+
+    // Si la contraseña es válida, genera un token JWT
+    const token = jwt.sign({ id: user._id, role: user.role }, secretKey, { expiresIn: '1h' });
 
     // Si la contraseña es válida y el token es válido, se puede devolver un mensaje de éxito o un token de autenticación
     return res.status(200).json({ message: "Inicio de sesión exitoso" });
