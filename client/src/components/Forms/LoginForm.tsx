@@ -1,50 +1,56 @@
-import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
-import { useState } from 'react';
-import {Link} from 'react-router-dom'
-import axios from 'axios';
+import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 const LoginForm = () => {
   const { register, handleSubmit } = useForm();
   const [token, setToken] = useState<string | null>(null);
 
+  const userHasAdminPermissions = () => {
+    return true;
+  };
 
   //El parámetro d en la función enviar no tiene un tipo de dato especificado, por lo que TypeScript lo asume como any.
   const enviar: SubmitHandler<FieldValues> = (data) => {
     //El tipo de parámetro en la función enviar debe coincidir con el tipo esperado por handleSubmit: FieldValues es el tipo genérico utilizado por react-hook-form
-    console.log('Datos del formulario:', data);
+    // console.log("Datos del formulario:", data);
 
-    const user = { ...data, role: "admin" };
+    if (data.role === "admin") {
+      if (!userHasAdminPermissions()) {
+        console.log(
+          "No tienes permisos para iniciar sesión como administrador"
+        );
+        return;
+      }
+    }
 
     axios
-    .post(
-      "https://inmobiliaria-bonpland-id-for-ideas.onrender.com/users/login",
-      user,
-      {
-        headers: {
-            
-          Authorization: `Bearer ${token}`,
-          
-        },
-      }
-    )
-    .then((response) => {
-      console.log(response.data);
-      // Almacena el token en el almacenamiento local del navegador
-      console.log('this is token:', token)
+      .post(
+        "https://inmobiliaria-bonpland-id-for-ideas.onrender.com/users/login",
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
 
-      localStorage.setItem('token', response.data.token);
-      console.log("Token set:", token);
-      setToken(response.data.token);
-      // eslint-disable-next-line no-debugger
-       debugger; // Pauses the execution of the code here
-
-    })
-    .catch((error) => {
-      console.log(error.response.data.message);
-    });
-};
-
-return (
+        // Almacena el token en el almacenamiento local del navegador
+        const token = response.data.token;
+        console.log("Token recibido:", token);
+        localStorage.setItem("token", token);
+        console.log("Token almacenado en localStorage:", token);
+        setToken(token);
+        console.log("Token actualizado en el estado:", token);
+      })
+      .catch((error) => {
+        console.log(error.response.data.message);
+      });
+  };
+  return (
     <div className="w-[100%] flex flex-col justify-center items-center p-5">
       <img src="assets/logos/MAX2.png" alt="logo" />
       <div className="flex justify-center items-center gap-4">
@@ -75,6 +81,7 @@ return (
         </div>
         <div className="w-[100%]">
           <p className="p-2 font-bold">Rol:</p>
+
           <select {...register("role")}>
             <option value="admin">Administrador</option>
             <option value="user">Usuario</option>
