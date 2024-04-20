@@ -65,18 +65,24 @@ const registerAdminFromDashboard = async (req, res) => {
 // Inicio de sesión de usuario y admin
 const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
+
+    // Verificar si el usuario intenta iniciar sesión como administrador sin serlo
+    if (role === 'admin' && !isAdmin(email)) {
+      console.log("No puedes iniciar sesión como administrador"); // Registro de depuración
+      return res.status(403).json({ message: "No tienes permisos para iniciar sesión como administrador" });
+    }
 
     // Verificar si el correo electrónico es de un administrador
     const adminEmails = process.env.ADMIN_EMAILS.split(',');
-    if (adminEmails.includes(email)) {
-      console.log("Admin login"); // Debug log
+    if (adminEmails.includes(email) && role === 'admin') {
+      console.log("Inicio de sesión de administrador"); // Registro de depuración
 
-      // Generar un token JWT para el administrador
+      // Generar un token JWT para el administrador con el rol 'admin'
       const token = jwt.sign({ email, role: 'admin' }, secretKey, { expiresIn: '1h' });
 
       // Devolver el token JWT como respuesta al inicio de sesión exitoso del administrador
-      return res.status(200).json({ message: "Inicio de sesión exitoso para el administrador", token });
+      return res.status(200).json({ message: "Inicio de sesión exitoso para el administrador", token, role: 'admin' });
     }
 
     // Si el correo electrónico no es de un administrador, buscar al usuario por correo electrónico
@@ -84,26 +90,32 @@ const login = async (req, res) => {
 
     // Si el usuario no está en la base de datos, devolver un error
     if (!user) {
-      console.log("User not found"); // Debug log
+      console.log("Usuario no encontrado"); // Registro de depuración
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
     // Verificar la contraseña para usuarios normales
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
-      console.log("Invalid credentials"); // Debug log
+      console.log("Credenciales inválidas"); // Registro de depuración
       return res.status(401).json({ message: "Credenciales inválidas" });
     }
 
-    // Si la contraseña es válida, generar un token JWT
-    const token = jwt.sign({ id: user._id, role: user.role }, secretKey, { expiresIn: '1h' });
+    // Si la contraseña es válida, generar un token JWT con el rol del usuario
+    const token = jwt.sign({ id: user._id, role }, secretKey, { expiresIn: '1h' });
 
-    // Si la contraseña es válida y el token es válido, devolver un mensaje de éxito y el token
-    return res.status(200).json({ message: "Inicio de sesión exitoso", token });
+    // Si la contraseña es válida y el token es válido, devolver un mensaje de éxito, el token y el rol del usuario
+    return res.status(200).json({ message: "Inicio de sesión exitoso", token, role });
   } catch (error) {
-    console.error(error); // Imprimir el error en la consola para depuración
+    console.error(error); // Registro de errores en la consola para depuración
     return res.status(500).json({ message: "Error en el servidor" });
   }
+};
+
+// Función para verificar si un usuario tiene permisos de administrador
+const isAdmin = (email) => {
+  const adminEmails = process.env.ADMIN_EMAILS.split(',');
+  return adminEmails.includes(email);
 };
 
 
