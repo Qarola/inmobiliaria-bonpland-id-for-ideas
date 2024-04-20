@@ -48,25 +48,23 @@ passport.use(
   };
 
   const validateToken = async (req, res, next) => {
-    try {
-      const encoder = new TextEncoder();
-      const { payload } = await jwtVerify(
-        req.headers.authorization.split(" ")[1], // Extract token from "Bearer <token>"
-        encoder.encode(process.env.JWT_SECRET)
-      );
-      if (payload.role == "admin" || payload.role == "user") {
-        req.user = payload; // Store the user's payload in the request for later use
-        console.log(req.user);
-        return next();
-      } else {
-        console.log("Invalid role");
-        return next(new Error("Unauthorized"));
-      }
-    } catch (error) {
-      console.log(error);
-      return next(new Error("Unauthorized"));
+  try {
+    const { payload } = await jwtVerify(
+      req.headers.authorization.split(" ")[1],
+      Buffer.from(process.env.JWT_SECRET, "utf8")
+    );
+    if (payload.role === "admin" || payload.role === "user") {
+      req.user = payload;
+      console.log(req.user);
+      return next();
+    } else {
+      return res.status(404).json({ status: 404, message: "Not found role" });
     }
-  };
+  } catch (error) {
+    console.log(error);
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+};
 
   //Route to create the token
 
