@@ -63,9 +63,9 @@ const registerAdminFromDashboard = async (req, res) => {
 };
 
 // Inicio de sesión de usuario y admin
-const login = async (req, res, next) => {
+const login = async (req, res) => {
   try {
-    const { email, password, role } = req.body;
+    const { email, password } = req.body;
 
     // Busca al usuario por email
     let user = await User.findOne({ email });
@@ -76,15 +76,12 @@ const login = async (req, res, next) => {
     // Si el usuario no está en la base de datos y no es el administrador definido en .env, devuelve un error
     if (!user && !adminEmails.includes(email)) {
       console.log("User not found"); // Debug log
-
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
     // Si el usuario no está en la base de datos pero es el administrador definido en .env, procede con la autenticación
     if (adminEmails.includes(email)) {
       console.log("Admin login"); // Debug log
-
-      // Se puede realizar alguna lógica adicional aquí si es necesario para el administrador
       return res.status(200).json({ message: "Inicio de sesión exitoso para el administrador" });
     }
 
@@ -92,7 +89,6 @@ const login = async (req, res, next) => {
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
       console.log("Invalid credentials"); // Debug log
-
       return res.status(401).json({ message: "Credenciales inválidas" });
     }
 
@@ -100,7 +96,7 @@ const login = async (req, res, next) => {
     const token = jwt.sign({ id: user._id, role: user.role }, secretKey, { expiresIn: '1h' });
 
     // Si la contraseña es válida y el token es válido, se puede devolver un mensaje de éxito o un token de autenticación
-    return res.status(200).json({ message: "Inicio de sesión exitoso" });
+    return res.status(200).json({ message: "Inicio de sesión exitoso", token });
   } catch (error) {
     console.error(error); // Imprime el error en la consola para depuración
     return res.status(500).json({ message: "Error en el servidor" });
