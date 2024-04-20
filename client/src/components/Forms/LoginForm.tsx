@@ -40,11 +40,11 @@ const LoginForm = () => {
 
         // Almacena el token en el almacenamiento local del navegador
         const token = response.data.token;
-        console.log("Token recibido:", token);
+        //console.log("Token recibido:", token);
         localStorage.setItem("token", token);
-        console.log("Token almacenado en localStorage:", token);
+        //console.log("Token almacenado en localStorage:", token);
         setToken(token);
-        console.log("Token actualizado en el estado:", token);
+        //console.log("Token actualizado en el estado:", token);
       })
       .catch((error) => {
         console.log(error.response.data.message);
