@@ -12,6 +12,7 @@ router.post('/admin/register', validateToken, requireRole('admin'), registerAdmi
 // Ruta para el inicio de sesión
 router.post('/login', login);
 
+
 // Ruta para crear el token y testear en Postman
 router.get('/token', createToken);
 
