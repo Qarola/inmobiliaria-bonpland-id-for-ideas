@@ -48,7 +48,7 @@ passport.use(
   };
 
   // Middleware to verify the token sent
-  const validateToken = async (req, res, next) => {
+ /*  const validateToken = async (req, res, next) => {
     try {
       const encoder = new TextEncoder();
       const { payload } = await jwtVerify(
@@ -59,6 +59,23 @@ passport.use(
         req.user = payload; // Almacenar la carga útil del usuario en la solicitud para uso posterior
         console.log(req.user);
         return next(); // Llamar a next() para pasar al siguiente middleware
+      } else {
+        return res.status(404).json({ status: 404, message: "Not found role" });
+      }
+    } catch (error) {
+      console.log(error);
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+  }; */
+  const validateToken = async (req, res, next) => {
+    try {
+      console.log("Token received:", req.headers.authorization);
+      const token = req.headers.authorization.split(" ")[1];
+      const { payload } = await jwtVerify(token, Buffer.from(process.env.JWT_SECRET, "utf8"));
+      if (payload.role === "admin" || payload.role === "user") {
+        req.user = payload;
+        console.log(req.user);
+        return next();
       } else {
         return res.status(404).json({ status: 404, message: "Not found role" });
       }
