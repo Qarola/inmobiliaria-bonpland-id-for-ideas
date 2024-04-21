@@ -23,7 +23,7 @@ const RegisterForm = () => {
     });
     }, [data]);
 
-    const enviar = (d) => {
+    const enviar: SubmitHandler<FieldValues> = (d) => {
         const dat = { ...d, role: 'user', id: d.email };
         const r = PasswordChecker(dat.password, pass2);
         setResult(r);

@@ -11,10 +11,7 @@ const LoginForm = () => {
     return true;
   };
 
-  //El parámetro d en la función enviar no tiene un tipo de dato especificado, por lo que TypeScript lo asume como any.
   const enviar: SubmitHandler<FieldValues> = (data) => {
-    //El tipo de parámetro en la función enviar debe coincidir con el tipo esperado por handleSubmit: FieldValues es el tipo genérico utilizado por react-hook-form
-    // console.log("Datos del formulario:", data);
 
     if (data.role === "admin") {
       if (!userHasAdminPermissions()) {
@@ -38,13 +35,9 @@ const LoginForm = () => {
       .then((response) => {
         console.log(response.data);
 
-        // Almacena el token en el almacenamiento local del navegador
         const token = response.data.token;
-        //console.log("Token recibido:", token);
         localStorage.setItem("token", token);
-        //console.log("Token almacenado en localStorage:", token);
         setToken(token);
-        //console.log("Token actualizado en el estado:", token);
       })
       .catch((error) => {
         console.log(error.response.data.message);
@@ -60,7 +53,7 @@ const LoginForm = () => {
       <form
         className="w-[100%] sm:w-[70%] lg:w-[60%] p-4 flex flex-col justify-center items-center"
         onSubmit={handleSubmit(enviar)}
-      >
+       >
         <div className="w-[100%]">
           <p className="p-2 font-bold">Mail:</p>
           <input
@@ -68,7 +61,7 @@ const LoginForm = () => {
             placeholder="Correo electronico"
             type="text"
             {...register("email")}
-          />
+           />
         </div>
         <div className="w-[100%]">
           <p className="p-2 font-bold">Contraseña:</p>
@@ -77,9 +70,9 @@ const LoginForm = () => {
             placeholder="Contraseña"
             type="password"
             {...register("password")}
-          />
+           />
         </div>
-        <div className="w-[100%]">
+        <div className="w-[100%] flex pt-2">
           <p className="p-2 font-bold">Rol:</p>
 
           <select {...register("role")}>
@@ -107,7 +100,7 @@ const LoginForm = () => {
             className="w-[30px]"
             src="assets/iconos/google.png"
             alt="Google Logo"
-          />
+           />
           Ingresar con Google
         </button>
       </form>

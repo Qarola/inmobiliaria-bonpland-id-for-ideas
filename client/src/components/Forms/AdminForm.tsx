@@ -6,17 +6,15 @@ const AdminForm = () => {
     const { register, handleSubmit } = useForm()
     const [data, setData] = useState({})
 
-    const enviar = (d) => {
-        const user = {...d, role: 'admin'}
+    const enviar: SubmitHandler<FieldValues> = (d) => {
+        const user = {...d, role: 'admin', id: d.email}
         setData(user)
     }
 
     return(
         <div className="w-[100%] flex flex-col justify-center items-center">
-            <img src="assets/logos/MAX2.png" alt="logo" />
-            <div className="flex justify-center items-center gap-4">
-                <h1 className="font-bold text-xl lg:text-3xl">Nuevo admin en</h1>
-                <img className="w-[130px] mt-1" src="assets/logos/MAX.png" alt="logo" />
+            <div className="flex gap-4">
+                <h1 className="font-bold text-xl lg:text-xl">Registrar nuevo administrador</h1>
             </div>
             <form className="w-[100%] lg:w-[50%] p-4 flex flex-col justify-center items-center" onSubmit={handleSubmit(enviar)}>
                 <div className="w-[100%]">

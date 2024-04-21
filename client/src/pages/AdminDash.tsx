@@ -1,6 +1,6 @@
 import AdminForm from '../components/Forms/AdminForm';
 
-const AdminLog= () => {
+const AdminDash= () => {
     return(
         <div className="flex w-[100%] justify-center items-center overflow-hidden p-10">
             <AdminForm/>
@@ -8,4 +8,4 @@ const AdminLog= () => {
     )
 }
 
-export default AdminLog
+export default AdminDash
