@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import AdminDash from './pages/AdminDash'
 import { Footer, Navbar } from './components';
+import { AboutUs } from './pages/AboutUs';
 
 function App() {
     return (
@@ -15,7 +16,8 @@ function App() {
                 <Route path='/' element={<Home />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/login' element={<Login />} />
-                <Route path='/dashboard' element={<AdminDash />}/>
+                <Route path='/dashboard' element={<AdminDash />} />
+                <Route path='/about' element={<AboutUs />} />
             </Routes>
             <Footer socialNetworks={[
                 {
