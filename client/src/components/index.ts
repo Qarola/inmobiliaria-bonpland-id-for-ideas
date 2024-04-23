@@ -11,3 +11,4 @@ export { Service } from './Service/Service';
 export { SectionServices } from './SectionServices/SectionServices';
 export { LuxuryHomesSection } from './LuxuryHomesSection/LuxuryHomesSection';
 export { AboutHeaderSection } from './AboutHeaderSection/AboutHeaderSection';
+export { MetricsSection } from './MetricsSection/MetricsSection';
