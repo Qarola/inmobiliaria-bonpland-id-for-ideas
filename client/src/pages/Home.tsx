@@ -1,7 +1,6 @@
 import Buscador from '../components/Buscador/Buscador';
-import Component_6 from '../components/Globals/Component_6';
 
-import { PropertiesSection, ContactAgentsSection, SectionServices } from '../components';
+import { PropertiesSection, ContactAgentsSection, SectionServices, LuxuryHomesSection } from '../components';
 
 import { useFetch } from '../hooks/UseFetch';
 
@@ -13,7 +12,7 @@ const Home = () => {
         <div className="">
             <Buscador />
             <PropertiesSection properties={properties} />
-            <Component_6 />
+            <LuxuryHomesSection />
             <SectionServices />
             <ContactAgentsSection agentsData={agentsData} />
         </div>

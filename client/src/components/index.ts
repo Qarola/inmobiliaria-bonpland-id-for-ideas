@@ -9,3 +9,4 @@ export { AgentCard } from './AgentCard/AgentCard';
 export { ContactAgentsSection } from './ContactAgentsSection/ContactAgentsSection';
 export { Service } from './Service/Service';
 export { SectionServices } from './SectionServices/SectionServices';
+export { LuxuryHomesSection } from './LuxuryHomesSection/LuxuryHomesSection';
