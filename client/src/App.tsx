@@ -15,7 +15,7 @@ function App() {
                 <Route path='/' element={<Home />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/login' element={<Login />} />
-                <Route path='/admin' element={<AdminDash />}/>
+                <Route path='/dashboard' element={<AdminDash />}/>
             </Routes>
             <Footer socialNetworks={[
                 {

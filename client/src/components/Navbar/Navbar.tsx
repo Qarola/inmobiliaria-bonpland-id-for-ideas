@@ -9,6 +9,8 @@ export const Navbar = () => {
         setClicked(!clicked)
     }
 
+    const user = JSON.parse(sessionStorage.getItem('user'))
+
     return(
         <div className="navbar bg-[#1A3670]">
             <Link to="/" className="p-2">
@@ -20,10 +22,26 @@ export const Navbar = () => {
                 <Link className="text-[#F6F6F6] navbar__item navbar__item-p m-3 p-2" to="/">Comprar</Link>
                 <Link className="text-[#F6F6F6] navbar__item navbar__item-p m-3 p-2" to="/">Vender</Link>
                 <Link className="text-[#F6F6F6] navbar__item navbar__item-p m-3 p-2" to="/">Contacto</Link>
+                {user
+                ?
+                <div>
+                    {user.role==='admin'
+                    ?
+                    <div className="flex account__buttons">
+                        <Link className="text-[#F6F6F6] m-3 p-2 navbar__item navbar__register" to="/dashboard">{user.name}</Link>
+                    </div>
+                    :
+                    <div className="flex account__buttons">
+                        <Link className="text-[#F6F6F6] m-3 p-2 navbar__item navbar__register" to="/profile">{user.name}</Link>
+                    </div>
+                    }
+                </div>
+                :
                 <div className="flex account__buttons">
                     <Link className="text-[#F6F6F6] m-3 p-2 navbar__item navbar__register" to="/register">Registrarse</Link>
                     <Link className="text-[#1A3670] hover:bg-[#003DA2] hover:text-white transition-colors duration-200 m-3 p-2 me-10 navbar__item bg-[#FEFEFE] rounded" to="/login">Ingresar</Link>
                 </div>
+                }
             </div>
             <div id="switch">
                 <p onClick={toggleClicked}>{clicked ?
