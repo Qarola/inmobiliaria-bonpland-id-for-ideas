@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import {UserContext} from '../../context/UserContext'
 import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 
 export const Navbar = () => {
+    const {user} = useContext(UserContext)
     const [clicked, setClicked] = useState(false)
+
     const toggleClicked = () => {
         setClicked(!clicked)
     }
-
-    const user = JSON.parse(sessionStorage.getItem('user'))
 
     return (
         <div className="navbar bg-[#1A3670]">
@@ -24,17 +25,8 @@ export const Navbar = () => {
                 <Link className="text-[#F6F6F6] navbar__item navbar__item-p m-3 p-2" to="/">Contacto</Link>
                 {user
                     ?
-                    <div>
-                        {user.role === 'admin'
-                            ?
-                            <div className="flex account__buttons">
-                                <Link className="text-[#F6F6F6] m-3 p-2 navbar__item navbar__register" to="/dashboard">{user.name}</Link>
-                            </div>
-                            :
-                            <div className="flex account__buttons">
-                                <Link className="text-[#F6F6F6] m-3 p-2 navbar__item navbar__register" to="/profile">{user.name}</Link>
-                            </div>
-                        }
+                    <div className="flex account__buttons">
+                        <Link className="text-[#F6F6F6] m-3 p-2 navbar__item navbar__register" to="/dashboard">{user.name}</Link>
                     </div>
                     :
                     <div className="flex account__buttons">

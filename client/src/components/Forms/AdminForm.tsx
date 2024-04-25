@@ -1,37 +1,60 @@
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useState } from "react";
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import PasswordChecker from '../../hooks/PasswordChecker.ts'
 
 const AdminForm = () => {
     const { register, handleSubmit } = useForm()
-    const [pass2, setPass2] = useState()
+    const [pass2, setPass2] = useState('')
+    const [error, setError] = useState('')
+    const [created, setCreated] = useState(false)
+    const [result, setResult] = useState('')
 
     const enviar: SubmitHandler<FieldValues> = (d) => {
         const data = { ...d, role: 'admin', id: d.email };
         const r = PasswordChecker(data.password, pass2);
+        setResult(r)
+
+        axios.get('https://inmobiliaria-bonpland-id-for-ideas.onrender.com/users/register')
+        .then(response => {
+            console.log(response.data.data)
+        })
+        .catch(error=>{
+            console.log(error)
+        })
 
         if (r === 'Ok') {
             axios.post('https://inmobiliaria-bonpland-id-for-ideas.onrender.com/users/register', data)
             .then(response => {
-                console.log('usuario registrado', response.data);
-                axios.get('https://inmobiliaria-bonpland-id-for-ideas.onrender.com/users')
-                .then(response=>{
-                    console.log(response.data.data)
-                })
+                setCreated(true)
             })
             .catch(error => {
-                console.log(error.response);
+                setError(error.response.data.message);
             });
-        }
-        else{
-            console.log("error en la contraseña")
         }
     };
 
     return(
-        <div className="w-[100%] flex flex-col justify-center items-center">
+        <div className="w-[100%] flex flex-col justify-center items-center relative">
+
+            <div className="flex flex-col gap-2 absolute top-[10px] right-[10px] lg:top-60 lg:left-[700px] lg:right-[-370px]">
+            {created &&
+                <div className=" bg-white rounded-lg border-2 border-red p-2">
+                    <p>Administrador registrado.</p>
+                </div>
+            }
+            { error === 'Error1' &&
+                <div className=" bg-white rounded-lg border-2 border-red p-2">
+                    <p>Las contraseñas no coinciden.</p>
+                </div>
+            }
+            { error === 'Error2' &&
+                <div className="bg-white rounded-lg border-2 border-red p-2">
+                    <p>La contraseña debe tener entre 8 y 12 caracteres.</p>
+                </div>
+            }
+            </div>
             <div className="flex gap-4">
                 <h1 className="font-bold text-xl lg:text-xl">Registrar nuevo administrador</h1>
             </div>

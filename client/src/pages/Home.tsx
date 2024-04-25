@@ -1,7 +1,5 @@
 import Buscador from '../components/Buscador/Buscador';
-
 import { PropertiesSection, ContactAgentsSection, SectionServices, LuxuryHomesSection } from '../components';
-
 import { useFetch } from '../hooks/UseFetch';
 
 const Home = () => {

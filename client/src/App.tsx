@@ -1,22 +1,24 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { UserProvider } from './context/UserContext';
 
 import Home from './pages/Home';
 import Register from './pages/Register';
 import Login from './pages/Login';
-import AdminDash from './pages/AdminDash'
+import Dashboard from './pages/Dashboard'
 import { Footer, Navbar } from './components';
 import { AboutUs } from './pages/AboutUs';
 
 function App() {
     return (
+        <UserProvider>
         <BrowserRouter>
             <Navbar />
             <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/login' element={<Login />} />
-                <Route path='/dashboard' element={<AdminDash />} />
+                <Route path='/dashboard' element={<Dashboard />} />
                 <Route path='/about' element={<AboutUs />} />
             </Routes>
             <Footer socialNetworks={[
@@ -42,6 +44,7 @@ function App() {
                 },
             ]} />
         </BrowserRouter>
+        </UserProvider>
     )
 }
 

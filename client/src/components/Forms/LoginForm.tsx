@@ -1,5 +1,6 @@
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import {UserContext} from '../../context/UserContext'
 import { Link } from "react-router-dom";
 import axios from "axios";
 import {GetUser} from '../../hooks/GetUser'
@@ -8,6 +9,9 @@ import {Navigate} from 'react-router-dom';
 const LoginForm = () => {
     const { register, handleSubmit } = useForm();
     const [token, setToken] = useState<string | null>(null);
+    const [result, setResult] = useState(false)
+    const [error, setError] = useState('')
+    const {log_user} = useContext(UserContext)
 
     const userHasAdminPermissions = () => {
         return true;
@@ -16,7 +20,7 @@ const LoginForm = () => {
     const enviar: SubmitHandler<FieldValues> = (data) => {
         if (data.role === "admin") {
             if (!userHasAdminPermissions()) {
-                console.log(
+                setError(
                 "No tienes permisos para iniciar sesión como administrador"
                 );
                 return;
@@ -38,13 +42,15 @@ const LoginForm = () => {
                     .then((response) => {
                         const token = response.data.token;
                         const userData = GetUser(data.email, base)
-                        sessionStorage.setItem('user', JSON.stringify(userData))
+                        if(userData !== 'error'){
+                            log_user(userData)
+                            setResult(true)
+                        }
                         localStorage.setItem("token", token);
-
                         setToken(token);
                     })
                     .catch((error) => {
-                        console.log(error.response.data.message);
+                        setError(error.response.data.message);
                     });
             })
             .catch(error => {
@@ -53,10 +59,17 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="w-[100%] flex flex-col justify-center items-center p-5">
-            {token && (
+        <div className="w-[100%] flex flex-col justify-center items-center p-5 relative">
+            {result && (
                 <Navigate to="/" replace={true} />
             )}
+            <div className="flex flex-col gap-2 absolute top-[10px] right-[10px] lg:top-60 lg:left-[700px] lg:right-[-370px]">
+            { error &&
+                <div className="bg-white rounded-lg border-2 border-red p-2">
+                    <p>{error}</p>
+                </div>
+            }
+            </div>
           <img src="assets/logos/MAX2.png" alt="logo" />
           <div className="flex justify-center items-center gap-4">
             <h1 className="font-bold text-2xl lg:text-3xl">Ingresa a</h1>

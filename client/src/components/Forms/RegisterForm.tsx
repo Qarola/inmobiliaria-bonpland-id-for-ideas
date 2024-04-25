@@ -1,10 +1,10 @@
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
 import {Link} from 'react-router-dom'
 import axios from 'axios';
 import PasswordChecker from '../../hooks/PasswordChecker.ts'
 import {Navigate} from 'react-router-dom';
-
+import { useState, useEffect, useContext } from "react";
+import {UserContext} from '../../context/UserContext'
 
 const RegisterForm = () => {
     const { register, handleSubmit } = useForm()
@@ -12,6 +12,7 @@ const RegisterForm = () => {
     const [result, setResult] = useState()
     const [error, setError] = useState()
     const [created, setCreated] = useState(false)
+    const {log_user} = useContext(UserContext)
 
     const enviar: SubmitHandler<FieldValues> = (d) => {
         const data = { ...d, role: 'user', id: d.email };
@@ -22,7 +23,7 @@ const RegisterForm = () => {
             axios.post('https://inmobiliaria-bonpland-id-for-ideas.onrender.com/users/register', data)
             .then(response => {
                 setCreated(true)
-                sessionStorage.setItem('user', JSON.stringify({email: data.email, name: data.name, role: data.role}))
+                log_user({email: data.email, name: data.name, role: data.role})
             })
             .catch(error => {
                 setError(error.response.data.message);
@@ -35,7 +36,7 @@ const RegisterForm = () => {
             {created &&
                 <Navigate to="/" replace={true} />
             }
-            <div className="flex flex-col gap-2 absolute top-[10px] right-[10px] lg:top-60 lg:right-[-260px]">
+            <div className="flex flex-col gap-2 absolute top-[10px] right-[10px] lg:top-60 lg:left-[700px] lg:right-[-370px]">
             { result === 'Error1' &&
                 <div className=" bg-white rounded-lg border-2 border-red p-2">
                     <p>Las contraseñas no coinciden</p>
