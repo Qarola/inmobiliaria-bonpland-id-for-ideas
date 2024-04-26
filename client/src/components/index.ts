@@ -12,4 +12,5 @@ export { SectionServices } from './SectionServices/SectionServices';
 export { LuxuryHomesSection } from './LuxuryHomesSection/LuxuryHomesSection';
 export { AboutHeaderSection } from './AboutHeaderSection/AboutHeaderSection';
 export { MetricsSection } from './MetricsSection/MetricsSection';
-export { WhoAreUs } from './WhoAreUs/WhoAreUs'
+export { WhoAreUs } from './WhoAreUs/WhoAreUs';
+export { ContactOptions } from './ContactOptions/ContactOptions';

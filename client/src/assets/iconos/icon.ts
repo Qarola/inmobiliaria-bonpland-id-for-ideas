@@ -8,6 +8,10 @@ import twitterBlack from './icons8-twitter-black.svg';
 import twitterWhite from './icons8-twitter-white.svg';
 import youtubeBlack from './icons8-youtube-black.svg';
 import youtubeWhite from './icons8-youtube-white.svg';
+import emailIcon from './emailIcon.svg';
+import phoneIcon from './phoneIcon.svg'
+import locationIcon from './locationIcon.svg'
+import socialIcon from './socialIcon.svg'
 
 export default {
   facebookBlack,
@@ -20,4 +24,8 @@ export default {
   twitterWhite,
   youtubeBlack,
   youtubeWhite,
+  emailIcon,
+  phoneIcon,
+  locationIcon,
+  socialIcon,
 }
