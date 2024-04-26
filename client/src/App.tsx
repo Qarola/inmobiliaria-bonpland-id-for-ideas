@@ -8,42 +8,44 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard'
 import { Footer, Navbar } from './components';
 import { AboutUs } from './pages/AboutUs';
+import { Contact } from './pages/Contact';
 
 function App() {
     return (
         <UserProvider>
-        <BrowserRouter>
-            <Navbar />
-            <Routes>
-                <Route path='/' element={<Home />} />
-                <Route path='/register' element={<Register />} />
-                <Route path='/login' element={<Login />} />
-                <Route path='/dashboard' element={<Dashboard />} />
-                <Route path='/about' element={<AboutUs />} />
-            </Routes>
-            <Footer socialNetworks={[
-                {
-                    name: 'youtube',
-                    link: 'http://youtube'
-                },
-                {
-                    name: 'facebook',
-                    link: 'http://facebook'
-                },
-                {
-                    name: 'twitter',
-                    link: 'http://twitter'
-                },
-                {
-                    name: 'instagram',
-                    link: 'http://instagram'
-                },
-                {
-                    name: 'linkedin',
-                    link: 'http://linkedin'
-                },
-            ]} />
-        </BrowserRouter>
+            <BrowserRouter>
+                <Navbar />
+                <Routes>
+                    <Route path='/' element={<Home />} />
+                    <Route path='/register' element={<Register />} />
+                    <Route path='/login' element={<Login />} />
+                    <Route path='/dashboard' element={<Dashboard />} />
+                    <Route path='/about' element={<AboutUs />} />
+                    <Route path='/contact' element={<Contact />} />
+                </Routes>
+                <Footer socialNetworks={[
+                    {
+                        name: 'youtube',
+                        link: 'http://youtube'
+                    },
+                    {
+                        name: 'facebook',
+                        link: 'http://facebook'
+                    },
+                    {
+                        name: 'twitter',
+                        link: 'http://twitter'
+                    },
+                    {
+                        name: 'instagram',
+                        link: 'http://instagram'
+                    },
+                    {
+                        name: 'linkedin',
+                        link: 'http://linkedin'
+                    },
+                ]} />
+            </BrowserRouter>
         </UserProvider>
     )
 }

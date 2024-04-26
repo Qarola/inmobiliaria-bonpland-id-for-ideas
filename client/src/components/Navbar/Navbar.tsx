@@ -1,11 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
-import {UserContext} from '../../context/UserContext'
+import { UserContext } from '../../context/UserContext'
 import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 
 export const Navbar = () => {
-    const {user} = useContext(UserContext)
+    const { user } = useContext(UserContext)
     const [clicked, setClicked] = useState(false)
 
     const toggleClicked = () => {
@@ -22,7 +22,7 @@ export const Navbar = () => {
                 <Link className="text-[#F6F6F6] navbar__item m-3 p-2" to="/about">Acerca de</Link>
                 <Link className="text-[#F6F6F6] navbar__item navbar__item-p m-3 p-2" to="/">Comprar</Link>
                 <Link className="text-[#F6F6F6] navbar__item navbar__item-p m-3 p-2" to="/">Vender</Link>
-                <Link className="text-[#F6F6F6] navbar__item navbar__item-p m-3 p-2" to="/">Contacto</Link>
+                <Link className="text-[#F6F6F6] navbar__item navbar__item-p m-3 p-2" to="/contact">Contacto</Link>
                 {user
                     ?
                     <div className="flex account__buttons">
