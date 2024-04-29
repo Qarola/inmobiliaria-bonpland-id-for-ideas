@@ -3,7 +3,6 @@ import CheckIcon from '@mui/icons-material/Check';
 
 const Profile = ({user}) =>{
     const {name, createdAt}: object = user
-    console.log(user)
 
     return(
         <div className="flex flex-col gap-4 justify-center items-center">
@@ -31,6 +30,9 @@ const Profile = ({user}) =>{
                 <div className="flex flex-col gap-4">
                     <p className="text-3xl font-bold">Hola, {name}</p>
                     <p className="text-md text-[#9A9A9A] w-[60%]" >Miembro desde {createdAt.slice(0, 4)}</p>
+                    <button className="btn bg-blue2 text-white p-2 rounded-lg">Editar perfil</button>
+                    <p>Propiedades favoritas</p>
+                    <p>Aun no tienes</p>
                 </div>
             </div>
 
