@@ -1,23 +1,17 @@
 import { useState, useEffect, useContext } from "react";
 import {UserContext} from '../context/UserContext'
-import UserProfile from '../components/Profile/UserProfile'
+import Profile from '../components/Profile/Profile'
 import AdminProfile from '../components/Profile/AdminProfile'
 
 const Dashboard= () => {
-
-    const user = JSON.parse(sessionStorage.getItem('user'))
+    const {user} = useContext(UserContext)
 
     return(
         <div className="flex w-[100%] justify-center items-center overflow-hidden p-10">
             {user
             ?
             <div className="w-[100%]">
-                {user.role === 'admin'
-                ?
-                <AdminProfile/>
-                :
-                <UserProfile/>
-                }
+                <Profile user={user}/>
             </div>
             :
             <div className="flex p-10 h-[80vh] justify-center items-center">
