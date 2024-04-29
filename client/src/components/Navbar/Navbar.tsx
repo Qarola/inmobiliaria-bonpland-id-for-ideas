@@ -20,7 +20,7 @@ export const Navbar = () => {
             <div id="navbar" className={clicked ? '#navbar active' : '#navbar'}>
                 <Link className="text-[#F6F6F6] navbar__item m-3 p-2" to="/">Inicio</Link>
                 <Link className="text-[#F6F6F6] navbar__item m-3 p-2" to="/about">Acerca de</Link>
-                <Link className="text-[#F6F6F6] navbar__item navbar__item-p m-3 p-2" to="/">Comprar</Link>
+                <Link className="text-[#F6F6F6] navbar__item navbar__item-p m-3 p-2" to="/properties">Comprar</Link>
                 <Link className="text-[#F6F6F6] navbar__item navbar__item-p m-3 p-2" to="/">Vender</Link>
                 <Link className="text-[#F6F6F6] navbar__item navbar__item-p m-3 p-2" to="/contact">Contacto</Link>
                 {user

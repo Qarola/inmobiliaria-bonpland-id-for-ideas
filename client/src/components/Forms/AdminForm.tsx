@@ -1,6 +1,5 @@
 import { useForm } from 'react-hook-form';
 import { useState } from "react";
-import {Link} from 'react-router-dom';
 import axios from 'axios';
 import PasswordChecker from '../../hooks/PasswordChecker.ts'
 
@@ -75,7 +74,7 @@ const AdminForm = () => {
                     <p className="p-2 font-bold">Repetir contraseña:</p>
                     <input className="border solid gray p-2 rounded-lg w-[100%]"  placeholder="Contraseña" type="password" onChange={(e)=>setPass2(e.target.value)}/>
                 </div>
-                <button className="w-[100%] font-bold text-xl p-2 m-2 bg-[#1A3670] text-white rounded-lg " type="submit">Ingresar</button>
+                <button className="w-[100%] font-bold text-xl p-2 m-2 bg-[#1A3670] text-white rounded-lg " type="submit">Registrar</button>
             </form>
         </div>
     )

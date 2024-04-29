@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard'
 import { Footer, Navbar } from './components';
 import { AboutUs } from './pages/AboutUs';
 import { Contact } from './pages/Contact';
+import Properties from './pages/Properties'
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                     <Route path='/dashboard' element={<Dashboard />} />
                     <Route path='/about' element={<AboutUs />} />
                     <Route path='/contact' element={<Contact />} />
+                    <Route path='/properties' element={<Properties />} />
                 </Routes>
                 <Footer socialNetworks={[
                     {

@@ -15,3 +15,4 @@ export { MetricsSection } from './MetricsSection/MetricsSection';
 export { WhoAreUs } from './WhoAreUs/WhoAreUs';
 export { ContactOptions } from './ContactOptions/ContactOptions';
 export { ContactForm } from './ContactForm/ContactForm';
+export { PropertiesList } from './PropertiesList/PropertiesList'
