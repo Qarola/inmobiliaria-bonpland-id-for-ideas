@@ -16,15 +16,20 @@ const registerUser = async (req, res) => {
   try {
     validateEmail(req, res, () => {
       validatePassword(req, res, async () => {
-        const { name, email, password } = req.body;
+        const { name, email, password, confirmPassword } = req.body;
 
-        // Verificar si el usuario ya existe
+        // Verifica si la contraseña y la confirmación de contraseña coinciden
+        if (password !== confirmPassword) {
+          return res.status(400).json({ message: "La contraseña y la confirmación de contraseña no coinciden" });
+        }
+
+        // Verifica si el usuario ya existe
         let existingUser = await User.findOne({ email });
         if (existingUser) {
           return res.status(400).json({ message: "El usuario ya existe" });
         }
 
-        // Crear un nuevo usuario con el rol de usuario
+        // Crea un nuevo usuario con el rol de usuario
         const newUser = new User({
           name,
           email,
