@@ -16,12 +16,12 @@ const registerUser = async (req, res) => {
   try {
     validateEmail(req, res, () => {
       validatePassword(req, res, async () => {
-        const { name, email, password, /* confirmPassword */ } = req.body;
+        const { name, email, password, confirmPassword  } = req.body;
 
         // Verifica si la contraseña y la confirmación de contraseña coinciden
-      /*   if (password !== confirmPassword) {
+       if (password !== confirmPassword) {
           return res.status(400).json({ message: "La contraseña y la confirmación de contraseña no coinciden" });
-        } */
+        } 
 
         // Verifica si el usuario ya existe
         let existingUser = await User.findOne({ email });
