@@ -13,7 +13,12 @@ dotenv.config();
 // Registro de usuario normal
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, confirmPassword } = req.body;
+
+    // Verifica si la contraseña y la confirmación de contraseña coinciden
+    if (password !== confirmPassword) {
+      return res.status(400).json({ message: "La contraseña y la confirmación de contraseña no coinciden" });
+    }
 
     // Verificar si el usuario ya existe
     let existingUser = await User.findOne({ email });
