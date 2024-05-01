@@ -1,6 +1,7 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { UserProvider } from './context/UserContext';
+import { PropertyProvider } from './context/PropertyContext';
 
 import Home from './pages/Home';
 import Register from './pages/Register';
@@ -14,6 +15,7 @@ import Properties from './pages/Properties'
 function App() {
     return (
         <UserProvider>
+        <PropertyProvider>
             <BrowserRouter>
                 <Navbar />
                 <Routes>
@@ -48,6 +50,7 @@ function App() {
                     },
                 ]} />
             </BrowserRouter>
+        </PropertyProvider>
         </UserProvider>
     )
 }

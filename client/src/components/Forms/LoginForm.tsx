@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import {UserContext} from '../../context/UserContext'
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -17,7 +17,7 @@ const LoginForm = () => {
         return true;
     };
 
-    const enviar: SubmitHandler<FieldValues> = (data) => {
+    const enviar: SubmitHandler<FieldValues> = (data: object) => {
         if (data.role === "admin") {
             if (!userHasAdminPermissions()) {
                 setError(
@@ -29,7 +29,7 @@ const LoginForm = () => {
 
         axios.get('https://inmobiliaria-bonpland-id-for-ideas.onrender.com/users')
             .then(response => {
-                const base = response.data.data
+                const base: array = response.data.data
                 axios.post(
                     "https://inmobiliaria-bonpland-id-for-ideas.onrender.com/users/login",
                     data,
@@ -40,7 +40,7 @@ const LoginForm = () => {
                     }
                 )
                     .then((response) => {
-                        const token = response.data.token;
+                        const token: string = response.data.token;
                         const userData = GetUser(data.email, base)
                         if(userData !== 'error'){
                             log_user(userData)

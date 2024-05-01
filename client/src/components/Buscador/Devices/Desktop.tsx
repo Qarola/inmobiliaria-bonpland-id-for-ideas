@@ -52,7 +52,7 @@ const Desktop = () =>{
                 </div>
                 <h1 className="mb-4 text-2xl font-medium bg-gradient-to-b from-[#1A3670] to-[#4054B0] inline-block text-transparent bg-clip-text">¿Qué buscas?</h1>
                 <div className="flex justify-between bg-white w-[100%] rounded-full">
-                    <input className="w-[70%] rounded-l-full p-3" placeholder="Ubicación deseada"/>
+                    <input className="w-[70%] bg-white rounded-l-full p-3" placeholder="Ubicación deseada"/>
                         <div className="relative">
                             <button className="p-3 w-[100%] font-[500] border-l border-r border-gray-100 border-solid" onClick={toggleComprarOptions}>
                                 {comprarOption}

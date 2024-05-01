@@ -10,9 +10,9 @@ const AdminForm = () => {
     const [created, setCreated] = useState(false)
     const [result, setResult] = useState('')
 
-    const enviar: SubmitHandler<FieldValues> = (d) => {
-        const data = { ...d, role: 'admin', id: d.email };
-        const r = PasswordChecker(data.password, pass2);
+    const enviar: SubmitHandler<FieldValues> = (d: object) => {
+        const data: object = { ...d, role: 'admin', id: d.email };
+        const r: string = PasswordChecker(data.password, pass2);
         setResult(r)
 
         axios.get('https://inmobiliaria-bonpland-id-for-ideas.onrender.com/users/register')

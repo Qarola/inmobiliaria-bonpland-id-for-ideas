@@ -1,9 +1,8 @@
 import { useForm } from 'react-hook-form';
-import {Link} from 'react-router-dom'
 import axios from 'axios';
 import PasswordChecker from '../../hooks/PasswordChecker.ts'
 import {Navigate} from 'react-router-dom';
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import {UserContext} from '../../context/UserContext'
 
 const RegisterForm = () => {
@@ -14,9 +13,9 @@ const RegisterForm = () => {
     const [created, setCreated] = useState(false)
     const {log_user} = useContext(UserContext)
 
-    const enviar: SubmitHandler<FieldValues> = (d) => {
-        const data = { ...d, role: 'user', id: d.email };
-        const r = PasswordChecker(data.password, pass2);
+    const enviar: SubmitHandler<FieldValues> = (d: object) => {
+        const data: object = { ...d, role: 'user', id: d.email };
+        const r: string = PasswordChecker(data.password, pass2);
         setResult(r)
 
         if (r === 'Ok') {
