@@ -13,7 +13,7 @@ export const Navbar = () => {
     }
 
     return (
-        <div className="navbar bg-[#1A3670]">
+        <div className="navbar bg-[#1A3670] fixed lg:relative w-[100%]">
             <Link to="/" className="p-2">
                 <img className="navbar__logo" src='assets/logos/MAX.png' alt="Logo" />
             </Link>
