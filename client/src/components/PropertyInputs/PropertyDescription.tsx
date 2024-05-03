@@ -8,9 +8,9 @@ const PropertyDescription = () =>{
     const { register, handleSubmit } = useForm()
 
     const enviar: SubmitHandler<FieldValues> = (data: object) => {
-        const {address, city, country, state}: object = data
-        if(address && city && country && state){
-            create_tempProperty({...temporalProperty, address: address, city: city, country: country, state: state})
+        const {address, city, country, state, titlePost}: object = data
+        if(address && city && country && state && titlePost){
+            create_tempProperty({...temporalProperty, address: address, city: city, country: country, state: state, titlePost: titlePost})
             nextIndex(currentIndex)
         }
     }
@@ -27,20 +27,24 @@ const PropertyDescription = () =>{
             onSubmit={handleSubmit(enviar)}
              >
                 <div className="w-[100%] flex">
+                    <p className="p-2 font-bold">Titulo:</p>
+                    <input className="border solid gray p-2 rounded-lg w-[100%]"  placeholder="Titulo" type="text" {...register("titlePost")}/>
+                </div>
+                <div className="w-[100%] flex">
                     <p className="p-2 font-bold">Direccion:</p>
-                    <input className="border solid gray p-2 rounded-lg w-[100%]"  placeholder="Correo electronico" type="text" {...register("address")}/>
+                    <input className="border solid gray p-2 rounded-lg w-[100%]"  placeholder="Direccion" type="text" {...register("address")}/>
                 </div>
                 <div className="w-[100%] flex">
                     <p className="p-2 font-bold">Ciudad:</p>
-                    <input className="border solid gray p-2 rounded-lg w-[100%]"  placeholder="Correo electronico" type="text" {...register("city")}/>
+                    <input className="border solid gray p-2 rounded-lg w-[100%]"  placeholder="Ciudad" type="text" {...register("city")}/>
                 </div>
                 <div className="w-[100%] flex">
                     <p className="p-2 font-bold">Estado:</p>
-                    <input className="border solid gray p-2 rounded-lg w-[100%]"  placeholder="Correo electronico" type="text" {...register("state")}/>
+                    <input className="border solid gray p-2 rounded-lg w-[100%]"  placeholder="Estado" type="text" {...register("state")}/>
                 </div>
                 <div className="w-[100%] flex">
                     <p className="p-2 font-bold">Pais:</p>
-                    <input className="border solid gray p-2 rounded-lg w-[100%]"  placeholder="Correo electronico" type="text" {...register("country")}/>
+                    <input className="border solid gray p-2 rounded-lg w-[100%]"  placeholder="Pais" type="text" {...register("country")}/>
                 </div>
                 <div className="w-[100%] flex gap-5">
                     <button className="p-2 ps-8 pe-8 rounded-lg bg-gray-500 text-white text-lg font-bold" onClick={()=>back()}>Volver</button>
