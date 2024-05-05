@@ -10,7 +10,16 @@ const PropertyDescription = () =>{
     const enviar: SubmitHandler<FieldValues> = (data: object) => {
         const {address, city, country, state, titlePost}: object = data
         if(address && city && country && state && titlePost){
-            create_tempProperty({...temporalProperty, address: address, city: city, country: country, state: state, titlePost: titlePost})
+            create_tempProperty({
+                ...temporalProperty,
+                address: address,
+                city: city,
+                country: country,
+                state: state,
+                titlePost: titlePost,
+                reference: titlePost,
+                id: titlePost
+                })
             nextIndex(currentIndex)
         }
     }
