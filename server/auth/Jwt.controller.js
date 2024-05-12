@@ -5,6 +5,7 @@ const {Strategy : BearerStrategy } = require('passport-http-bearer');
 
 dotenv.config('../');
 
+//console.log(process.env.JWT_SECRET);
 
 // Configurar la estrategia de autenticación Bearer
 passport.use(
