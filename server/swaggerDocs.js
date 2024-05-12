@@ -649,6 +649,8 @@ module.exports = specs;
  *                 type: string
  *               password:
  *                 type: string
+ *               confirmPassword:
+ *                 type: string
  *               role:
  *                 type: string
  *                 enum: [user, admin]
