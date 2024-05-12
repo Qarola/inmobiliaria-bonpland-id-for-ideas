@@ -21,7 +21,7 @@ const Buscador = () => {
     );
 
     return (
-        <div>
+        <div className="">
             {width >= 1020
             ?
             <Desktop/>
