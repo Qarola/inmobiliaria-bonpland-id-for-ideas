@@ -14,35 +14,29 @@ dotenv.config();
 // Registro de usuario normal
 const registerUser = async (req, res) => {
   try {
-    validateEmail(req, res, () => {
-      validatePassword(req, res, async () => {
-        const { name, email, password, confirmPassword  } = req.body;
+    const { name, email, password, confirmPassword } = req.body;
 
-        // Verifica si la contraseña y la confirmación de contraseña coinciden
-       if (password !== confirmPassword) {
-          return res.status(400).json({ message: "La contraseña y la confirmación de contraseña no coinciden" });
-        } 
+    // Verifica si la contraseña y la confirmación de contraseña coinciden
+    if (password !== confirmPassword) {
+      return res.status(400).json({ message: "La contraseña y la confirmación de contraseña no coinciden" });
+    }
 
-        // Verifica si el usuario ya existe
-        let existingUser = await User.findOne({ email });
-        if (existingUser) {
-          return res.status(400).json({ message: "El usuario ya existe" });
-        }
+    // Verifica si el usuario ya existe
+    let existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: "El usuario ya existe" });
+    }
 
-        // Crea un nuevo usuario con el rol de usuario
-        const newUser = new User({
-          name,
-          email,
-          password: await bcrypt.hash(password, 10),
-          role: "user", // Asigna el rol de usuario
-        });
-        await newUser.save();
-
-        return res
-          .status(201)
-          .json({ message: "Usuario registrado exitosamente" });
-      });
+    // Crea un nuevo usuario con el rol de usuario
+    const newUser = new User({
+      name,
+      email,
+      password: await bcrypt.hash(password, 10),
+      role: "user", // Asigna el rol de usuario
     });
+    await newUser.save();
+
+    return res.status(201).json({ message: "Usuario registrado exitosamente" });
   } catch (error) {
     console.error("Error al registrar el usuario:", error.message);
     return res.status(500).json({ message: "Error en el servidor" });
