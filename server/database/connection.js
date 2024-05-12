@@ -1,18 +1,22 @@
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 
-dotenv.config('../'); 
+dotenv.config();
 
 // Función para conectar a MongoDB
-const connectToMongoDB = async () => {
-    try {
-      await mongoose.connect(process.env.MONGODB_URI);
-      console.log("Connected to MongoDB");
-    } catch (error) {
-      console.error("Error connecting to MongoDB:", error);
-      throw error;
+const connectToMongoDB = async (mongoURI) => {
+  try {
+    if (!mongoURI) {
+      throw new Error("MongoDB URI is not defined.");
     }
-  };
+    await mongoose.connect(mongoURI);
+    console.log("Connected to MongoDB");
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+    throw error;
+  }
+};
+
    
   // Manejar desconexión de MongoDB al detener o reiniciar el servidor
   mongoose.connection.on("disconnected", () => {

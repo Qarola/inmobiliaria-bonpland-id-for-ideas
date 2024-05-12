@@ -57,6 +57,11 @@ const port = process.env.PORT || 5000;
 
 // Inicia servidor y conectar a MongoDB
 app.listen(port, () => {
-  connectToMongoDB();
+  const mongoURI = process.env.MONGODB_URI;
+  if (!mongoURI) {
+    console.error("MongoDB URI is not defined.");
+    process.exit(1);
+  }
+  connectToMongoDB(mongoURI);
   console.log(`Server running on port ${port}`);
 });
