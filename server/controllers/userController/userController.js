@@ -16,6 +16,10 @@ const registerUser = async (req, res) => {
   try {
     const { name, email, password, confirmPassword } = req.body;
 
+    // Validar el email y la contraseña
+    await validateEmail(req, res);
+    await validatePassword(req, res);
+    
     // Verifica si la contraseña y la confirmación de contraseña coinciden
     if (password !== confirmPassword) {
       return res
