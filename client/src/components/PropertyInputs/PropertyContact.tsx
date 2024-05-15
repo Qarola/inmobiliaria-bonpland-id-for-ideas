@@ -24,19 +24,18 @@ const PropertyContact = () =>{
         if(contact && email && phone1 && code1){
             create_tempProperty({
                 ...temporalProperty,
-                contact: contact,
-                other_info: info || '',
-                webpage: web || '',
-                area_code: code1,
-                phone: phone1,
-                area_code2: code2 || '',
-                phone2: phone2 || '',
-                email: email
+                sellerContact:{
+                    contact: contact,
+                    other_info: info || '',
+                    webpage: web || '',
+                    area_code: code1,
+                    phone: phone1,
+                    area_code2: code2 || '',
+                    phone2: phone2 || '',
+                    email: email
+                }
             })
             nextIndex(currentIndex)
-        }
-        else{
-            console.log("2222")
         }
     }
 

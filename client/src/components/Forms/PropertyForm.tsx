@@ -4,6 +4,7 @@ import PropertyValues from '../PropertyInputs/PropertyValues'
 import PropertyImages from '../PropertyInputs/PropertyImages'
 import PropertyFeatured from '../PropertyInputs/PropertyFeatured'
 import PropertyContact from '../PropertyInputs/PropertyContact'
+import PropertyReview from '../PropertyInputs/PropertyReview'
 import {PropertyContext} from '../../context/PropertyContext'
 import { useState, useContext } from "react";
 
@@ -18,11 +19,12 @@ const PropertyForm = () => {
         <PropertyValues/>,
         <PropertyImages/>,
         <PropertyFeatured/>,
-        <PropertyContact/>
+        <PropertyContact/>,
+        <PropertyReview/>
         ]
 
     return (
-        <div className="w-[100%] h-[100vh] flex justify-center items-center">
+        <div className="w-[100%] min-h-[100vh] flex justify-center items-center">
             {inputs[currentIndex]}
         </div>
     );
