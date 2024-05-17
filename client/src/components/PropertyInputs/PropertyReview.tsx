@@ -11,13 +11,18 @@ const PropertyReview = () =>{
     }
 
     const crear: SubmitHandler<FieldValues> = (data: object) => {
-        const property:object = {...data, status: 'disponible', reference: data.titlePost}
-        axios.post('https://inmobiliaria-bonpland-id-for-ideas.onrender.com/users', property)
+        const property: object = {...data, status: 'disponible', reference: data.titlePost}
+        const publication: object = {
+            message: 'nueva propiedad',
+            property: property
+        }
+        axios.post('https://inmobiliaria-bonpland-id-for-ideas.onrender.com/api/properties/create', publication)
         .then(response =>{
             console.log(response)
         })
         .catch(error => {
-            console.log(error)
+            console.log(error.response.data.message, publication)
+
         })
     }
 
