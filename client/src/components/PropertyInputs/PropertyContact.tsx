@@ -2,7 +2,7 @@ import {PropertyContext} from '../../context/PropertyContext'
 import {useState, useContext} from 'react'
 
 const PropertyContact = () =>{
-    const {currentIndex, prevIndex, nextIndex, temporalProperty, create_tempProperty} =  useContext(PropertyContext)
+    const {currentIndex, prevIndex, nextIndex, temporalProperty, create_tempProperty, create_property} =  useContext(PropertyContext)
     const [contact, setContact] = useState<string>('')
     const [email, setEmail] = useState<string>('')
     const [phone1, setPhone1] = useState<string>('')
@@ -24,6 +24,8 @@ const PropertyContact = () =>{
         if(contact && email && phone1 && code1){
             create_tempProperty({
                 ...temporalProperty,
+                status: 'disponible',
+                reference: temporalProperty.id,
                 sellerContact:{
                     contact: contact,
                     other_info: info || '',
@@ -35,6 +37,7 @@ const PropertyContact = () =>{
                     email: email
                 }
             })
+            create_property(temporalProperty)
             nextIndex(currentIndex)
         }
     }

@@ -37,7 +37,7 @@ const PropertyValues = () => {
     }
 
     const next = () => {
-        if((bathrooms > 0) && (rooms > 0) && (area > 0) && (price > 0) && (contractType !== null)){
+        if((bathrooms > 0) && (rooms > 0) && (area > 0) && (price > 0) && (contractType)){
             create_tempProperty({...temporalProperty, bathrooms: bathrooms, rooms: rooms, coveredArea: area, price: price, contractType: contractType})
             nextIndex(currentIndex)
         }

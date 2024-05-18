@@ -30,7 +30,11 @@ export const PropertyProvider = ({ children }: { children: ReactNode }) => {
     const [temporalProperty, setTemporalProperty] = useState<object>()
 
     const create_property = (data: object) =>{
-        setProperty(data)
+        const prop = {
+            message: 'vacio',
+            property: {...data}
+        }
+        setProperty(prop)
     }
 
     const putIndex = (n: int) => {
@@ -47,7 +51,6 @@ export const PropertyProvider = ({ children }: { children: ReactNode }) => {
 
     const create_tempProperty = (data: object) => {
         setTemporalProperty(data)
-        console.log(temporalProperty)
     }
 
     const deleteTempProperty = () =>{

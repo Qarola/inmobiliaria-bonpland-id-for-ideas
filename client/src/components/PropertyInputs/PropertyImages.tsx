@@ -11,6 +11,7 @@ const PropertyImages = () => {
     const {currentIndex, prevIndex, nextIndex, temporalProperty, create_tempProperty} =  useContext(PropertyContext)
 
     const addImage = (image) =>{
+        console.log(image)
         if(image){
             const array = [...images,image]
             setImages(array)
@@ -39,7 +40,7 @@ const PropertyImages = () => {
             <div className="w-[100%] flex flex-col">
                 <div className="w-[100%] flex justify-start items-center gap-1 p-2">
                     <p className="font-bold">Añadir imagen (link):</p>
-                    <input className="border solid black rounded-lg p-2" type="text" onChange={(e)=>setImage(e.target.value)}/>
+                    <input className=" p-2" type="file" onChange={(e)=>setImage(e.target.files[0])}/>
                     <div className="bg-blue2 text-white rounded-lg p-2 cursor-pointer" onClick={()=>addImage(image)}>
                         <AddIcon/>
                     </div>
@@ -47,8 +48,8 @@ const PropertyImages = () => {
                 {images.length > 0 ?
                 <div className="flex flex-col justify-start gap-2">
                 {images.map(image =>(
-                    <div className="w-min flex bg-gray-500 justify-start items-center rounded-lg p-1 gap-2">
-                        <p className="font-bold text-white">{image}</p>
+                    <div key={image} className="w-min flex bg-gray-500 justify-start items-center rounded-lg p-1 gap-2">
+                        <p className="font-bold text-white">{image.name}</p>
                         <div className="text-white cursor-pointer" onClick={()=>removeImage(image)}>
                             <RemoveIcon/>
                         </div>

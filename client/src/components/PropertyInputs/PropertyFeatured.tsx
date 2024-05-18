@@ -16,7 +16,6 @@ const PropertyFeatured = () =>{
     const handleClicked = (a) =>{
         let array = [false, false, false]
         array[a] = true
-        console.log(array, a)
         const options = ['silver','gold','gold_premium']
         setClicked(array)
         setFeatured(options[a])

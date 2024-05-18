@@ -3,7 +3,7 @@ import {useState, useContext} from 'react'
 import axios from 'axios'
 
 const PropertyReview = () =>{
-    const {currentIndex, prevIndex, nextIndex, temporalProperty, create_tempProperty, putIndex} =  useContext(PropertyContext)
+    const {currentIndex, prevIndex, nextIndex, temporalProperty, property, create_property, create_tempProperty, putIndex} =  useContext(PropertyContext)
 
     const cancel = () =>{
         create_tempProperty({})
@@ -11,17 +11,12 @@ const PropertyReview = () =>{
     }
 
     const crear: SubmitHandler<FieldValues> = (data: object) => {
-        const property: object = {...data, status: 'disponible', reference: data.titlePost}
-        const publication: object = {
-            message: 'nueva propiedad',
-            property: property
-        }
-        axios.post('https://inmobiliaria-bonpland-id-for-ideas.onrender.com/api/properties/create', publication)
+        axios.post('https://inmobiliaria-bonpland-id-for-ideas.onrender.com/api/properties/create', property)
         .then(response =>{
             console.log(response)
         })
         .catch(error => {
-            console.log(error.response.data.message, publication)
+            console.log(error.response.data.message, property)
 
         })
     }
@@ -107,7 +102,7 @@ const PropertyReview = () =>{
             <div className="flex flex-col ps-10">
                 {temporalProperty.images.map(image =>(
                     <p className="font-bold">
-                    {image}
+                    {image.name}
                     </p>
                 ))}
             </div>
