@@ -6,6 +6,7 @@ const morgan = require("morgan");
 const connectToMongoDB = require('./database/connection.js');
 const propertyRoute = require('./routes/propertyRoutes/propertyRoutes.js');
 const userRoutes = require('./routes/userRoutes/userRoutes.js');
+const contactRoutes = require('./routes/contactForm/contactForm.js')
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 const specs = require('./swaggerDocs.js'); 
@@ -27,6 +28,7 @@ app.use(express.json()); // Analizar solicitudes JSON
 // Rutas
 app.use("/api", propertyRoute); 
 app.use("/users", userRoutes);
+app.use("/api", contactRoutes);
 
 // Sirve la documentación Swagger en la ruta /api-docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));

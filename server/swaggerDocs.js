@@ -804,3 +804,32 @@ module.exports = specs;
  *                   type: string
  *                   description: Mensaje de error.
  */
+
+/**
+ * @swagger
+ * /contactForm:
+ *   post:
+ *     summary: Create a new contact message
+ *     tags: [Contact Form]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - message
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 description: The contact email
+ *               message:
+ *                 type: string
+ *                 description: The contact message
+ *     responses:
+ *       201:
+ *         description: Contact message received
+ *       500:
+ *         description: Error creating contact message
+ */
