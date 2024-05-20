@@ -47,4 +47,34 @@ const sendAEmail = async (correoDestino, asunto, mensaje, reference) => {
   }
 };
 
-module.exports = sendAEmail;
+
+const sendContactMessage = async (email, message) => {
+  try {
+    const mailOptions = {
+      from: "Inmobiliaria Bonpland <" + process.env.AUTH_EMAIL + ">",
+      to: process.env.RECEIVER_EMAIL, // Email de destino
+      subject: 'Nuevo mensaje de contacto',
+      html: `
+        <p>Has recibido un nuevo mensaje de contacto:</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Mensaje:</strong> ${message}</p>
+      `,
+    };
+
+    mail_iBonpland((transport) => {
+      transport.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error("Error al enviar el correo electrónico:", error);
+          throw error;
+        }
+        console.log("Correo electrónico enviado:", info.messageId);
+      });
+    });
+
+  } catch (error) {
+    console.error("Error al enviar el correo electrónico:", error);
+    throw error;
+  }
+};
+
+module.exports = { sendAEmail, sendContactMessage };
