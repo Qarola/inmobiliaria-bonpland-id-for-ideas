@@ -807,7 +807,7 @@ module.exports = specs;
 
 /**
  * @swagger
- * /contactForm:
+ * /api/contact:
  *   post:
  *     summary: Create a new contact message
  *     tags: [Contact Form]
