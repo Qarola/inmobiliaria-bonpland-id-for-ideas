@@ -5,22 +5,18 @@ import AddIcon from '@mui/icons-material/Add';
 
 
 const PropertyImages = () => {
-    const [images, setImages] = useState<array>([])
     const [image, setImage] = useState<string>()
+    const {currentIndex, prevIndex, nextIndex, temporalProperty, create_tempProperty, images, addImage, setImagess} =  useContext(PropertyContext)
 
-    const {currentIndex, prevIndex, nextIndex, temporalProperty, create_tempProperty} =  useContext(PropertyContext)
-
-    const addImage = (image) =>{
-        console.log(image)
+    const add = (image) =>{
         if(image){
-            const array = [...images,image]
-            setImages(array)
+            addImage(image)
         }
     }
 
     const removeImage = (image) =>{
         const array = images.filter(obj => obj !== image);
-        setImages(array)
+        setImagess(array)
     }
 
     const back = () => {
@@ -29,7 +25,6 @@ const PropertyImages = () => {
 
     const next = () => {
         if(images.length > 0){
-            create_tempProperty({...temporalProperty, images: images})
             nextIndex(currentIndex)
         }
     }
@@ -41,7 +36,7 @@ const PropertyImages = () => {
                 <div className="w-[100%] flex justify-start items-center gap-1 p-2">
                     <p className="font-bold">Añadir imagen (link):</p>
                     <input className=" p-2" type="file" onChange={(e)=>setImage(e.target.files[0])}/>
-                    <div className="bg-blue2 text-white rounded-lg p-2 cursor-pointer" onClick={()=>addImage(image)}>
+                    <div className="bg-blue2 text-white rounded-lg p-2 cursor-pointer" onClick={()=>add(image)}>
                         <AddIcon/>
                     </div>
                 </div>

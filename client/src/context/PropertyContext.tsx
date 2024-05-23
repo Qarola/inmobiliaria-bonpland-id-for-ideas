@@ -1,40 +1,41 @@
 import { createContext, useState, children, useEffect } from 'react';
 
 interface PropertyContextType {
-  property: any | null;
   currentIndex: any | null;
+  images: any | null;
   temporalProperty: any | null;
   create_tempProperty: (data: any) => void;
-  create_property: (data: any) => void;
   putIndex: (n: any) => void;
   prevIndex: (n: any) => void;
   nextIndex: (n: any) => void;
+  addImage: (n: any) => void;
+  setImagess: (n: any) => void;
 }
 
 export const PropertyContext = createContext<UserContextType>({
-  property: null,
   currentIndex: null,
   temporalProperty: null,
+  images: null,
   create_tempProperty: () => {},
-  create_property: () => {},
   putIndex: () => {},
   prevIndex: () => {},
   nextIndex: () => {},
+  addImage: () => {},
+  setImagess: () => {},
 });
 
-const propertyLocal = JSON.parse(sessionStorage.getItem('property')) || null;
 
 export const PropertyProvider = ({ children }: { children: ReactNode }) => {
-    const [property, setProperty] = useState<object>(propertyLocal)
     const [currentIndex, setCurrentIndex] = useState<number>(0)
     const [temporalProperty, setTemporalProperty] = useState<object>()
+    const [images, setImages] = useState<array>([])
 
-    const create_property = (data: object) =>{
-        const prop = {
-            message: 'vacio',
-            property: {...data}
-        }
-        setProperty(prop)
+    const addImage = (image) =>{
+        setImages([...images, image])
+    }
+
+    const setImagess = (images) =>{
+        setImages(images)
     }
 
     const putIndex = (n: int) => {
@@ -57,21 +58,18 @@ export const PropertyProvider = ({ children }: { children: ReactNode }) => {
         setTemporalProperty({})
     }
 
-    useEffect(() =>{
-        sessionStorage.setItem("property", JSON.stringify(property))
-    },[property])
-
     return(
     <PropertyContext.Provider
     value={{
-    property,
     currentIndex,
-    create_property,
     putIndex,
     nextIndex,
     prevIndex,
     temporalProperty,
-    create_tempProperty
+    create_tempProperty,
+    images,
+    addImage,
+    setImagess
     }}>
         {children}
     </PropertyContext.Provider>

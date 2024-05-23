@@ -8,8 +8,6 @@ import PropertyReview from '../PropertyInputs/PropertyReview'
 import {PropertyContext} from '../../context/PropertyContext'
 import { useState, useContext } from "react";
 
-
-
 const PropertyForm = () => {
     const {currentIndex} = useContext(PropertyContext)
 

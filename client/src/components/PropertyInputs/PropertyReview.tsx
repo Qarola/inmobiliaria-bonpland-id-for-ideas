@@ -1,22 +1,58 @@
 import {PropertyContext} from '../../context/PropertyContext'
 import {useState, useContext} from 'react'
 import axios from 'axios'
+import FormData from 'isomorphic-form-data';
 
 const PropertyReview = () =>{
-    const {currentIndex, prevIndex, nextIndex, temporalProperty, property, create_property, create_tempProperty, putIndex} =  useContext(PropertyContext)
+    const {currentIndex, prevIndex, nextIndex, temporalProperty, create_tempProperty, putIndex, images, setImagess} =  useContext(PropertyContext)
 
     const cancel = () =>{
         create_tempProperty({})
+        setImagess([])
         putIndex(0)
     }
 
-    const crear: SubmitHandler<FieldValues> = (data: object) => {
-        axios.post('https://inmobiliaria-bonpland-id-for-ideas.onrender.com/api/properties/create', property)
+    const submit: SubmitHandler<FieldValues> = async (e) => {
+        e.preventDefault()
+
+        const prop = new FormData
+        prop.append('id', temporalProperty.id)
+        prop.append('titlePost', temporalProperty.titlePost)
+        prop.append('price', temporalProperty.price)
+        prop.append('coveredArea', temporalProperty.coveredArea)
+        prop.append('contractType', temporalProperty.contractType)
+        prop.append('propertyType', temporalProperty.propertyType)
+        prop.append('reference', temporalProperty.reference)
+        prop.append('rooms', temporalProperty.rooms)
+        prop.append('bathrooms', temporalProperty.bathrooms)
+        prop.append('address', temporalProperty.address)
+        prop.append('country', temporalProperty.country)
+        prop.append('city', temporalProperty.city)
+        prop.append('state', temporalProperty.state)
+        prop.append('status', temporalProperty.status)
+        prop.append('sellerContact', JSON.stringify(temporalProperty.sellerContact))
+        prop.append('featuredProperties', temporalProperty.featuredProperties)
+
+        images.map(image=>{
+            prop.append('images', image)
+        })
+
+        const property = {
+            message: 'hola',
+            property: prop
+        }
+
+
+        axios.post('https://inmobiliaria-bonpland-id-for-ideas.onrender.com/api/properties/create', prop, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
         .then(response =>{
             console.log(response)
         })
         .catch(error => {
-            console.log(error.response.data.message, property)
+            console.log(error.response, prop.get('images'))
 
         })
     }
@@ -100,8 +136,8 @@ const PropertyReview = () =>{
             <hr/>
             <h1 className="text-xl ps-6">Imagenes</h1>
             <div className="flex flex-col ps-10">
-                {temporalProperty.images.map(image =>(
-                    <p className="font-bold">
+                {images.map(image =>(
+                    <p className="font-bold" key={image.name}>
                     {image.name}
                     </p>
                 ))}
@@ -154,7 +190,7 @@ const PropertyReview = () =>{
             </div>
             <div className="w-[100%] flex gap-5">
                 <button className="p-2 ps-8 pe-8 rounded-lg bg-gray-500 text-white text-lg font-bold" onClick={()=>cancel()}>Eliminar</button>
-                <button className="p-2 ps-8 pe-8 rounded-lg bg-blue2 text-white text-lg font-bold" onClick={()=>crear(temporalProperty)}>Siguiente</button>
+                <button className="p-2 ps-8 pe-8 rounded-lg bg-blue2 text-white text-lg font-bold" onClick={submit}>Siguiente</button>
             </div>
         </div>
     )
