@@ -8,9 +8,9 @@ const { getProperties,
     getFeaturedProperties, 
     getPropertyDetails, 
     contactRealEstate,
-    editProperty,
     deleteProperty,
     showPropertiesByFilters,
+    EditProperty,
  } = require('../../controllers/propertyController/propertyController')
 const { propertyUpload } = require("../../utils/multer");
 const { validateToken, createToken } = require("../../auth/Jwt.controller");
