@@ -4,8 +4,12 @@ const uuid = require("uuid");
 const { meliConfig } = require("../../meliConfig/config");
 const Property = require("../../models/Property/Property");
 const sendAEmail = require("../../utils/emailService");
+<<<<<<< HEAD
 const { propertyUpload } = require("../../utils/multer") ;
  
+=======
+
+>>>>>>> Develop
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 const reference = uuid.v4();
 
@@ -348,7 +352,10 @@ const changePropertyStatus = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> Develop
 async function showPropertiesByFilters(req,res) {
   try {
     const {priceGreater,priceMinor,metersGreater,metersMinor} = req.body;
