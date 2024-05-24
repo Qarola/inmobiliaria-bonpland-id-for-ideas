@@ -87,7 +87,7 @@ passport.use(
       return res.status(401).json({ message: "Unauthorized" });
     }
   }; */
-  const validateToken = async (req, res, next) => {
+/*   const validateToken = async (req, res, next) => {
     try {
       console.log("Token received:", req.headers.authorization);
       const token = req.headers.authorization.split(" ")[1];
@@ -103,7 +103,7 @@ passport.use(
       console.log(error);
       return res.status(401).json({ message: "Unauthorized" });
     }
-  };
+  }; */
   
 
   //Route to create the token
