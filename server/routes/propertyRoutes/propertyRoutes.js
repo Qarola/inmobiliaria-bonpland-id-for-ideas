@@ -10,7 +10,7 @@ const { getProperties,
     contactRealEstate,
     deleteProperty,
     showPropertiesByFilters,
-    EditProperty,
+    editProperty,
  } = require('../../controllers/propertyController/propertyController')
 const { propertyUpload } = require("../../utils/multer");
 const { validateToken, createToken } = require("../../auth/Jwt.controller");
@@ -46,7 +46,7 @@ property.get("/properties/type/:propertyType", searchPropertiesByType);
 property.post("/contact-real-estate", contactRealEstate);
 
 // PUT
-property.put('/', validateToken, EditProperty);
+property.put('/', validateToken, editProperty);
 property.put('/properties/:id/status', changePropertyStatus);
 
 
