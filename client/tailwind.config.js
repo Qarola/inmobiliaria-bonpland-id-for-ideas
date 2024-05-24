@@ -1,12 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-<<<<<<< HEAD
-module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
-  theme: {
-    extend: {},
-=======
 export default {
   content: [
     "./index.html",
@@ -26,7 +18,6 @@ export default {
         'greyLigth': '#D5DAE1',
       }
     },
->>>>>>> Develop
   },
   plugins: [],
 }
