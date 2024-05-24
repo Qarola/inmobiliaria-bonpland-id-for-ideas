@@ -48,7 +48,6 @@ passport.use(
     };
   };
 
-<<<<<<< HEAD
   const validateToken = async (req, res, next) => {
   try {
     const { payload } = await jwtVerify(
@@ -67,7 +66,7 @@ passport.use(
     return res.status(401).json({ message: "Unauthorized" });
   }
 };
-=======
+
   // Middleware to verify the token sent
  /*  const validateToken = async (req, res, next) => {
     try {
@@ -106,7 +105,6 @@ passport.use(
     }
   };
   
->>>>>>> Develop
 
   //Route to create the token
 
@@ -130,8 +128,4 @@ passport.use(
     }
   };
 
-<<<<<<< HEAD
   module.exports = { validateToken, requireRole, createToken };
-=======
-  module.exports = { validateToken, requireRole, createToken };
->>>>>>> Develop
