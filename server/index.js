@@ -6,13 +6,11 @@ const morgan = require("morgan");
 const connectToMongoDB = require('./database/connection.js');
 const propertyRoute = require('./routes/propertyRoutes/propertyRoutes.js');
 const userRoutes = require('./routes/userRoutes/userRoutes.js');
-<<<<<<< HEAD
 const contactRoutes = require('./routes/contactForm/contactForm.js')
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 const specs = require('./swaggerDocs.js'); 
-=======
->>>>>>> Develop
+
 
 const app = express();
 dotenv.config(); 
@@ -31,10 +29,8 @@ app.use(express.json()); // Analiza solicitudes JSON
 // Rutas
 app.use("/api", propertyRoute); 
 app.use("/users", userRoutes);
-<<<<<<< HEAD
 app.use("/api", contactRoutes);
-=======
->>>>>>> Develop
+
 
 // Sirve la documentación Swagger en la ruta /api-docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
