@@ -1,5 +1,4 @@
 const User = require("../../models/User/User");
-<<<<<<< HEAD
 const { validateEmail } = require("../../middlewares/validateEmail");
 const { validatePassword } = require("../../middlewares/validatePassword");
 const bcrypt = require("bcrypt");
@@ -9,23 +8,12 @@ const dotenv = require("dotenv");
 
 const secretKey = process.env.JWT_SECRET;
 
-=======
-const bcrypt = require("bcrypt");
-const jwt = require('jsonwebtoken');
-const { validateToken } = require("../../auth/Jwt.controller");
-const dotenv = require("dotenv"); 
-
-const secretKey = process.env.JWT_SECRET;
-
-
->>>>>>> Develop
 // Carga variables de entorno desde el archivo .env
 dotenv.config();
 
 // Registro de usuario normal
 const registerUser = async (req, res) => {
   try {
-<<<<<<< HEAD
     const { name, email, password, confirmPassword } = req.body;
 
     // Validar el email y la contraseña
@@ -42,39 +30,26 @@ const registerUser = async (req, res) => {
     }
 
     // Verifica si el usuario ya existe
-=======
     const { name, email, password } = req.body;
 
     // Verificar si el usuario ya existe
->>>>>>> Develop
     let existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "El usuario ya existe" });
     }
 
-<<<<<<< HEAD
-    // Crea un nuevo usuario con el rol de usuario
-=======
     // Crear un nuevo usuario con el rol de usuario
->>>>>>> Develop
     const newUser = new User({
       name,
       email,
       password: await bcrypt.hash(password, 10),
-<<<<<<< HEAD
       role: "user", // Asigna el rol de usuario
-=======
-      role: 'user', // Asigna el rol de usuario
->>>>>>> Develop
     });
     await newUser.save();
 
     return res.status(201).json({ message: "Usuario registrado exitosamente" });
   } catch (error) {
-<<<<<<< HEAD
     console.error("Error al registrar el usuario:", error.message);
-=======
->>>>>>> Develop
     return res.status(500).json({ message: "Error en el servidor" });
   }
 };
@@ -82,12 +57,9 @@ const registerUser = async (req, res) => {
 // Registro de administrador desde el panel de administrador
 const registerAdminFromDashboard = async (req, res) => {
   try {
-<<<<<<< HEAD
     await validateEmail(req, res); // Validar el email
     await validatePassword(req, res); // Validar la contraseña
 
-=======
->>>>>>> Develop
     const { name, email, password } = req.body;
 
     // Verificar si el usuario ya existe
@@ -101,7 +73,6 @@ const registerAdminFromDashboard = async (req, res) => {
       name,
       email,
       password: await bcrypt.hash(password, 10),
-<<<<<<< HEAD
       role: "admin", // Asignar el rol de administrador
     });
     await newUser.save();
@@ -117,7 +88,6 @@ const registerAdminFromDashboard = async (req, res) => {
 };
 
 // Inicio de sesión de usuario y admin
-=======
       role: 'admin', // Asigna el rol de administrador
     });
     await newUser.save();
@@ -129,13 +99,11 @@ const registerAdminFromDashboard = async (req, res) => {
 };
 
 //Login para admins y users
->>>>>>> Develop
 const login = async (req, res) => {
   try {
     const { email, password, role } = req.body;
 
     // Verificar si el usuario intenta iniciar sesión como administrador sin serlo
-<<<<<<< HEAD
     if (role === "admin") {
       const user = await User.findOne({ email, role: "admin" });
 
@@ -187,7 +155,6 @@ const login = async (req, res) => {
       .json({ message: "Inicio de sesión exitoso", token, role });
   } catch (error) {
     console.error(error);
-=======
     if (role === 'admin' && !isAdmin(email)) {
       console.log("No puedes iniciar sesión como administrador"); // Registro de depuración
       return res.status(403).json({ message: "No tienes permisos para iniciar sesión como administrador" });
@@ -228,13 +195,10 @@ const login = async (req, res) => {
     return res.status(200).json({ message: "Inicio de sesión exitoso", token, role });
   } catch (error) {
     console.error(error); // Registro de errores en la consola para depuración
->>>>>>> Develop
     return res.status(500).json({ message: "Error en el servidor" });
   }
 };
 
-<<<<<<< HEAD
-=======
 // Función para verificar si un usuario tiene permisos de administrador
 const isAdmin = (email) => {
   const adminEmails = process.env.ADMIN_EMAILS.split(',');
@@ -243,10 +207,6 @@ const isAdmin = (email) => {
 
 
 
-
-
-
->>>>>>> Develop
 const getAllUsers = async (req, res) => {
   try {
     const getAllUsersDB = await User.find();
@@ -263,18 +223,9 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> Develop
 module.exports = {
   registerUser,
   registerAdminFromDashboard,
   login,
-<<<<<<< HEAD
   getAllUsers,
-=======
-  getAllUsers
->>>>>>> Develop
 };
