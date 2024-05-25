@@ -29,8 +29,6 @@ const registerUser = async (req, res) => {
         });
     }
 
-    // Verifica si el usuario ya existe
-    const { name, email, password } = req.body;
 
     // Verificar si el usuario ya existe
     let existingUser = await User.findOne({ email });
