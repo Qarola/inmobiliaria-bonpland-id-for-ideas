@@ -22,11 +22,9 @@ const registerUser = async (req, res) => {
 
     // Verifica si la contraseña y la confirmación de contraseña coinciden
     if (password !== confirmPassword) {
-      return res
-        .status(400)
-        .json({
-          message: "La contraseña y la confirmación de contraseña no coinciden",
-        });
+      return res.status(400).json({
+        message: "La contraseña y la confirmación de contraseña no coinciden",
+      });
     }
 
     // Verificar si el usuario ya existe
@@ -74,9 +72,7 @@ const registerAdminFromDashboard = async (req, res) => {
     });
     await newUser.save();
 
-    return res
-      .status(201)
-      .json({ message: "Administrador registrado exitosamente" });
+    return res.status(201).json({ message: "Administrador registrado exitosamente" });
   } catch (error) {
     console.error("Error al registrar el nuevo administrador:", error);
     return res.status(500).json({ message: "Error en el servidor: " + error.message });
@@ -135,51 +131,9 @@ const login = async (req, res) => {
       expiresIn: "1h",
     });
 
-    return res
-      .status(200)
-      .json({ message: "Inicio de sesión exitoso", token, role });
-  } catch (error) {
-    console.error(error);
-    if (role === 'admin' && !isAdmin(email)) {
-      console.log("No puedes iniciar sesión como administrador"); // Registro de depuración
-      return res.status(403).json({ message: "No tienes permisos para iniciar sesión como administrador" });
-    }
-
-    // Verificar si el correo electrónico es de un administrador
-    const adminEmails = process.env.ADMIN_EMAILS.split(',');
-    if (adminEmails.includes(email) && role === 'admin') {
-      console.log("Inicio de sesión de administrador"); // Registro de depuración
-
-      // Generar un token JWT para el administrador con el rol 'admin'
-      const token = jwt.sign({ email, role: 'admin' }, secretKey, { expiresIn: '1h' });
-
-      // Devolver el token JWT como respuesta al inicio de sesión exitoso del administrador
-      return res.status(200).json({ message: "Inicio de sesión exitoso para el administrador", token, role: 'admin' });
-    }
-
-    // Si el correo electrónico no es de un administrador, buscar al usuario por correo electrónico
-    let user = await User.findOne({ email });
-
-    // Si el usuario no está en la base de datos, devolver un error
-    if (!user) {
-      console.log("Usuario no encontrado"); // Registro de depuración
-      return res.status(404).json({ message: "Usuario no encontrado" });
-    }
-
-    // Verificar la contraseña para usuarios normales
-    const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) {
-      console.log("Credenciales inválidas"); // Registro de depuración
-      return res.status(401).json({ message: "Credenciales inválidas" });
-    }
-
-    // Si la contraseña es válida, generar un token JWT con el rol del usuario
-    const token = jwt.sign({ id: user._id, role }, secretKey, { expiresIn: '1h' });
-
-    // Si la contraseña es válida y el token es válido, devolver un mensaje de éxito, el token y el rol del usuario
     return res.status(200).json({ message: "Inicio de sesión exitoso", token, role });
   } catch (error) {
-    console.error(error); // Registro de errores en la consola para depuración
+    console.error(error);
     return res.status(500).json({ message: "Error en el servidor" });
   }
 };
@@ -212,3 +166,4 @@ module.exports = {
   login,
   getAllUsers,
 };
+
