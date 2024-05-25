@@ -19,7 +19,7 @@ const registerUser = async (req, res) => {
     // Validar el email y la contraseña
     await validateEmail(req, res);
     await validatePassword(req, res);
-    
+
     // Verifica si la contraseña y la confirmación de contraseña coinciden
     if (password !== confirmPassword) {
       return res
@@ -28,7 +28,6 @@ const registerUser = async (req, res) => {
           message: "La contraseña y la confirmación de contraseña no coinciden",
         });
     }
-
 
     // Verificar si el usuario ya existe
     let existingUser = await User.findOne({ email });
@@ -78,25 +77,13 @@ const registerAdminFromDashboard = async (req, res) => {
     return res
       .status(201)
       .json({ message: "Administrador registrado exitosamente" });
-    } catch (error) {
-      console.error("Error al registrar el nuevo administrador:", error);
-      return res.status(500).json({ message: "Error en el servidor: " + error.message });
-    }
-    
-};
-
-// Inicio de sesión de usuario y admin
-      role: 'admin', // Asigna el rol de administrador
-    });
-    await newUser.save();
-
-    return res.status(201).json({ message: "Administrador registrado exitosamente" });
   } catch (error) {
-    return res.status(500).json({ message: "Error en el servidor" });
+    console.error("Error al registrar el nuevo administrador:", error);
+    return res.status(500).json({ message: "Error en el servidor: " + error.message });
   }
 };
 
-//Login para admins y users
+// Inicio de sesión de usuario y admin
 const login = async (req, res) => {
   try {
     const { email, password, role } = req.body;
@@ -202,8 +189,6 @@ const isAdmin = (email) => {
   const adminEmails = process.env.ADMIN_EMAILS.split(',');
   return adminEmails.includes(email);
 };
-
-
 
 const getAllUsers = async (req, res) => {
   try {
