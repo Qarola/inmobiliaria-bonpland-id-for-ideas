@@ -43,7 +43,7 @@ const PropertyReview = () =>{
         }
 
 
-        axios.post('https://inmobiliaria-bonpland-id-for-ideas.onrender.com/api/properties/create', prop, {
+        axios.post('https://inmobiliaria-bonpland-id-for-ideas.onrender.com/api/properties/create', property, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
