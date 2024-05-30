@@ -17,11 +17,12 @@ dotenv.config();
 
 // Middlewares
 const corsOptions = {
-  origin: "*",
+  origin: "http://localhost:5173/",  /* "*" */
   methods: "GET,POST,PUT,DELETE",
 };
 
 app.use(cors(corsOptions)); // Configura CORS
+
 app.use(morgan('dev'));
 app.use(cookieParser()); // Analiza cookies
 app.use(express.json()); // Analiza solicitudes JSON
