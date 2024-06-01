@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useFormik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
@@ -6,6 +7,13 @@ import 'tailwindcss/tailwind.css';
 
 interface SellerContact {
   contact: string;
+  other_info: string;
+  webpage: string;
+  area_code: string;
+  phone: string;
+  area_code2: string;
+  phone2: string;
+  email: string;
 }
 
 interface PropertyFormValues {
@@ -45,7 +53,16 @@ const CreatePropertyForm: React.FC = () => {
       images: [],
       address: '',
       featuredProperties: '',
-      sellerContact: { contact: '' },
+      sellerContact: {
+        contact: '',
+        other_info: '',
+        webpage: '',
+        area_code: '',
+        phone: '',
+        area_code2: '',
+        phone2: '',
+        email: '',
+      },
     },
     validationSchema: Yup.object({
       titlePost: Yup.string().required('Required'),
@@ -68,7 +85,7 @@ const CreatePropertyForm: React.FC = () => {
     }),
     onSubmit: async (values: PropertyFormValues, { setSubmitting }: FormikHelpers<PropertyFormValues>) => {
       try {
-        console.log('Form Values:', values); // Agregar este console.log para ver los valores del formulario
+        console.log('Form Values:', values); //console.log para ver los valores del formulario
 
         const formData = new FormData();
 Object.keys(values).forEach(key => {
@@ -129,6 +146,7 @@ Object.keys(values).forEach(key => {
   return (
     <form onSubmit={formik.handleSubmit} className="max-w-lg mx-auto p-4 bg-white rounded shadow-md">
       <h1 className="text-2xl font-bold mb-4">Crear Nuevo Inmueble</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
       {/* Campo para el título del post */}
       <div className="mb-4">
@@ -343,52 +361,150 @@ Object.keys(values).forEach(key => {
 
 
 
-      {/* Campo para el contacto del vendedor */}
-      <div className="mb-4">
-        <label htmlFor="sellerContact.contact" className="block text-sm font-medium text-gray-700">Contacto del Vendedor</label>
-        <input
-          id="sellerContact.contact"
-          name="sellerContact.contact"
-          type="text"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.sellerContact.contact}
-          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-        />
-        {formik.touched.sellerContact?.contact && formik.errors.sellerContact?.contact ? renderError(formik.errors.sellerContact.contact) : null}
-      </div>
+      {/* Campos para el contacto del vendedor */}
+<div className="mb-4">
+  <label htmlFor="sellerContact.contact" className="block text-sm font-medium text-gray-700">Contacto del Vendedor</label>
+  <input
+    id="sellerContact.contact"
+    name="sellerContact.contact"
+    type="text"
+    onChange={formik.handleChange}
+    onBlur={formik.handleBlur}
+    value={formik.values.sellerContact.contact}
+    className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+  />
+  {formik.touched.sellerContact?.contact && formik.errors.sellerContact?.contact ? renderError(formik.errors.sellerContact.contact) : null}
+</div>
 
-      {/* Campo para las imágenes */}
-      <div className="mb-4">
-        <label htmlFor="images" className="block text-sm font-medium text-gray-700">Imágenes</label>
-        <input
-          id="images"
-          name="images"
-          type="file"
-          multiple
-          onChange={(event) => {
-            const files = (event.target as HTMLInputElement).files;
-            if (files) {
-              formik.setFieldValue('images', Array.from(files));
-            }
-          }}
-          onBlur={formik.handleBlur}
-          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-        />
-        {formik.touched.images && formik.errors.images ? renderError(formik.errors.images as string | string[] | undefined) : null}
-      </div>
+<div className="mb-4">
+  <label htmlFor="sellerContact.other_info" className="block text-sm font-medium text-gray-700">Otra información del Vendedor</label>
+  <input
+    id="sellerContact.other_info"
+    name="sellerContact.other_info"
+    type="text"
+    onChange={formik.handleChange}
+    onBlur={formik.handleBlur}
+    value={formik.values.sellerContact.other_info}
+    className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+  />
+  {formik.touched.sellerContact?.other_info && formik.errors.sellerContact?.other_info ? renderError(formik.errors.sellerContact.other_info) : null}
+</div>
 
-      {/* Botón de envío */}
-      <div>
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
-        >
-          Crear Inmueble
-        </button>
+<div className="mb-4">
+  <label htmlFor="sellerContact.webpage" className="block text-sm font-medium text-gray-700">Página Web del Vendedor</label>
+  <input
+    id="sellerContact.webpage"
+    name="sellerContact.webpage"
+    type="text"
+    onChange={formik.handleChange}
+    onBlur={formik.handleBlur}
+    value={formik.values.sellerContact.webpage}
+    className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+  />
+  {formik.touched.sellerContact?.webpage && formik.errors.sellerContact?.webpage ? renderError(formik.errors.sellerContact.webpage) : null}
+</div>
+
+<div className="mb-4">
+  <label htmlFor="sellerContact.area_code" className="block text-sm font-medium text-gray-700">Código de Área del Vendedor</label>
+  <input
+    id="sellerContact.area_code"
+    name="sellerContact.area_code"
+    type="text"
+    onChange={formik.handleChange}
+    onBlur={formik.handleBlur}
+    value={formik.values.sellerContact.area_code}
+    className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+  />
+  {formik.touched.sellerContact?.area_code && formik.errors.sellerContact?.area_code ? renderError(formik.errors.sellerContact.area_code) : null}
+</div>
+
+<div className="mb-4">
+  <label htmlFor="sellerContact.phone" className="block text-sm font-medium text-gray-700">Teléfono del Vendedor</label>
+  <input
+    id="sellerContact.phone"
+    name="sellerContact.phone"
+    type="text"
+    onChange={formik.handleChange}
+    onBlur={formik.handleBlur}
+    value={formik.values.sellerContact.phone}
+    className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+  />
+  {formik.touched.sellerContact?.phone && formik.errors.sellerContact?.phone ? renderError(formik.errors.sellerContact.phone) : null}
+</div>
+
+<div className="mb-4">
+  <label htmlFor="sellerContact.area_code2" className="block text-sm font-medium text-gray-700">Segundo Código de Área del Vendedor</label>
+  <input
+    id="sellerContact.area_code2"
+    name="sellerContact.area_code2"
+    type="text"
+    onChange={formik.handleChange}
+    onBlur={formik.handleBlur}
+    value={formik.values.sellerContact.area_code2}
+    className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+  />
+  {formik.touched.sellerContact?.area_code2 && formik.errors.sellerContact?.area_code2 ? renderError(formik.errors.sellerContact.area_code2) : null}
+</div>
+
+<div className="mb-4">
+  <label htmlFor="sellerContact.phone2" className="block text-sm font-medium text-gray-700">Segundo Teléfono del Vendedor</label>
+  <input
+    id="sellerContact.phone2"
+    name="sellerContact.phone2"
+    type="text"
+    onChange={formik.handleChange}
+    onBlur={formik.handleBlur}
+    value={formik.values.sellerContact.phone2}
+    className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+  />
+  {formik.touched.sellerContact?.phone2 && formik.errors.sellerContact?.phone2 ? renderError(formik.errors.sellerContact.phone2) : null}
+</div>
+
+<div className="mb-4">
+  <label htmlFor="sellerContact.email" className="block text-sm font-medium text-gray-700">Correo Electrónico del Vendedor</label>
+  <input
+    id="sellerContact.email"
+    name="sellerContact.email"
+    type="email"
+    onChange={formik.handleChange}
+    onBlur={formik.handleBlur}
+    value={formik.values.sellerContact.email}
+    className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+  />
+  {formik.touched.sellerContact?.email && formik.errors.sellerContact?.email ? renderError(formik.errors.sellerContact.email) : null}
+</div>
+{/* Campo para las imágenes */}
+<div className="mb-4">
+    <label htmlFor="images" className="block text-sm font-medium text-gray-700">Imágenes</label>
+    <input
+      id="images"
+      name="images"
+      type="file"
+      multiple
+      onChange={(event) => {
+        const files = (event.target as HTMLInputElement).files;
+        if (files) {
+          formik.setFieldValue('images', Array.from(files));
+        }
+      }}
+      onBlur={formik.handleBlur}
+      className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+    />
+    {formik.touched.images && formik.errors.images ? renderError(formik.errors.images as string | string[] | undefined) : null}
+  </div>
+
+  {/* Botón de envío */}
+  <div className="mb-4 md:col-span-2 flex justify-center">
+    <button
+      type="submit"
+      className="bg-blue-500 text-white py-2 px-14 rounded hover:bg-blue-700"
+    >
+      Crear Inmueble
+    </button>
+  </div>
+
       </div>
     </form>
   );
 };
-
 export default CreatePropertyForm;
