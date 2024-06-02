@@ -12,6 +12,7 @@ import { AboutUs } from './pages/AboutUs';
 import { Contact } from './pages/Contact';
 import Properties from './pages/Properties';
 import PropertyDetail from './pages/PropertyDetail';
+import CreateProperty from './pages/CreateProperty';
 
 function App() {
     return (
@@ -28,6 +29,7 @@ function App() {
                     <Route path='/contact' element={<Contact />} />
                     <Route path='/properties' element={<Properties />} />
                     <Route path="/property/:id" element={<PropertyDetail />} />
+                    <Route path="/create-property" element={<CreateProperty/>}/>
                 </Routes>
                 <Footer socialNetworks={[
                     {
