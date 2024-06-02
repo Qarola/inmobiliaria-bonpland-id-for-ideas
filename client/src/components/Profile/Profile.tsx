@@ -1,6 +1,6 @@
 import AdminForm from '../Forms/AdminForm';
 import CheckIcon from '@mui/icons-material/Check';
-import PropertyForm from '../Forms/PropertyForm';
+import CreatePropertyForm from '../Forms/CreatePropertyForm';
 import {useState} from 'react'
 
 const Profile = ({user}) =>{
@@ -48,7 +48,7 @@ const Profile = ({user}) =>{
                     {option ?
                     <AdminForm/>
                     :
-                    <PropertyForm/>
+                    <CreatePropertyForm/>
                     }
                 </div>
             }

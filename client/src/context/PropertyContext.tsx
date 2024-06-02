@@ -1,77 +1,66 @@
-import { createContext, useState, children, useEffect } from 'react';
+import { createContext, useState, ReactNode, useEffect } from 'react';
+import axios from 'axios';
 
 interface PropertyContextType {
-  currentIndex: any | null;
-  images: any | null;
-  temporalProperty: any | null;
-  create_tempProperty: (data: any) => void;
-  putIndex: (n: any) => void;
-  prevIndex: (n: any) => void;
-  nextIndex: (n: any) => void;
-  addImage: (n: any) => void;
-  setImagess: (n: any) => void;
+  properties: any[] | null;
+  searchPerType: (type: string) => void;
+  reset: (type: string) => void;
 }
 
-export const PropertyContext = createContext<UserContextType>({
-  currentIndex: null,
-  temporalProperty: null,
-  images: null,
-  create_tempProperty: () => {},
-  putIndex: () => {},
-  prevIndex: () => {},
-  nextIndex: () => {},
-  addImage: () => {},
-  setImagess: () => {},
+export const PropertyContext = createContext<PropertyContextType>({
+  properties: null,
+  searchPerType: () => {},
+  reset: () => {}
 });
 
-
 export const PropertyProvider = ({ children }: { children: ReactNode }) => {
-    const [currentIndex, setCurrentIndex] = useState<number>(0)
-    const [temporalProperty, setTemporalProperty] = useState<object>()
-    const [images, setImages] = useState<array>([])
+  const [properties, setProperties] = useState<any[]>([]);
 
-    const addImage = (image) =>{
-        setImages([...images, image])
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        const response = await axios.get("https://inmobiliaria-bonpland-id-for-ideas.onrender.com/api/all-properties");
+        setProperties(response.data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchProperties();
+  }, []);
+
+  const searchPerType = async (type: string) => {
+    if (type !== 'Tipo de propiedad') {
+      try {
+        const response = await axios.get(`https://inmobiliaria-bonpland-id-for-ideas.onrender.com/api/properties/type/${type}`);
+        setProperties(response.data.data);
+      } catch (error) {
+        console.error(error, type);
+      }
+    } else {
+      console.log('no');
+    }
+  };
+
+    const reset = () =>{
+        axios.get("https://inmobiliaria-bonpland-id-for-ideas.onrender.com/api/all-properties")
+        .then(response => {
+            setProperties(response.data.data)
+        })
+        .catch(error => {
+            console.error(error);
+        })
     }
 
-    const setImagess = (images) =>{
-        setImages(images)
-    }
-
-    const putIndex = (n: int) => {
-        setCurrentIndex(n)
-    }
-
-    const prevIndex = (n: int) =>{
-        setCurrentIndex(currentIndex-1)
-    }
-
-    const nextIndex = (n: int) =>{
-        setCurrentIndex(currentIndex+1)
-    }
-
-    const create_tempProperty = (data: object) => {
-        setTemporalProperty(data)
-    }
-
-    const deleteTempProperty = () =>{
-        setTemporalProperty({})
-    }
-
-    return(
+  return (
     <PropertyContext.Provider
-    value={{
-    currentIndex,
-    putIndex,
-    nextIndex,
-    prevIndex,
-    temporalProperty,
-    create_tempProperty,
-    images,
-    addImage,
-    setImagess
-    }}>
-        {children}
+      value={{
+        properties,
+        searchPerType,
+        reset,
+      }}
+     >
+      {children}
     </PropertyContext.Provider>
-    )
-}
+  );
+};

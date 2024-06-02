@@ -23,7 +23,6 @@ const PropertyDetail = () =>{
         })
     },[])
 
-    console.log(property)
 
 
     return(
@@ -46,7 +45,7 @@ const PropertyDetail = () =>{
                         <img className="w-[400px] rounded-xl" src={image} alt="img"/>
                     ))}
                 </div>
-                <div className="flex w-[100%] flex-wrap gap-5">
+                <div className="flex w-[100%] flex-wrap justify-center gap-5">
                     <div className="flex flex-col items-start justify-start p-10 rounded-xl shadow-md shadow-gray-500 gap-2">
                         {property.contractType === 'buy'
                         ?
@@ -70,7 +69,7 @@ const PropertyDetail = () =>{
                         <p className="font-bold text-lg">Contactar con agente inmobiliario</p>
                         <hr className="w-[100%]"/>
                         <div className="p-2 bg-[#C3D2F1]">
-                            <p>{property.sellerContact.phone}</p>
+                            <p>{property.propertyType}</p>
                             <p>{property.sellerContact.email}</p>
                         </div>
                     </div>
