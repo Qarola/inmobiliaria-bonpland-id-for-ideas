@@ -85,7 +85,7 @@ const CreatePropertyForm: React.FC = () => {
     }),
     onSubmit: async (values: PropertyFormValues, { setSubmitting }: FormikHelpers<PropertyFormValues>) => {
       try {
-        console.log('Form Values:', values); // Agregar este console.log para ver los valores del formulario
+        console.log('Form Values:', values); //console.log para ver los valores del formulario
 
         const formData = new FormData();
 Object.keys(values).forEach(key => {
