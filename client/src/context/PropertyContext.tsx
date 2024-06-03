@@ -37,10 +37,12 @@ export const PropertyProvider = ({ children }: { children: ReactNode }) => {
       } catch (error) {
         console.error(error, type);
       }
-    } else {
-      console.log('no');
     }
   };
+
+    const searchPerFilters = (filters) =>{
+
+    }
 
     const reset = () =>{
         axios.get("https://inmobiliaria-bonpland-id-for-ideas.onrender.com/api/all-properties")
