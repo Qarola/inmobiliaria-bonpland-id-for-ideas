@@ -16,15 +16,12 @@ const mail_iBonpland = async (callback) => {
       refresh_token: process.env.AUTH_REFRESH_TOKEN,
     });
 
-    // Se utiliza una promesa para encapsular la llamada a oauth2Client.getAccessToken
-    const accessToken = await new Promise((resolve, reject) => {
+    // Obtener el token de acceso utilizando la promesa
+    const { token } = await oauth2Client.getAccessToken();
       // oauth2Client.getAccessToken maneja la renovación automática del token de acceso cuando sea necesario
-      oauth2Client.getAccessToken((err, token) => {
-        if (err) reject(err);
-        // Si se obtiene con éxito un nuevo token de acceso, se llama a resolve con el token de acceso como argumento.
-        resolve(token);
-      });
-    });
+      if (!token) {
+        throw new Error("No se pudo obtener un token de acceso");
+      }
 
     const transport = nodemailer.createTransport({
       service: "gmail",
@@ -34,7 +31,7 @@ const mail_iBonpland = async (callback) => {
         clientId: process.env.AUTH_CLIENT_ID,
         clientSecret: process.env.AUTH_CLIENT_SECRET,
         refreshToken: process.env.AUTH_REFRESH_TOKEN,
-        accessToken: accessToken,
+        accessToken: token,
       },
     });
 

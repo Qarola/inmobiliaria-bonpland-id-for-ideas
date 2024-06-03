@@ -4,7 +4,7 @@ const uuid = require("uuid");
 const { meliConfig } = require("../../meliConfig/config");
 const Property = require("../../models/Property/Property");
 const { propertyUpload } = require("../../utils/multer") ;
-const sendAEmail = require("../../utils/emailService");
+const { sendAEmail } = require("../../utils/emailService");
  
 
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
