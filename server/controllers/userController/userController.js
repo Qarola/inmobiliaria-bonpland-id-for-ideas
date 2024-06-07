@@ -50,7 +50,7 @@ const registerUser = async (req, res) => {
 };
 
 // Registro de administrador desde el panel de administrador
-const registerAdminFromDashboard = async (req, res) => {
+/* const registerAdminFromDashboard = async (req, res) => {
   try {
     await validateEmail(req, res); // Validar el email
     await validatePassword(req, res); // Validar la contraseña
@@ -76,6 +76,56 @@ const registerAdminFromDashboard = async (req, res) => {
   } catch (error) {
     console.error("Error al registrar el nuevo administrador:", error);
     return res.status(500).json({ message: "Error en el servidor: " + error.message });
+  }
+};
+ */
+
+// Registro de administrador desde el panel de administrador
+const registerAdminFromDashboard = async (req, res) => {
+  try {
+    await validateEmail(req, res); // Validar el email
+    await validatePassword(req, res); // Validar la contraseña
+
+    const { name, email, password } = req.body;
+
+    // Verificar si el usuario ya existe
+    let existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: "El usuario ya existe" });
+    }
+
+    // Crear un nuevo usuario con el rol de administrador
+    const newUser = new User({
+      name,
+      email,
+      password: await bcrypt.hash(password, 10),
+      role: "admin", // Asignar el rol de administrador
+    });
+    await newUser.save();
+
+    // Generar el token JWT para el nuevo usuario
+    const token = jwt.sign(
+      { id: newUser._id, role: newUser.role }, // Información que se incluye en el token
+      secretKey, // Clave secreta para firmar el token
+      { expiresIn: "1h" } // Expiración del token
+    );
+
+    // Configurar la cookie con HttpOnly y Secure
+    res.cookie("authToken", token, {
+      httpOnly: true, // La cookie no puede ser accedida por JavaScript del lado del cliente
+      secure: process.env.NODE_ENV === "production", // Solo enviar la cookie a través de HTTPS en producción
+      maxAge: 3600000, // 1 hora en milisegundos
+      sameSite: "strict", // Opcional: mejorar la seguridad contra ataques CSRF
+    });
+
+    return res
+      .status(201)
+      .json({ message: "Administrador registrado exitosamente" });
+  } catch (error) {
+    console.error("Error al registrar el nuevo administrador:", error);
+    return res
+      .status(500)
+      .json({ message: "Error en el servidor: " + error.message });
   }
 };
 
