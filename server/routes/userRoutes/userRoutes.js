@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { registerUser, registerAdminFromDashboard, login, getAllUsers } = require('../../controllers/userController/userController');
-const { validateToken, requireRole, createToken } = require('../../auth/Jwt.controller');
+const { validateToken, requireRole, createToken, validateCookieToken } = require('../../auth/Jwt.controller');
 
 //Ruta para traer todos los usuarios de la DB.
 router.get('/', getAllUsers);
@@ -14,7 +14,7 @@ router.post('/register',  registerUser);
 router.post('/register', registerUser);
 
 // Ruta para el registro de nuevos administradores desde el panel de administrador
-router.post('/admin/register', validateToken, requireRole('admin'), registerAdminFromDashboard);
+router.post('/admin/register', validateCookieToken, requireRole('admin'), registerAdminFromDashboard);
 
 // Ruta para el inicio de sesión
 router.post('/login', login);

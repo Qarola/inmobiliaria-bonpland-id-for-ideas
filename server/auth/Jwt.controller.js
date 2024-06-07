@@ -67,6 +67,35 @@ passport.use(
   }
 };
 
+const validateCookieToken = async (req, res, next) => {
+  try {
+    // Obtener el token desde la cookie
+    const token = req.cookies.authToken;
+
+    if (!token) {
+      return res.status(401).json({ message: "No se encontró el token en la cookie" });
+    }
+
+    // Verificar el token
+    const { payload } = await jwtVerify(
+      token,
+      Buffer.from(process.env.JWT_SECRET, "utf8")
+    );
+
+    // Validar el rol del usuario o cualquier otra lógica de autorización
+    if (payload.role === "admin" || payload.role === "user") {
+      req.user = payload;
+      return next();
+    } else {
+      return res.status(403).json({ message: "No tiene permiso para acceder a esta ruta" });
+    }
+  } catch (error) {
+    console.error("Error al validar el token de la cookie:", error);
+    return res.status(401).json({ message: "Token inválido o expirado" });
+  }
+};
+
+
   // Middleware to verify the token sent
  /*  const validateToken = async (req, res, next) => {
     try {
@@ -128,4 +157,4 @@ passport.use(
     }
   };
 
-  module.exports = { validateToken, requireRole, createToken };
+  module.exports = { validateToken, requireRole, createToken, validateCookieToken };
