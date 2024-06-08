@@ -16,7 +16,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
     const { log_user } = useContext(UserContext);
 
     const userHasAdminPermissions = () => {
-        return true; // Aquí puedes implementar la lógica real para verificar los permisos del usuario administrador
+        return true; 
     };
 
     const enviar: SubmitHandler<FieldValues> = (data) => {

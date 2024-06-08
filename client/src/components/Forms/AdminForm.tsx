@@ -8,7 +8,7 @@ interface FormValues {
     name: string;
     email: string;
     password: string;
-    role: string; // Agregar la propiedad role
+    role: string; // Agrega la propiedad role
 }
 
 const AdminForm = () => {
