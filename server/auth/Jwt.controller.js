@@ -71,6 +71,7 @@ const validateCookieToken = async (req, res, next) => {
   try {
     // Obtener el token desde la cookie
     const token = req.cookies.authToken;
+    console.log("Token from cookie:", token);
 
     if (!token) {
       return res.status(401).json({ message: "No se encontró el token en la cookie" });
@@ -94,7 +95,6 @@ const validateCookieToken = async (req, res, next) => {
     return res.status(401).json({ message: "Token inválido o expirado" });
   }
 };
-
 
   // Middleware to verify the token sent
  /*  const validateToken = async (req, res, next) => {
