@@ -14,7 +14,7 @@ router.post('/register',  registerUser);
 router.post('/register', registerUser);
 
 // Ruta para el registro de nuevos administradores desde el panel de administrador
-router.post('/admin/register', validateCookieToken, requireRole('admin'), registerAdminFromDashboard);
+router.post('/admin/register',  registerAdminFromDashboard);
 
 // Ruta para el inicio de sesión
 router.post('/login', login);

@@ -147,7 +147,6 @@ const registerAdminFromDashboard = async (req, res) => {
       .json({ message: "Error en el servidor: " + error.message });
   }
 };
-
 // Inicio de sesión de usuario y admin
 const login = async (req, res) => {
   try {
