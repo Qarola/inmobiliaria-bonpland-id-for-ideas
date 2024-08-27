@@ -12,6 +12,7 @@ interface Params {
     }[]
   }[]
 }
+
 export const ContactAgentsSection = (params: Params) => {
   return (
     <section className='max-w-[1440px] p-4 sm:p-6 md:p-10 xl:p-12 m-auto text-center'>
@@ -19,8 +20,7 @@ export const ContactAgentsSection = (params: Params) => {
 
       <section className='flex flex-wrap justify-center gap-4 py-16'>
         {
-          params.agentsData.map(agentData => (
-
+          params.agentsData.slice(0, 3).map(agentData => (
             <AgentCard key={agentData.image} agentData={agentData} />
           ))
         }

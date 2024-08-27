@@ -31,7 +31,7 @@ export const ContactForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className='flex flex-col gap-4 w-[800px] p-10 bg-[#E8EDFF] text-blue1 rounded-md border shadow-[0px_1px_2px_rgba(85,105,135,0.10)]'
+      className='flex flex-col gap-4 w-full md:w-[600px] p-4 md:p-10 bg-[#E8EDFF] text-blue1 rounded-md border shadow-[0px_1px_2px_rgba(85,105,135,0.10)]'
     >
       <label className=''>
         Email
@@ -58,7 +58,7 @@ export const ContactForm = () => {
 
       <button
         type='submit'
-        className=' h-14 bg-blue1 font-bold text-white p-2 rounded-lg border shadow-[0px_1px_2px_rgba(105,81,255,0.05)]'
+        className='h-14 bg-blue1 font-bold text-white p-2 rounded-lg border shadow-[0px_1px_2px_rgba(105,81,255,0.05)]'
       >
         Enviar
       </button>

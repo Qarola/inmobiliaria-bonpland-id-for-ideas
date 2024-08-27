@@ -40,7 +40,7 @@ export const PropertyProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-    const searchPerFilters = (filters) =>{
+    const searchPerFilters = (filters: { [key: string]: any }) => {
 
     }
 

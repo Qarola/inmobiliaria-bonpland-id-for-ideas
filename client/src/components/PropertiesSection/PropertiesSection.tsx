@@ -17,7 +17,7 @@ export const PropertiesSection = (params: Params) => {
 
       <section className='flex flex-wrap justify-center gap-4 py-16'>
         {
-          params.properties.map(property => (
+          params.properties.slice(0, 3).map(property => (
             <PropertiesCard
               key={property.linkMore}
               image={property.image}

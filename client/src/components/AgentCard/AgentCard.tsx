@@ -34,8 +34,7 @@ export const AgentCard = ({ agentData }: Params) => {
         }
       </article>
 
-      <button className='p-4 mt-4 rounded-2xl bg-blue2 text-white'>Contacta con {agentData.name}
-      </button>
+      <button className='p-2 mt-6 mb-4 rounded-2xl bg-blue2 text-white'>Contacta con {agentData.name}</button>
 
     </article>
   )

@@ -1,4 +1,3 @@
-
 export const MetricsSection = () => {
   const dataMetrics = [
     {
@@ -19,7 +18,7 @@ export const MetricsSection = () => {
     },
   ]
   return (
-    <section className='flex flex-wrap xl:flex-nowrap  justify-center align-middle gap-20 max-w-[1440px] p-4 xl:p-20 m-auto'>
+    <section className='flex flex-wrap xl:flex-nowrap justify-center align-middle gap-20 max-w-[1440px] p-4 xl:p-20 m-auto'>
 
       <section className='m-auto'>
 
@@ -27,15 +26,13 @@ export const MetricsSection = () => {
 
       </section>
 
-      <section className='flex flex-wrap justify-between gap-6 xl:gap-10 max-w-[480px] '>
+      <section className='flex flex-wrap justify-between gap-6 xl:gap-10 max-w-[480px]'>
 
         <section>
           <p className='mb-6 text-blue3'>
-            Conseguimos
-            <span className='text-red uppercase'>
-              hogares
-            </span>
-            para nuestros clientes.
+            <span className='pr-2'>Conseguimos</span>
+            <span className='text-red uppercase pr-2'>hogares</span>
+            <span className='pr-2'>para nuestros clientes.</span>
           </p>
           <h2 className='mb-4 font-semibold text-5xl'>
             Encontramos tu hogar perfecto.

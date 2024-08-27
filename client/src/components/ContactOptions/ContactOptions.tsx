@@ -10,7 +10,7 @@ const contactOptions = [
   {
     icon: icons.phoneIcon,
     title: 'Telefono',
-    paragraph: '+7-843-672-431'
+    paragraph: '+55 41 9876-5432'
   },
   {
     icon: icons.locationIcon,
@@ -45,7 +45,7 @@ export const ContactOptions = () => {
         contactOptions.map(contactOption => (
           <article key={contactOption.title} className='max-w-[262px] px-6'>
             <img src={contactOption.icon} alt={contactOption.icon} />
-            <h3 className='my-3 text-3xl text-blue1'>
+            <h3 className='my-3 text-2xl md:text-3xl text-blue1'>
               {contactOption.title}
             </h3>
             <p className='text-xl font-medium'>
@@ -54,9 +54,9 @@ export const ContactOptions = () => {
           </article>
         ))
       }
-      <article className='max-w-[262px] px-6'>
+      <article className='max-w-[262px] px-5'>
         <img src={icons.socialIcon} alt={'icono'} />
-        <h3 className='mt-3 mb-7 text-3xl text-blue1'>
+        <h3 className='mt-3 mb-7 text-2xl md:text-3xl text-blue1'>
           Redes Sociales
         </h3>
         <div className='flex justify-between'>
